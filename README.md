@@ -1,7 +1,7 @@
 # MysteryBox_CS304
 Final Project for CS304
 
-![alt text](https://raw.githubusercontent.com/hdengg/MysteryBox_CS304/blob/master/MysteryBoxRevised.jpg)
+![ER Diagram](https://github.com/hdengg/MysteryBox_CS304/blob/master/MysteryBoxRevised.jpg)
 
 Platform:
 We will use the CS UGrad Oracle installation and JDBC
