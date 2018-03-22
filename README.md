@@ -3,29 +3,27 @@ Final Project for CS304
 
 ![ER Diagram](https://github.com/hdengg/MysteryBox_CS304/blob/master/MysteryBoxRevised.jpg)
 
-Platform:
-We will use the CS UGrad Oracle installation and JDBC
+** Note, this is not a complete list. 
 
-Functionality:
-Classes of users: customers, employees, and administrators 
+### Supported Queries - Customers
 
-Customers: 
-Customers can create an account and will able to view their own account information: username, password, first and last name, phone#, email addresses, credit cards, order history and shipment history 
-Customers can request to reset their password or change their first name, last name, phone number, and email 
-Customers can add/delete credit cards and addresses 
-They can also browse boxes by category and add or cancel a subscription to a box 
+- [ ] SHOULD BE ABLE TO UPDATE PROFILE
+- [ ] SHOULD BE ABLE TO ADD/DELETE/UPDATE ADDRESS
+- [ ] SHOULD BE ABLE TO ADD/DELETE/UPDATE CREDIT CARDS
+- [ ] SHOULD BE ABLE TO VIEW ALL SUBSCRIPTIONS TO A PARTICULAR MYSTERY BOX
+- [ ] SHOULD BE ABLE TO VIEW ALL SUBSCRIPTIONS 
+- [ ] SHOULD BE ABLE TO ADD A SUBSCRIPTION (CANNOT DELETE OR UPDATE) 
+- [ ] SHOULD BE ABLE TO VIEW SHIPPING INFORMATION FOR A SUBSCRIPTION 
+- [ ] SHOULD BE ABLE TO VIEW SHIPPING INFORMATION FOR ALL SUBSCRIPTIONS 
 
-Employees: 
-Can do anything a customer can do 
-Ask for all account information for a given customer, where the employee enters the customer username 
-Browse boxes given an mbid and their item contents; they can also search for specific items by an item id 
-Can view transaction information and shipment information for all customers 
-Can generate reports such as all customers subscribed from a certain date or in between certain dates 
-How many customers subscribed to certain boxes, how many cancellations 
+### Supported Queries - Administrator 
+- [ ] Same checklist as above for customers
+- [ ] SHOULD BE ABLE TO VIEW ALL CUSTOMERS 
+- [ ] SHOULD BE ABLE TO VIEW ALL ITEMS IN A MYSTERY BOX 
+- [ ] SHOULD BE ABLE TO ADD/DELETE/UPDATE SHIPMENTS 
+- [ ] SHOULD BE ABLE TO ADD/DELETE/UPDATE SUBSCRIPTIONS 
+- [ ] SHOULD BE ABLE TO GET THE NUMBER OF SUBSCRIPTIONS (COUNT) FOR ALL CUSTOMERS 
+- [ ] SHOULD BE ABLE TO ADD/DELETE/UPDATE ITEMS 
+- [ ] SHOULD BE ABLE TO ADD/DELETE/UPDATE ITEMS IN A MYSTERY BOX
 
-Administrators: 
-Can do everything a customer and an employee can (see above) 
-Can add/delete/update mystery boxes (including content and prices) 
-Can add/delete/update mystery box items to the database
-Update subscription fields, such as cost 
-Update shipment fields such as carrier, status
+Please add to the task list if there are any queries that are missing
