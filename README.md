@@ -5,7 +5,7 @@ Final Project for CS304
 
 ** Note, this is not a complete list. 
 
-### Supported Queries - Customers
+### Customers
 
 - [ ] SHOULD BE ABLE TO UPDATE PROFILE
 - [ ] SHOULD BE ABLE TO ADD/DELETE/UPDATE ADDRESS
@@ -16,7 +16,7 @@ Final Project for CS304
 - [ ] SHOULD BE ABLE TO VIEW SHIPPING INFORMATION FOR A SUBSCRIPTION 
 - [ ] SHOULD BE ABLE TO VIEW SHIPPING INFORMATION FOR ALL SUBSCRIPTIONS 
 
-### Supported Queries - Administrator 
+### Administrators
 - [ ] Same checklist as above for customers
 - [ ] SHOULD BE ABLE TO VIEW ALL CUSTOMERS 
 - [ ] SHOULD BE ABLE TO VIEW ALL ITEMS IN A MYSTERY BOX 
