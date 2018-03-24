@@ -1,17 +1,19 @@
 package GUI;
 
+import client.DBConnection;
+
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 
 public class Login {
     private JPanel leftPanel;
-    public JPanel rootPanel;
+    private JPanel rootPanel;
     private JPanel rightPanel;
-    private JTextField userText;
-    private JTextField passwordText;
+    private JTextField userField;
+    private JTextField passwordField;
     private JButton loginButton;
     private JLabel MainTitle;
     private JPanel rightContentPanel;
@@ -20,19 +22,27 @@ public class Login {
     private JLabel iconLabel;
 
 
-    public Login() {
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+    private void createUIComponents() {
+        usernameLabel = new JLabel("Username");
+        usernameLabel.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-            }
-        });
+        passwordLabel = new JLabel("Password");
+        passwordLabel.setBorder(new EmptyBorder(15, 15, 15, 15));
     }
 
-    private void createUIComponents() {
-//        Path currentRelativePath = Paths.get("");
-//        String s = currentRelativePath.toAbsolutePath().toString();
-//        System.out.println("Current relative path is: " + s);
-//        iconLabel = new JLabel(new ImageIcon("/MysteryBox_CS304/assets/mysterybox_icon.png"));
+    public JPanel getRootPanel() {
+        return rootPanel;
+    }
+
+    public JButton getLoginButton() {
+        return loginButton;
+    }
+
+    public JTextField getUserField() {
+        return userField;
+    }
+
+    public JTextField getPasswordField() {
+        return passwordField;
     }
 }

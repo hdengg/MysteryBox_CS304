@@ -1,3 +1,5 @@
+package client;
+
 import javax.swing.*;
 import java.sql.DriverManager;
 import java.sql.Connection;
@@ -6,9 +8,11 @@ import java.sql.SQLException;
 public class DBConnection {
     private Connection connection;
 
-    private int MAX_LOGIN_ATTEMPTS = 3;
+
 
     public DBConnection() {
+        int loginAttempts = 0;
+
         try {
             // Load the Oracle JDBC driver
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -17,14 +21,14 @@ public class DBConnection {
             System.out.println("Message: " + ex.getMessage());
             System.exit(-1);
         }
-        connect("ora_j2z8", "a31484116");
+        //connect("ora_j2z8", "a31484116");
     }
 
 
     /*
      * connects to Oracle database named ug using user supplied username and password
      */
-    private boolean connect(String username, String password)
+    public boolean connect(String username, String password)
     {
         String connectURL = "jdbc:oracle:thin:@localhost:1522:ug";
 
