@@ -3,6 +3,8 @@ package GUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Login {
     private JPanel leftPanel;
@@ -28,7 +30,9 @@ public class Login {
     }
 
     private void createUIComponents() {
-        System.out.println();
-        iconLabel = new JLabel(new ImageIcon("./assets/mysterybox_icon.png"));
+//        Path currentRelativePath = Paths.get("");
+//        String s = currentRelativePath.toAbsolutePath().toString();
+//        System.out.println("Current relative path is: " + s);
+//        iconLabel = new JLabel(new ImageIcon("/MysteryBox_CS304/assets/mysterybox_icon.png"));
     }
 }
