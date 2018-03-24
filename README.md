@@ -28,7 +28,10 @@ Final Project for CS304
 
 Please add to the task list if there are any queries that are missing
 
-HOW TO RUN ON UGRAD SERVER:
+### HOW TO RUN ON UGRAD SERVER:
 - scp the project to the ugrad server and ssh -X to the ugrad server.
 - cd into this: cd ~/304Project/MysteryBox_CS304/production/304Project
 - then run java Main 
+
+### HOW TO RUN ON INTELLIJ:
+https://docs.google.com/document/d/1zcNB4Z_VKEWk7deZixsrO84K4aP0jyz7MufFAh2Ov3k/edit?usp=sharing
