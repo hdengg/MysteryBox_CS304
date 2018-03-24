@@ -1,6 +1,10 @@
+import client.DBConnection;
+import client.MainFrameController;
+
 public class Main {
-    // TODO
+
+
     public static void main(String[] args) {
-        // Execute program
+        MainFrameController mfc = new MainFrameController();
     }
 }
