@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 public class Login {
     private JPanel leftPanel;
-    private JPanel rootPanel;
+    public JPanel rootPanel;
     private JPanel rightPanel;
     private JTextField userText;
     private JTextField passwordText;
@@ -28,6 +28,7 @@ public class Login {
     }
 
     private void createUIComponents() {
-        iconLabel = new JLabel(new ImageIcon("/assets/mysterybox_icon.png"));
+        System.out.println();
+        iconLabel = new JLabel(new ImageIcon("./assets/mysterybox_icon.png"));
     }
 }
