@@ -38,7 +38,7 @@ CREATE TABLE Customer_Address
 	street varchar(40) NOT NULL,
 	postal_code varchar(6) NOT NULL,
 	PRIMARY KEY (username, house_num, street, postal_code),
-	FOREIGN KEY (username) REFERENCES Customer ON DELETE CASCADE,
+	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE,
 	FOREIGN KEY (house_num, street, postal_code) REFERENCES Address(house_num, street, postal_code) ON DELETE CASCADE);
 
 GRANT SELECT ON Customer_Address to public;
@@ -162,9 +162,6 @@ VALUES ('tonyvaler', 1002);
 INSERT INTO Address
 VALUES ('1125', 'East 54th Ave', 'V5Y7F3', 'North Vancouver', 'British Columbia');
 
-INSERT INTO City_Province
-VALUES ('Victoria', 'British Columbia', 'V5Y7F3');
-
 INSERT INTO Customer_Address
 VALUES ('tonyvaler', '1125', 'East 54th Ave', 'V5Y7F3');
 
@@ -266,7 +263,7 @@ INSERT INTO Customer_Address
 VALUES ('navigator', '19284', 'White Street', 'V8S3L8');
 
 INSERT INTO Subscription
-VALUES (3, 20.00, 'true', '2018-01-04', 4, 'navigator', 5);
+VALUES (5, 20.00, 'true', '2018-01-04', 4, 'navigator', 5);
 
 INSERT INTO Mystery_Box
 VALUES (5, 5, 'Harry Potter', '2018-02-01');
