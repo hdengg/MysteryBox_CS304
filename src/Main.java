@@ -1,6 +1,11 @@
+import GUI.Login;
+
+import javax.swing.*;
+
 public class Main {
-    // TODO
+
     public static void main(String[] args) {
-        // Execute program
+        Login loginFrame = new Login();
+        DBConnection connection = new DBConnection();
     }
 }
