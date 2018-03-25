@@ -1,11 +1,7 @@
 package GUI;
 
-import client.DBConnection;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 public class Login {
