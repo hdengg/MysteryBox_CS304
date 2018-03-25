@@ -1,38 +1,85 @@
-DROP TABLE Mystery_Box_Item;
+DROP TABLE Contains;
 DROP TABLE Item;
-DROP TABLE Shipment_Process;
+DROP TABLE Shipment;
 DROP TABLE Subscription;
 DROP TABLE Mystery_Box;
-DROP TABLE Customer_Payment;
+DROP TABLE Pays_With;
 DROP TABLE Credit_Card;
-DROP TABLE Customer_Address;
+DROP TABLE Customer_Has_Address;
+DROP TABLE City_Province;
 DROP TABLE Address;
 DROP TABLE Customer;
 
 
 CREATE TABLE Customer
-	(username varchar(20) ,
-	password varchar(20) ,
-	first_name varchar(20) ,
-	last_name varchar(20) ,
-	phone char(12) ,
-	email varchar(60) ,
+	(username varchar(20),
+	password varchar(20),
+	first_name varchar(20),
+	last_name varchar(20),
+	phone char(12),
+	email varchar(60),
 	PRIMARY KEY (username));
  
 GRANT SELECT ON Customer to public;
+
+INSERT INTO Customer
+VALUES ('anthonyd', 'ilovesoccer89', 'Anthony', 'Davidson', '7783945923', 'anthony@gmail.com');
+
+INSERT INTO Customer
+VALUES ('tonyvaler', 'whipeout884', 'Tony', 'Valer', '7783947294', 'tvaler@gmail.com');
+
+INSERT INTO Customer
+VALUES ('mikeman', 'mikeisthebest', 'Michael', 'James', '6045392415', 'itsmikejames@yahoo.com');
+
+INSERT INTO Customer
+VALUES ('bieberfever', 'despacito1994', 'Karen', 'Piper', '6045259604', 'flowergirl94@gmail.com');
+
+INSERT INTO Customer
+VALUES ('navigator', 'mortalkombat', 'Navjit', 'Lal', '2503948384', 'navi420@hotmail.com');
  
 CREATE TABLE Address
-	(house_num varchar(20) ,
-	street varchar(40) ,
+	(house_num INTEGER,
+	street varchar(40),
 	postal_code varchar(6),
-	city	varchar(20),
-	province varchar(20),
 	PRIMARY KEY (house_num, street, postal_code));
  
 GRANT SELECT ON Address to public;
 
+/* Anthony Davidson */
+INSERT INTO Address
+VALUES ('1272', 'East 63rd Ave', 'V5X2L7');
+INSERT INTO Address
+VALUES ('3914', 'Nevelle Street', 'V6X4K7');
+/* Tony Valer */
+INSERT INTO Address
+VALUES ('1125', 'East 54th Ave', 'V5Y7F3');
+/* Mike */
+INSERT INTO Address
+VALUES ('3894', '4th Ave', 'V6S9L4');
 
-CREATE TABLE Customer_Address
+CREATE TABLE City_Province
+	(city		VARCHAR(20),
+	province	VARCHAR(20),
+	postal_code	VARCHAR(7) NOT NULL,
+	PRIMARY KEY (postal_code),
+	FOREIGN KEY (postal_code) REFERENCES Address(postal_code) ON DELETE CASCADE);
+
+GRANT SELECT ON City_Province to public;
+
+/* Anthony Davidson */
+INSERT INTO City_Province
+VALUES ('Vancouver', 'British Columbia', 'V5X2L7');
+INSERT INTO City_Province
+VALUES ('Burnaby', 'British Columbia', 'V6X4K7');
+/* Tony Valer */
+INSERT INTO City_Province
+VALUES ('North Vancouver', 'British Columbia', 'V5Y7F3');
+/* Mike */
+INSERT INTO City_Province
+VALUES ('Nanaimo', 'British Columbia', 'V6S9L4');
+
+
+CREATE TABLE Customer_Has_Address
 	(username varchar(20) NOT NULL,
 	house_num varchar(20) NOT NULL,
 	street varchar(40) NOT NULL,
@@ -41,7 +88,19 @@ CREATE TABLE Customer_Address
 	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE,
 	FOREIGN KEY (house_num, street, postal_code) REFERENCES Address(house_num, street, postal_code) ON DELETE CASCADE);
 
-GRANT SELECT ON Customer_Address to public;
+GRANT SELECT ON Customer_Has_Address to public;
+
+/* Anthony Davidson */
+INSERT INTO Customer_Has_Address
+VALUES ('anthonyd', '1272', 'East 63rd Ave', 'V5X2L7');
+INSERT INTO Customer_Has_Address
+VALUES ('anthonyd', '3914', 'Nevelle Street', 'V6X4K7');
+/* Tony Valer */
+INSERT INTO Customer_Has_Address
+VALUES ('tonyvaler', '1125', 'East 54th Ave', 'V5Y7F3');
+/* Mike */
+INSERT INTO Customer_Has_Address
+VALUES ('mikeman', '3894', '4th Ave', 'V6S9L4');
  
 CREATE TABLE Credit_Card
 	(c_id INTEGER,
@@ -53,41 +112,86 @@ CREATE TABLE Credit_Card
 
 GRANT SELECT ON Credit_Card to public;
 
-CREATE TABLE Customer_Payment
-	(username varchar(20),
-	c_id INTEGER,
-	PRIMARY KEY (username, c_id),
-	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE,
-	FOREIGN KEY (c_id) REFERENCES Credit_Card(c_id) ON DELETE CASCADE);
+/* Anthony Davidson */
+INSERT INTO Credit_Card
+VALUES(1001, '2020-01-01', 'XWSDFR', 'Visa', '0462');
+/* Tony Valer */
+INSERT INTO Credit_Card
+VALUES(1002, '2024-02-01', 'XWSDFZ', 'MasterCard', '2349');
+INSERT INTO Credit_Card
+VALUES(2002, '2028-02-02', 'XWALFZ', 'Visa', '4926');
+INSERT INTO Credit_Card
+VALUES(3002, '2021-11-01', 'AQSDFZ', 'MasterCard', '2960');
+/* Mike */
+INSERT INTO Credit_Card
+VALUES(1003, '2019-02-02', 'XWSDFF', 'MasterCard', '9393');
 
 
-GRANT SELECT ON Customer_Payment to public;
+CREATE TABLE Pays_With
+	(c_id INTEGER,
+	username varchar(20),
+	PRIMARY KEY (c_id, username),
+	FOREIGN KEY (c_id) REFERENCES Credit_Card(c_id) ON DELETE CASCADE,
+	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE);
+
+GRANT SELECT ON Pays_With to public;
+
+/* Anthony Davidson */
+INSERT INTO Pays_With
+VALUES (1001, 'anthonyd');
+/* Tony Valer */
+INSERT INTO Pays_With
+VALUES (2002, 'tonyvaler');
+/* Mike */
+INSERT INTO Pays_With
+VALUES (1003, 'mikeman');
+
+
 	
 CREATE TABLE Mystery_Box
 	(mbid INTEGER,
-	num_items INTEGER,
-	theme varchar(20),
+	no_items INTEGER,
 	mdate date,
+	theme varchar(20),
 	PRIMARY KEY (mbid));
  
 GRANT SELECT ON Mystery_Box to public;
+
+/* Anthony Davidson */
+INSERT INTO Mystery_Box
+VALUES (1, 3, '2017-12-27', 'Harry Potter');
+/* Tony Valer */
+INSERT INTO Mystery_Box
+VALUES (2, 3, '2017-12-27', 'Anime');
+/* Mike */
+INSERT INTO Mystery_Box
+VALUES (3, 3, '2017-09-01','Marvel');
 
 CREATE TABLE Subscription
 	(s_id INTEGER,
 	cost float(2),
 	status varchar(10),
 	s_from date,
-	momth_num INTEGER,
+	num_month INTEGER,
 	username varchar(20) NOT NULL,
 	mbid INTEGER NOT NULL,
 	PRIMARY KEY (s_id),
 	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE,
 	FOREIGN KEY (mbid) REFERENCES Mystery_Box(mbid) ON DELETE CASCADE);
  
-GRANT SELECT ON SubscriptiON to public;
+GRANT SELECT ON Subscription to public;
 
+/* Anthony Davidson */
+INSERT INTO Subscription
+VALUES (1, 20.00, 'true', '2017-12-07', 4, 'anthonyd', 1);
+/* Tony Valer */
+INSERT INTO Subscription
+VALUES (2, 10.00, 'true', '2017-11-02', 2, 'tonyvaler', 2);
+/* Mike */
+INSERT INTO Subscription
+VALUES (3, 20.00, 'true', '2017-08-04', 4, 'mikeman', 3);
  
-CREATE TABLE Shipment_Process
+CREATE TABLE Shipment
 	(shipping_no INTEGER,
 	carrier varchar(20),
 	ship_date date,
@@ -97,7 +201,17 @@ CREATE TABLE Shipment_Process
 	PRIMARY KEY (shipping_no),
 	FOREIGN KEY (s_id) REFERENCES Subscription(s_id) ON DELETE CASCADE);
  
-GRANT SELECT ON Shipment_Process to public;
+GRANT SELECT ON Shipment to public;
+
+/* Anthony Davidson */
+INSERT INTO Shipment
+VALUES (1, 'Fedex', '2018-01-12', 'Arrived', 'W1Z98', 1);
+/* Tony Valer */
+INSERT INTO Shipment
+VALUES (2, 'Canada Post', NULL, 'Pending', NULL, 2);
+/* Mike */
+INSERT INTO Shipment
+VALUES (3, 'UPS', NULL, 'Pending', NULL, 3);
  
 CREATE TABLE Item
 	(item_id INTEGER,
@@ -107,174 +221,34 @@ CREATE TABLE Item
  
 GRANT SELECT ON Item to public;
 
-CREATE TABLE Mystery_Box_Item
-	(item_id INTEGER NOT NULL,
-	mbid INTEGER NOT NULL,
-	PRIMARY KEY (item_id, mbid),
-	FOREIGN KEY (item_id) REFERENCES Item(item_id) ON DELETE CASCADE,
-	FOREIGN KEY (mbid) REFERENCES Mystery_Box(mbid) ON DELETE CASCADE);
- 
-GRANT SELECT ON Mystery_Box_Item to public;
-
-
-
-INSERT INTO Credit_Card
-VALUES(1001, '2020-01-01', 'XWSDFR', 'Visa', '0462');
- 
-INSERT INTO Customer
-VALUES ('anthonyd', 'ilovesoccer89', 'Anthony', 'Davidson', '7783945923', 'anthony@gmail.com');
-
-INSERT INTO Customer_Payment
-VALUES ('anthonyd', 1001);
-
-INSERT INTO Address
-VALUES ('1272', 'East 63rd Ave', 'V5X2L7', 'Vancouver', 'British Columbia');
-
-INSERT INTO Customer_Address
-VALUES ('anthonyd', '1272', 'East 63rd Ave', 'V5X2L7');
-
-INSERT INTO Subscription
-VALUES (1, 20.00, 'true', '2017-12-07', 4, 'anthonyd', 1);
-
-INSERT INTO Mystery_Box
-VALUES (1, 3, 'Harry Potter', '2017-12-27');
-
-INSERT INTO Shipment_Process
-VALUES (1, 'Fedex', '2018-01-12', 'Arrived', 'W1Z98', 1);
-
+/* Anthony Davidson */
 INSERT INTO Item
 VALUES (1, 5.00, 'Harry Potter Plush Toy');
-
-INSERT INTO Mystery_Box_Item
-VALUES (1, 1);
-
-
-
-INSERT INTO Credit_Card
-VALUES(1002, '2024-02-01', 'XWSDFZ', 'MasterCard', '2349');
- 
-INSERT INTO Customer
-VALUES ('tonyvaler', 'whipeout884', 'Tony', 'Valer', '7783947294', 'tvaler@gmail.com');
-
-INSERT INTO Customer_Payment
-VALUES ('tonyvaler', 1002);
-
-INSERT INTO Address
-VALUES ('1125', 'East 54th Ave', 'V5Y7F3', 'North Vancouver', 'British Columbia');
-
-INSERT INTO Customer_Address
-VALUES ('tonyvaler', '1125', 'East 54th Ave', 'V5Y7F3');
-
-INSERT INTO Subscription
-VALUES (2, 20.00, 'true', '2017-11-02', 2, 'tonyvaler', 2);
-
-INSERT INTO Mystery_Box
-VALUES (2, 3, 'Anime', '2017-12-27');
-
-INSERT INTO Shipment_Process
-VALUES (2, 'UPS', NULL, 'Pending', NULL, 2);
-
+/* Tony Valer */
 INSERT INTO Item
 VALUES (2, 5.00, 'Naruto Plush Toy');
-
-INSERT INTO Mystery_Box_Item
-VALUES (2, 2);
-
-
-
-INSERT INTO Credit_Card
-VALUES(1003, '2019-02-02', 'XWSDFF', 'Visa', '9393');
- 
-INSERT INTO Customer
-VALUES ('mikeman', 'mikeisthebest', 'Michael', 'James', '6045392415', 'itsmikejames@yahoo.com');
-
-INSERT INTO Customer_Payment
-VALUES ('mikeman', 1003);
-
-INSERT INTO Address
-VALUES ('3894', '4th Ave', 'V6S9L4', 'Nanaimo', 'British Columbia');
-
-INSERT INTO Customer_Address
-VALUES ('mikeman', '3894', '4th Ave', 'V6S9L4');
-
-INSERT INTO Subscription
-VALUES (3, 20.00, 'true', '2017-08-04', 4, 'mikeman', 3);
-
-INSERT INTO Mystery_Box
-VALUES (3, 3, 'Marvel', '2017-09-01');
-
-INSERT INTO Shipment_Process
-VALUES (3, 'UPS', NULL, 'Pending', NULL, 3);
-
+/* Mike */
 INSERT INTO Item
 VALUES (3, 5.00, 'Avengers Toy Set');
 
-INSERT INTO Mystery_Box_Item
+
+CREATE TABLE Contains
+	(mbid INTEGER NOT NULL,
+	item_id INTEGER NOT NULL,
+	PRIMARY KEY (mbid, item_id),
+	FOREIGN KEY (mbid) REFERENCES Mystery_Box(mbid) ON DELETE CASCADE,
+	FOREIGN KEY (item_id) REFERENCES Item(item_id) ON DELETE CASCADE);
+ 
+GRANT SELECT ON Contains to public;
+
+/* Anthony Davidson */
+INSERT INTO Contains
+VALUES (1, 1);
+/* Tony Valer */
+INSERT INTO Contains
+VALUES (2, 2);
+/* Mike */
+INSERT INTO Contains
 VALUES (3, 3);
-
-
-
-
-INSERT INTO Credit_Card
-VALUES(1004, '2021-09-06', 'XWSDFE', 'MasterCard', '0921');
- 
-INSERT INTO Customer
-VALUES ('bieberfever', 'despacito1994', 'Karen', 'Piper', '6045259604', 'flowergirl94@gmail.com');
-
-INSERT INTO Customer_Payment
-VALUES ('bieberfever', 1004);
-
-INSERT INTO Address
-VALUES ('3059', 'Pandosey Rd', 'N7C3L6', 'Kelowna', 'British Columbia');
-
-INSERT INTO Customer_Address
-VALUES ('bieberfever', '3059', 'Pandosey Rd', 'N7C3L6');
-
-INSERT INTO Subscription
-VALUES (4, 20.00, 'true', '2018-01-04', 4, 'bieberfever', 4);
-
-INSERT INTO Mystery_Box
-VALUES (4, 4, 'Harry Potter', '2018-02-01');
-
-INSERT INTO Shipment_Process
-VALUES (4, 'UPS', '2018-02-14', 'Arrived', 'L1MNA', 4);
-
-INSERT INTO Item
-VALUES (4, 5.00, 'Chamber of Secrets Box');
-
-INSERT INTO Mystery_Box_Item
-VALUES (4, 4);
-
-
-
-INSERT INTO Credit_Card
-VALUES(1005, '2022-05-05', 'XWSDFO', 'MasterCard', '0581');
- 
-INSERT INTO Customer
-VALUES ('navigator', 'mortalkombat', 'Navjit', 'Lal', '2503948384', 'navi420@hotmail.com');
-
-INSERT INTO Customer_Payment
-VALUES ('navigator', 1005);
-
-INSERT INTO Address
-VALUES ('19284', 'White Street', 'V8S3L8', 'Ladysmith', 'British Columbia');
-
-INSERT INTO Customer_Address
-VALUES ('navigator', '19284', 'White Street', 'V8S3L8');
-
-INSERT INTO Subscription
-VALUES (5, 20.00, 'true', '2018-01-04', 4, 'navigator', 5);
-
-INSERT INTO Mystery_Box
-VALUES (5, 5, 'Harry Potter', '2018-02-01');
-
-INSERT INTO Shipment_Process
-VALUES (5, 'UPS', NULL, 'Pending', NULL, 5);
-
-INSERT INTO Item
-VALUES (5, 5.00, 'Magic Wand');
-
-INSERT INTO Mystery_Box_Item
-VALUES (5, 5);
 
 
