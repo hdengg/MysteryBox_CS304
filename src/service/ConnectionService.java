@@ -1,16 +1,13 @@
-package client;
+package service;
 
-import javax.swing.*;
-import java.sql.DriverManager;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBConnection {
+public class ConnectionService {
     private Connection connection;
 
-
-
-    public DBConnection() {
+    public ConnectionService() {
         int loginAttempts = 0;
 
         try {
@@ -21,9 +18,7 @@ public class DBConnection {
             System.out.println("Message: " + ex.getMessage());
             System.exit(-1);
         }
-        //connect("ora_j2z8", "a31484116");
     }
-
 
     /*
      * connects to Oracle database named ug using user supplied username and password
@@ -42,5 +37,9 @@ public class DBConnection {
             System.out.println("Message: " + ex.getMessage());
             return false;
         }
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

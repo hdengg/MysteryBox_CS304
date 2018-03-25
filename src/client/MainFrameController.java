@@ -1,8 +1,9 @@
 package client;
 
-import javax.swing.*;
 import GUI.Login;
+import service.CustomerService;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,18 +11,17 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class MainFrameController {
-    private DBConnection connection;
     private JFrame loginFrame;
     private Login loginUI;
     private JButton loginButton;
     private int MAX_LOGIN_ATTEMPTS = 3;
     private int loginAttempts;
+    private CustomerService customerService;
 
-    public MainFrameController() {
-        connection = new DBConnection();
+    public MainFrameController(CustomerService customerService) {
+        this.customerService = customerService;
         initLoginWindow();
         initListeners();
-
     }
 
     public void initLoginWindow() {
@@ -56,7 +56,7 @@ public class MainFrameController {
         public void actionPerformed(ActionEvent e) {
             String username = loginUI.getUserField().getText();
             String password = loginUI.getPasswordField().getText();
-            if (connection.connect(username, password)) {
+            if (customerService.login(username, password)) {
                 //TODO: open main app frame
             } else {
                 loginAttempts++;
