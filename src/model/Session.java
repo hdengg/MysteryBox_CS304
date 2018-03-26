@@ -9,11 +9,6 @@ public class Session {
 
     public Session() {}
 
-    public void loginCustomer(Customer customer) {
-        this.customer = customer;
-        loggedIn = true;
-    }
-
     public Customer getCustomer() {
         return customer;
     }
@@ -21,4 +16,15 @@ public class Session {
     public boolean isLoggedIn() {
         return loggedIn;
     }
+
+    public void loginCustomer(Customer customer) {
+        setCustomer(customer);
+        loggedIn = true;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+
 }

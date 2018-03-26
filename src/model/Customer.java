@@ -44,5 +44,9 @@ public class Customer {
         return email;
     }
 
+    public String toString() {
+        return String.format("username:%s, password:%s, firstName:%s, lastName:%s, phoneNum:%s, email:%s,",
+                username, password, firstName, lastName, phoneNum, email);
+    }
 
 }

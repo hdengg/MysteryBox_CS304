@@ -28,6 +28,7 @@ public class CustomerService {
         return false;
     }
 
+    // returns a customer given the username
     public Customer getCustomer(String username) {
         PreparedStatement pstmt;
         ResultSet rs;
