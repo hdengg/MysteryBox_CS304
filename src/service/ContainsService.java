@@ -1,6 +1,9 @@
 package service;
 
+import com.sun.tools.javac.jvm.Items;
 import model.Contains;
+import model.Item;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,22 +60,51 @@ public class ContainsService {
     }
 
     /**
-     * Retrieves item ids from mbid
-     * @param mbid mystery box ID
-     * @return list of item ids
+     * Join Query: View items from each mystery box
      */
-    public List<Integer> getItemIds(int mbid) {
-        List<Integer> item_ids = new ArrayList<>();
+    public void viewItems() {
         try {
             Statement st = connection.createStatement();
-            String sqlQuery = "SELECT item_id FROM Contains WHERE mbid = " + mbid;
-            ResultSet rs = st.executeQuery(sqlQuery);
+            String query = "create view items_from_mbid as "
+                    + "select Mystery_Box.mbid, Mystery_Box.theme, Mystery_Box.no_items, "
+                    + "Item.item_id, Item.value, Item.item_name "
+                    + "from Mystery_Box join Contains on Mystery_Box.mbid = Contains.mbid"
+                    + " join Item on Item.item_id = Contains.item_id";
+            st.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Retrieves all Items from a specified Mystery Box
+     * @param mbid the mbid to query
+     * @return all item names associated with mbid
+     */
+    public List<Item> getItems(int mbid) {
+        List<Item> items = new ArrayList<>();
+        try {
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT item_id, value, item_name FROM items_from_mbid WHERE mbid = " + mbid);
             while (rs.next()) {
-                item_ids.add(rs.getInt("item_id"));
+                int item_id = rs.getInt("item_id");
+                float value = rs.getFloat("value");
+                String item_name = rs.getString("item_name");
+                Item item = new Item(item_id, value, item_name);
+                items.add(item);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return item_ids;
+        return items;
+    }
+
+    public void dropViewsTable() {
+        try {
+            Statement st = connection.createStatement();
+            st.executeQuery("drop view items_from_mbid");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

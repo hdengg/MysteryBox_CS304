@@ -1,9 +1,6 @@
-import model.MysteryBox;
 import service.*;
 import client.MainFrameController;
 import model.Session;
-
-import java.sql.Date;
 
 public class Main {
 
@@ -14,6 +11,7 @@ public class Main {
         CustomerService customerService = new CustomerService(connectionService.getConnection());
         MysteryBoxService mysteryBoxService = new MysteryBoxService(connectionService.getConnection());
         ItemService itemService = new ItemService(connectionService.getConnection());
+        ContainsService containsService = new ContainsService(connectionService.getConnection());
         MainFrameController mfc = new MainFrameController(customerService);
     }
 }
