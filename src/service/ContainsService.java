@@ -2,6 +2,7 @@ package service;
 
 import model.Contains;
 import model.Item;
+import model.MysteryBox;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -51,7 +52,10 @@ public class ContainsService {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO Contains VALUES (?,?)");
             ps.setInt(1, mbid);
             ps.setInt(2, item_id);
-            ps.executeUpdate();
+            int res = ps.executeUpdate();
+            if (res == 1) {
+                System.out.println("Item successfully added to Mystery Box");
+            }
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,6 +93,38 @@ public class ContainsService {
                     + "from Mystery_Box join Contains on Mystery_Box.mbid = Contains.mbid"
                     + " join Item on Item.item_id = Contains.item_id";
             st.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Gets the minimum or maximum average
+     * @param isMax is maximum
+     */
+    public void getAverage(boolean isMax) {
+        try {
+            Statement st = connection.createStatement();
+            String query = "WITH inner_table as"
+                    + "(SELECT temp.mbid, temp.avgprice "
+                    + "FROM (SELECT Mystery_Box.mbid, AVG (Item.value) AS avgprice "
+                    + "FROM Mystery_Box LEFT JOIN Contains ON Mystery_Box.mbid = Contains.mbid "
+                    + "LEFT JOIN Item ON Item.item_id = Contains.item_id "
+                    + "GROUP BY Mystery_Box.mbid) temp )";
+            if (isMax) {
+                query = query + "SELECT * FROM inner_table "
+                        + "WHERE avgprice = (SELECT MAX(avgprice) FROM inner_table)";
+            } else {
+                query = query + "SELECT * FROM inner_table "
+                        + "WHERE avgprice = (SELECT MIN(avgprice) FROM inner_table)";
+            }
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next()) {
+                int mbid = rs.getInt("mbid");
+                double avgprice = rs.getDouble("avgprice");
+                System.out.println(mbid);
+                System.out.println(avgprice);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
