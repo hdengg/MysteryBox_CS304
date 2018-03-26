@@ -3,9 +3,9 @@ package model;
 /**
  * Created by janicelee on 2018-03-24.
  */
-public class Session {
-    private Customer customer;
-    boolean loggedIn = false;
+public class Session  extends Model {
+    protected Customer customer;
+    protected boolean loggedIn = false;
 
     public Session() {}
 

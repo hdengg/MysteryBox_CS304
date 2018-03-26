@@ -1,15 +1,9 @@
 import client.MainFrameController;
-import model.Address;
-import model.CreditCard;
-import model.Customer;
 import model.Session;
 import service.AddressService;
 import service.ConnectionService;
 import service.CreditCardService;
 import service.CustomerService;
-
-import java.sql.Date;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -33,36 +27,41 @@ public class Main {
 
     public static void janiceTester(CustomerService customerService, AddressService addressService,
                                     CreditCardService credCardService, Session session) {
-        customerService.login(session, "mikeman", "mikeisthebest");
-        System.out.println(session.getCustomer().toString());
+//        customerService.login(session, "mikeman", "mikeisthebest");
+//        System.out.println(session.getCustomer().toString());
+//
+//        Customer customer = session.getCustomer();
+//
+//        customer = customerService.updateCustomer("mikeman", "newp", customer.getFirstName(),
+//                customer.getLastName(), customer.getPhoneNum(), customer.getEmail());
+//
+//        System.out.println(customer.toString());
+//
+//        ArrayList<Address> mikeAddresses = addressService.getAllCustomerAddresses("anthonyd");
+//
+//        for (Address a : mikeAddresses) {
+//            System.out.println(a.toString());
+//        }
+//
+//        addressService.addAddress("mikeman", 11, "STREEET", "PCODE", "CITY", "PROV");
+//        addressService.deleteAddress("mikeman", 11, "STREEET", "PCODE");
+//
+//        Address mikeAddress = new Address(3894, "4th Ave", "V6S9L4", "Nanaimo", "British Columbia");
+//        addressService.updateAddress("mikeman", mikeAddress, 99, "newStreet", "newPC", "newCity", "newProv");
+//
+//        ArrayList<CreditCard> mikecards = credCardService.getCustomerCreditCards("mikeman");
+//        for (CreditCard cc : mikecards) {
+//            System.out.println(cc.toString());
+//        }
+//
+//        Date date = new Date(1522027111);
+//        CreditCard mikeCard = new CreditCard(919, date, "KEN", "TYPO", 3333);
+//        credCardService.addCustomerCreditCard("mikeman", mikeCard);
+//        credCardService.deleteCustomerCreditCard("mikeman", 919);
 
-        Customer customer = session.getCustomer();
-
-        customer = customerService.updateCustomer("mikeman", "newp", customer.getFirstName(),
-                customer.getLastName(), customer.getPhoneNum(), customer.getEmail());
-
-        System.out.println(customer.toString());
-
-        ArrayList<Address> mikeAddresses = addressService.getAllCustomerAddresses("anthonyd");
-
-        for (Address a : mikeAddresses) {
-            System.out.println(a.toString());
-        }
-
-        addressService.addAddress("mikeman", 11, "STREEET", "PCODE", "CITY", "PROV");
-        addressService.deleteAddress("mikeman", 11, "STREEET", "PCODE");
-
-        Address mikeAddress = new Address(3894, "4th Ave", "V6S9L4", "Nanaimo", "British Columbia");
-        addressService.updateAddress("mikeman", mikeAddress, 99, "newStreet", "newPC", "newCity", "newProv");
-
-        ArrayList<CreditCard> mikecards = credCardService.getCustomerCreditCards("mikeman");
-        for (CreditCard cc : mikecards) {
-            System.out.println(cc.toString());
-        }
-
-        Date date = new Date(1522027111);
-        CreditCard mikeCard = new CreditCard(919, date, "KEN", "TYPO", 3333);
-        credCardService.addCustomerCreditCard("mikeman", mikeCard);
-        credCardService.deleteCustomerCreditCard("mikeman", 919);
+//        ArrayList<Customer> customers = customerService.getAllCustomers();
+//        for (Customer c : customers) {
+//            System.out.println(c.toString());
+//        }
     }
 }

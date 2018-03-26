@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by janicelee on 2018-03-24.
@@ -51,6 +52,38 @@ public class CustomerService {
             }
 
             pstmt.close();
+
+        } catch (SQLException ex) {
+            System.out.println("Message: " + ex.getMessage());
+        }
+
+        return null;
+    }
+
+    // returns a list of all customers
+    public ArrayList<Customer> getAllCustomers() {
+        PreparedStatement pstmt;
+        ResultSet rs;
+        ArrayList<Customer> customers = new ArrayList<>();
+        Customer customer;
+
+        try {
+            pstmt = connection.prepareStatement("SELECT * FROM Customer");
+            rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                String cUsername = rs.getString("username");
+                String cPassword = rs.getString("password");
+                String cfirstName = rs.getString("first_name");
+                String clastName = rs.getString("last_name");
+                String cPhoneNum = rs.getString("phone");
+                String cEmail = rs.getString("email");
+
+                customer = new Customer(cUsername, cPassword, cfirstName, clastName, cPhoneNum, cEmail);
+                customers.add(customer);
+            }
+            pstmt.close();
+            return customers;
 
         } catch (SQLException ex) {
             System.out.println("Message: " + ex.getMessage());

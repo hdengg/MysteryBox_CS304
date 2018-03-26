@@ -3,12 +3,12 @@ package model;
 /**
  * Created by janicelee on 2018-03-24.
  */
-public class Address {
-    private int houseNum;
-    private String street;
-    private String postalCode;
-    private String city;
-    private String province;
+public class Address extends Model {
+    protected int houseNum;
+    protected String street;
+    protected String postalCode;
+    protected String city;
+    protected String province;
 
     public Address(int houseNum, String street, String postalCode, String city, String province) {
         this.houseNum = houseNum;
@@ -38,8 +38,4 @@ public class Address {
         return province;
     }
 
-    public String toString() {
-        return String.format("houseNum:%s, street:%s, postalCode:%s, city:%s, province:%s",
-                Integer.toString(houseNum), street, postalCode,  city, province);
-    }
 }
