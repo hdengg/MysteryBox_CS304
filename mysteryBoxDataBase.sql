@@ -1,6 +1,7 @@
 DROP TABLE Contains;
 DROP TABLE Item;
 DROP TABLE Shipment;
+DROP TABLE Subscribes_To;
 DROP TABLE Subscription;
 DROP TABLE Mystery_Box;
 DROP TABLE Pays_With;
@@ -213,30 +214,55 @@ CREATE TABLE Subscription
 	s_from date,
 	num_month INTEGER,
 	username varchar(20) NOT NULL,
-	mbid INTEGER NOT NULL,
 	PRIMARY KEY (s_id),
-	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE,
-	FOREIGN KEY (mbid) REFERENCES Mystery_Box(mbid) ON DELETE CASCADE);
+	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE);
  
 GRANT SELECT ON Subscription to public;
 
 /* Anthony Davidson */
 INSERT INTO Subscription
-VALUES (1, 20.00, 'true', '2017-11-07', 3, 'anthonyd', 5);
+VALUES (1, 20.00, 'true', '2017-11-07', 3, 'anthonyd');
 /* Tony Valer */
 INSERT INTO Subscription
-VALUES (2, 50.00, 'true', '2017-12-20', 3, 'tonyvaler', 7);
+VALUES (2, 50.00, 'true', '2017-12-20', 3, 'tonyvaler');
 /* Michael James*/
 INSERT INTO Subscription
-VALUES (3, 25.00, 'true', '2018-01-04', 2, 'mikeman', 9);
+VALUES (3, 25.00, 'true', '2018-01-04', 2, 'mikeman');
 /* Karen Piper */
 INSERT INTO Subscription
-VALUES (4, 25.00, 'true', '2018-12-16', 2, 'bieberfever', 9);
+VALUES (4, 25.00, 'true', '2018-12-16', 2, 'bieberfever');
 INSERT INTO Subscription
-VALUES (5, 20.00, 'true', '2018-01-29', 1, 'bieberfever', 5);
+VALUES (5, 20.00, 'true', '2018-01-29', 1, 'bieberfever');
 /* Navjit Lal*/
 INSERT INTO Subscription
-VALUES (6, 35.00, 'false', '2017-08-04', 1, 'navigator', 1);
+VALUES (6, 35.00, 'false', '2017-08-04', 1, 'navigator');
+
+CREATE TABLE Subscribes_To
+  (s_id INTEGER NOT NULL,
+  mbid INTEGER NOT NULL,
+  PRIMARY KEY (s_id, mbid),
+  FOREIGN KEY (s_id) REFERENCES Subscription(s_id) ON DELETE CASCADE,
+  FOREIGN KEY (mbid) REFERENCES Mystery_Box(mbid) ON DELETE CASCADE);
+
+GRANT SELECT ON Subscribes_To to public;
+
+/* Anthony Davidson */
+INSERT INTO Subscribes_To VALUES (1, 1);
+INSERT INTO Subscribes_To VALUES (1, 4);
+INSERT INTO Subscribes_To VALUES (1, 5);
+/* Tony Valer */
+INSERT INTO Subscribes_To VALUES (2, 2);
+INSERT INTO Subscribes_To VALUES (2, 6);
+INSERT INTO Subscribes_To VALUES (2, 7);
+/* Michael James*/
+INSERT INTO Subscribes_To VALUES (3, 8);
+INSERT INTO Subscribes_To VALUES (3, 9);
+/* Karen Piper */
+INSERT INTO Subscribes_To VALUES (4, 8);
+INSERT INTO Subscribes_To VALUES (4, 9);
+INSERT INTO Subscribes_To VALUES (5, 5);
+/* Navjit Lal*/
+INSERT INTO Subscribes_To VALUES (6, 1);
  
 CREATE TABLE Shipment
 	(shipping_no INTEGER,
