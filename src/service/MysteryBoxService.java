@@ -23,7 +23,7 @@ public class MysteryBoxService {
      * Retrieves all mystery boxes
      * @return mystery boxes
      */
-    public List<MysteryBox> getMysteryBoxes() {
+    public List<MysteryBox> getAllMysteryBoxes() {
         List<MysteryBox> mysteryBoxes = new ArrayList<>();
         try {
             Statement st = connection.createStatement();
@@ -106,6 +106,54 @@ public class MysteryBoxService {
         }
     }
 
+    /**
+     * Add item to box
+     * @param mbid mystery box id to add item to
+     * @param item_id item id to add
+     */
+    public void addItemToBox(int mbid, int item_id) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO Contains VALUES (?,?)");
+            ps.setInt(1, mbid);
+            ps.setInt(2, item_id);
+            int res = ps.executeUpdate();
+            if (res == 1) {
+                System.out.println("Item successfully added to Mystery Box");
+            }
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Delete item from box
+     * @param mbid mystery box id to delete
+     * @param item_id item_id to delete
+     */
+    public void deleteItemFromBox(int mbid, int item_id) {
+        try {
+            PreparedStatement ps = connection.prepareStatement(
+                    "DELETE FROM Contains WHERE (mbid = ?)" + " AND (item_id = ?)");
+            ps.setInt(1, mbid);
+            ps.setInt(2, item_id);
+            int res = ps.executeUpdate();
+            if (res == 1) {
+                System.out.println("Item successfully deleted from Mystery Box");
+            }
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Updates mystery box
+     * @param mbid mbid of mystery box
+     * @param no_items number of items to update
+     * @param mdate date to update
+     * @param theme theme to update
+     */
     public void updateMysteryBox(int mbid, int no_items, Date mdate, String theme) {
         PreparedStatement ps;
         try {
@@ -117,6 +165,38 @@ public class MysteryBoxService {
             ps.setInt(4, mbid);
             ps.executeUpdate();
             ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Gets the box and price with the minimum or maximum average cost
+     * @param isMax is maximum
+     */
+    public void getAverage(boolean isMax) {
+        try {
+            Statement st = connection.createStatement();
+            String query = "WITH inner_table as"
+                    + "(SELECT temp.mbid, temp.avgprice "
+                    + "FROM (SELECT Mystery_Box.mbid, AVG (Item.value) AS avgprice "
+                    + "FROM Mystery_Box LEFT JOIN Contains ON Mystery_Box.mbid = Contains.mbid "
+                    + "LEFT JOIN Item ON Item.item_id = Contains.item_id "
+                    + "GROUP BY Mystery_Box.mbid) temp )";
+            if (isMax) {
+                query = query + "SELECT * FROM inner_table "
+                        + "WHERE avgprice = (SELECT MAX(avgprice) FROM inner_table)";
+            } else {
+                query = query + "SELECT * FROM inner_table "
+                        + "WHERE avgprice = (SELECT MIN(avgprice) FROM inner_table)";
+            }
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next()) {
+                int mbid = rs.getInt("mbid");
+                double avgprice = rs.getDouble("avgprice");
+                System.out.println(mbid);
+                System.out.println(avgprice);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

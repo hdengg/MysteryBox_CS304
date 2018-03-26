@@ -22,7 +22,7 @@ public class ItemService {
      * Retrieves all Items
      * @return items
      */
-    public List<Item> getItems() {
+    public List<Item> getAllItems() {
         List<Item> items = new ArrayList<>();
         try {
             Statement st = connection.createStatement();
@@ -64,6 +64,58 @@ public class ItemService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Join Query: View items from each mystery box
+     */
+    public void viewItems() {
+        try {
+            Statement st = connection.createStatement();
+            String query = "create view items_from_mbid as "
+                    + "select Mystery_Box.mbid, Mystery_Box.theme, Mystery_Box.no_items, "
+                    + "Item.item_id, Item.value, Item.item_name "
+                    + "from Mystery_Box join Contains on Mystery_Box.mbid = Contains.mbid"
+                    + " join Item on Item.item_id = Contains.item_id";
+            st.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Drops the items_from_mbid views table
+     */
+    public void dropViewsTable() {
+        try {
+            Statement st = connection.createStatement();
+            st.executeQuery("drop view items_from_mbid");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Retrieves all Items from a specified Mystery Box
+     * @param mbid the mbid to query
+     * @return all item names associated with mbid
+     */
+    public List<Item> getItemsFromBox(int mbid) {
+        List<Item> items = new ArrayList<>();
+        try {
+            Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT item_id, value, item_name FROM items_from_mbid WHERE mbid = " + mbid);
+            while (rs.next()) {
+                int item_id = rs.getInt("item_id");
+                float value = rs.getFloat("value");
+                String item_name = rs.getString("item_name");
+                Item item = new Item(item_id, value, item_name);
+                items.add(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return items;
     }
 
     /**
