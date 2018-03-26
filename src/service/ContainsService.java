@@ -1,6 +1,5 @@
 package service;
 
-import com.sun.tools.javac.jvm.Items;
 import model.Contains;
 import model.Item;
 
@@ -43,7 +42,7 @@ public class ContainsService {
     }
 
     /**
-     * Add new tuples to the contains table
+     * Add new tuple to the contains table
      * @param mbid mystery box id to add
      * @param item_id item id to add
      */
@@ -53,6 +52,25 @@ public class ContainsService {
             ps.setInt(1, mbid);
             ps.setInt(2, item_id);
             ps.executeUpdate();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Delete tuple from the contains table
+     * @param mbid mystery box id to delete
+     * @param item_id item_id to delete
+     */
+    public void deleteContains(int mbid, int item_id) {
+        try {
+            PreparedStatement ps = connection.prepareStatement(
+                    "DELETE FROM Contains WHERE mbid = " + mbid + " AND item_id = " + item_id);
+            int res = ps.executeUpdate();
+            if (res == 1) {
+                System.out.println("Item successfully deleted from Mystery Box");
+            }
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
