@@ -35,3 +35,6 @@ Please add to the task list if there are any queries that are missing
 
 ### HOW TO RUN ON INTELLIJ:
 https://docs.google.com/document/d/1zcNB4Z_VKEWk7deZixsrO84K4aP0jyz7MufFAh2Ov3k/edit?usp=sharing
+
+### QUERY CHECKLIST:
+https://docs.google.com/document/d/1MVYEyPK213wZI0meHWWs1zrOsyhGZVE2lMrkrqxTVzo/edit
