@@ -27,7 +27,7 @@ public class MysteryBoxService {
         List<MysteryBox> mysteryBoxes = new ArrayList<>();
         try {
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("select * from Mystery_Box");
+            ResultSet rs = st.executeQuery("SELECT * FROM Mystery_Box");
 
             while (rs.next()) {
                 int mbid = rs.getInt("mbid");
@@ -84,7 +84,6 @@ public class MysteryBoxService {
             ps.setDate(3, mdate);
             ps.setString(4, theme);
             ps.executeUpdate();
-            connection.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -99,7 +98,6 @@ public class MysteryBoxService {
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM Mystery_Box where mbid = " + mbid);
             ps.executeUpdate();
-            connection.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -115,7 +113,6 @@ public class MysteryBoxService {
             ps.setDate(2, mdate);
             ps.setString(3, theme);
             ps.executeUpdate();
-            connection.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,7 +1,9 @@
-import service.ConnectionService;
+import model.MysteryBox;
+import service.*;
 import client.MainFrameController;
 import model.Session;
-import service.CustomerService;
+
+import java.sql.Date;
 
 public class Main {
 
@@ -10,6 +12,8 @@ public class Main {
         connectionService.connect("ora_j2z8", "a31484116");
         Session session = new Session();
         CustomerService customerService = new CustomerService(connectionService.getConnection());
+        MysteryBoxService mysteryBoxService = new MysteryBoxService(connectionService.getConnection());
+        ItemService itemService = new ItemService(connectionService.getConnection());
         MainFrameController mfc = new MainFrameController(customerService);
     }
 }

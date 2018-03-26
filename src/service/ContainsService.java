@@ -24,7 +24,7 @@ public class ContainsService {
         List<Contains> containsList = new ArrayList<>();
         try {
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("select * from Contains");
+            ResultSet rs = st.executeQuery("SELECT * FROM Contains");
 
             while (rs.next()) {
                 int mbid = rs.getInt("mbid");
@@ -46,17 +46,15 @@ public class ContainsService {
      */
     public void addContains(int mbid, int item_id) {
         try {
-            PreparedStatement ps = connection.prepareStatement("insert into Contains values (?,?)");
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO Contains VALUES (?,?)");
             ps.setInt(1, mbid);
             ps.setInt(2, item_id);
             ps.executeUpdate();
-            connection.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
 
     /**
      * Retrieves item ids from mbid
@@ -67,7 +65,7 @@ public class ContainsService {
         List<Integer> item_ids = new ArrayList<>();
         try {
             Statement st = connection.createStatement();
-            String sqlQuery = "select item_id from Contains where mbid = " + mbid;
+            String sqlQuery = "SELECT item_id FROM Contains WHERE mbid = " + mbid;
             ResultSet rs = st.executeQuery(sqlQuery);
             while (rs.next()) {
                 item_ids.add(rs.getInt("item_id"));
