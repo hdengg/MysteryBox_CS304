@@ -2,7 +2,6 @@ package service;
 
 import model.Contains;
 import model.Item;
-import model.MysteryBox;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -70,7 +69,9 @@ public class ContainsService {
     public void deleteContains(int mbid, int item_id) {
         try {
             PreparedStatement ps = connection.prepareStatement(
-                    "DELETE FROM Contains WHERE mbid = " + mbid + " AND item_id = " + item_id);
+                    "DELETE FROM Contains WHERE (mbid = ?)" + " AND (item_id = ?)");
+            ps.setInt(1, mbid);
+            ps.setInt(2, item_id);
             int res = ps.executeUpdate();
             if (res == 1) {
                 System.out.println("Item successfully deleted from Mystery Box");

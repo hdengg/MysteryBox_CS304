@@ -50,7 +50,8 @@ public class ItemService {
         PreparedStatement ps;
         ResultSet rs;
         try {
-            ps = connection.prepareStatement("SELECT * FROM Item WHERE item_id = " + item_id);
+            ps = connection.prepareStatement("SELECT * FROM Item WHERE (item_id = ?)");
+            ps.setInt(1, item_id);
             rs = ps.executeQuery();
             if (rs.next()) {
                 int item_id1 = rs.getInt("item_id");
@@ -91,7 +92,8 @@ public class ItemService {
      */
     public void deleteItem(int item_id) {
         try {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM Item where item_id = " + item_id);
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM Item where (item_id = ?)");
+            ps.setInt(1, item_id);
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -109,9 +111,10 @@ public class ItemService {
         PreparedStatement ps;
         try {
             ps = connection.prepareStatement(
-                    "UPDATE Item SET value = ?, item_name = ? WHERE item_id =" + item_id);
+                    "UPDATE Item SET value = ?, item_name = ? WHERE (item_id = ?)");
             ps.setDouble(1, value);
             ps.setString(2, item_name);
+            ps.setInt(3, item_id);
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {

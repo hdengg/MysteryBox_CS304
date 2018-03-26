@@ -52,7 +52,8 @@ public class MysteryBoxService {
         PreparedStatement ps;
         ResultSet rs;
         try {
-            ps = connection.prepareStatement("SELECT * FROM Mystery_Box WHERE mbid = " + mbid);
+            ps = connection.prepareStatement("SELECT * FROM Mystery_Box WHERE (mbid = ?)");
+            ps.setInt(1, mbid);
             rs = ps.executeQuery();
             if (rs.next()) {
                 int mysbid = rs.getInt("mbid");
@@ -96,7 +97,8 @@ public class MysteryBoxService {
      */
     public void deleteMysteryBox(int mbid) {
         try {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM Mystery_Box where mbid = " + mbid);
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM Mystery_Box where (mbid = ?)");
+            ps.setInt(1, mbid);
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
@@ -108,10 +110,11 @@ public class MysteryBoxService {
         PreparedStatement ps;
         try {
             ps = connection.prepareStatement(
-                    "UPDATE Mystery_Box SET no_items = ?, mdate = ?, theme = ? WHERE mbid =" + mbid);
+                    "UPDATE Mystery_Box SET no_items = ?, mdate = ?, theme = ? WHERE (mbid = ?)");
             ps.setInt(1, no_items);
             ps.setDate(2, mdate);
             ps.setString(3, theme);
+            ps.setInt(4, mbid);
             ps.executeUpdate();
             ps.close();
         } catch (SQLException e) {
