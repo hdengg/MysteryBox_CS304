@@ -28,7 +28,7 @@ public class Main {
 
         //janiceTester(customerService, addressService, credCardService, session);
 
-        MainFrameController mfc = new MainFrameController(session, customerService, addressService);
+        MainFrameController mfc = new MainFrameController(session, customerService, addressService, credCardService);
     }
 
     public static void janiceTester(CustomerService customerService, AddressService addressService,

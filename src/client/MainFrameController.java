@@ -3,6 +3,7 @@ package client;
 import GUI.Login;
 import model.Session;
 import service.AddressService;
+import service.CreditCardService;
 import service.CustomerService;
 
 import javax.swing.*;
@@ -20,9 +21,11 @@ public class MainFrameController {
     private int loginAttempts;
     private CustomerService customerService;
     private AddressService addressService;
+    private CreditCardService creditCardService;
     private Session session;
 
-    public MainFrameController(Session session, CustomerService customerService, AddressService addressService) {
+    public MainFrameController(Session session, CustomerService customerService, AddressService addressService,
+                               CreditCardService creditCardService) {
         this.customerService = customerService;
         this.addressService = addressService;
         this.session = session;
