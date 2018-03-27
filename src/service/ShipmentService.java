@@ -40,7 +40,7 @@ public class ShipmentService {
         return shipments;
     }
 
-    public void addShipments(int subscriptionId, Shipment newShipment) throws SQLException{
+    public void addShipment(int subscriptionId, Shipment newShipment) throws SQLException{
         try {
             PreparedStatement pstmt = connection.prepareStatement(
                 "INSERT INTO Shipment VALUES (?, ?, ?, ?, ?, ?)"

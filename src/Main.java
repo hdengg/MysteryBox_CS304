@@ -1,12 +1,5 @@
-
-import client.MainFrameController;
 import model.Session;
-import service.AddressService;
-import service.ConnectionService;
-import service.CreditCardService;
-import service.CustomerService;
-import service.MysteryBoxService;
-import service.ItemService;
+import service.*;
 
 public class Main {
 
@@ -24,14 +17,17 @@ public class Main {
         ItemService itemService = new ItemService(connectionService.getConnection());
         AddressService addressService = new AddressService(connectionService.getConnection());
         CreditCardService credCardService = new CreditCardService(connectionService.getConnection());
+        ShipmentService shipmentService = new ShipmentService(connectionService.getConnection());
+        SubscriptionService subscriptionService = new SubscriptionService(connectionService.getConnection());
 
-        //janiceTester(customerService, addressService, credCardService, session);
+        janiceTester(customerService, addressService, credCardService, shipmentService, subscriptionService, session);
 
-        MainFrameController mfc = new MainFrameController(session, customerService, addressService, credCardService);
+        //MainFrameController mfc = new MainFrameController(session, customerService, addressService, credCardService);
     }
 
     public static void janiceTester(CustomerService customerService, AddressService addressService,
-                                    CreditCardService credCardService, Session session) {
+                                    CreditCardService credCardService, ShipmentService shipmentService,
+                                    SubscriptionService subscriptionService, Session session) {
 //        customerService.login(session, "mikeman", "mikeisthebest");
 //        System.out.println(session.getCustomer().toString());
 //
@@ -67,6 +63,15 @@ public class Main {
 //        ArrayList<Customer> customers = customerService.getAllCustomers();
 //        for (Customer c : customers) {
 //            System.out.println(c.toString());
+//        }
+
+//        try {
+//            Date date = new Date(1522027111);
+//            Shipment shipment = new Shipment(999, "carrier", "zombie", date, "W8W8W");
+//            shipmentService.deleteShipment(999);
+//
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
 //        }
     }
 }
