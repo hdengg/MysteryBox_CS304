@@ -1,9 +1,12 @@
+
 import client.MainFrameController;
 import model.Session;
 import service.AddressService;
 import service.ConnectionService;
 import service.CreditCardService;
 import service.CustomerService;
+import service.MysteryBoxService;
+import service.ItemService;
 
 public class Main {
 
@@ -17,6 +20,8 @@ public class Main {
         connectionService.connect("ora_w8t0b", "a86182169");
         Session session = new Session();
         CustomerService customerService = new CustomerService(connectionService.getConnection());
+        MysteryBoxService mysteryBoxService = new MysteryBoxService(connectionService.getConnection());
+        ItemService itemService = new ItemService(connectionService.getConnection());
         AddressService addressService = new AddressService(connectionService.getConnection());
         CreditCardService credCardService = new CreditCardService(connectionService.getConnection());
 
@@ -63,6 +68,5 @@ public class Main {
 //        for (Customer c : customers) {
 //            System.out.println(c.toString());
 //        }
-
     }
 }
