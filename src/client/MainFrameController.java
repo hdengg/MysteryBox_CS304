@@ -1,10 +1,11 @@
 package client;
 
-import GUI.Login;
+import ui.Login;
 import model.Session;
 import service.AddressService;
 import service.CreditCardService;
 import service.CustomerService;
+import ui.CustomerUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +16,7 @@ import java.awt.event.WindowEvent;
 
 public class MainFrameController {
     private JFrame loginFrame;
+    private JFrame customerFrame;
     private Login loginUI;
     private JButton loginButton;
     private int MAX_LOGIN_ATTEMPTS = 3;
@@ -38,23 +40,7 @@ public class MainFrameController {
         loginUI = new Login();
         loginButton = loginUI.getLoginButton();
         loginFrame.setContentPane(loginUI.getRootPanel());
-        // size the window to obtain a best fit for the components
-        loginFrame.pack();
-
-        // center the frame
-        Dimension d = loginFrame.getToolkit().getScreenSize();
-        Rectangle r = loginFrame.getBounds();
-        loginFrame.setLocation( (d.width - r.width)/2, (d.height - r.height)/2 );
-        loginFrame.setVisible(true);
-
-        // anonymous inner class for closing the window
-        loginFrame.addWindowListener(new WindowAdapter()
-        {
-            public void windowClosing(WindowEvent e)
-            {
-                System.exit(0);
-            }
-        });
+        setFrameProperties(loginFrame);
     }
 
     private void initListeners() {
@@ -66,7 +52,11 @@ public class MainFrameController {
             String username = loginUI.getUserField().getText();
             String password = loginUI.getPasswordField().getText();
             if (customerService.login(session, username, password)) {
-                //TODO: open main app frame
+                loginFrame.dispose();
+                customerFrame = new JFrame("MysteryBox Customer Application");
+                CustomerUI customerUI = new CustomerUI();
+                customerFrame.setContentPane(customerUI.getRootPanel());
+                setFrameProperties(customerFrame);
             } else {
                 loginAttempts++;
                 if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
@@ -77,5 +67,25 @@ public class MainFrameController {
                 }
             }
         }
+    }
+
+    private void setFrameProperties(JFrame frame) {
+        // size the window to obtain a best fit for the components
+        frame.pack();
+
+        // center the frame
+        Dimension d = frame.getToolkit().getScreenSize();
+        Rectangle r = frame.getBounds();
+        frame.setLocation( (d.width - r.width)/2, (d.height - r.height)/2 );
+        frame.setVisible(true);
+
+        // anonymous inner class for closing the window
+        frame.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent e)
+            {
+                System.exit(0);
+            }
+        });
     }
 }
