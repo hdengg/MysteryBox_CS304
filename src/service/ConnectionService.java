@@ -31,6 +31,7 @@ public class ConnectionService {
 
         try {
             connection = DriverManager.getConnection(connectURL,username,password);
+            connection.setAutoCommit(false);
 
             System.out.println("\nConnected to Oracle!");
             return true;
