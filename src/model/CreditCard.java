@@ -7,12 +7,12 @@ import java.sql.Date;
  * Created by janicelee on 2018-03-24.
  */
 
-public class CreditCard {
-    private int cid;
-    private Date expDate;
-    private String token;
-    private String type;
-    private int lastDigits;
+public class CreditCard extends Model {
+    protected int cid;
+    protected Date expDate;
+    protected String token;
+    protected String type;
+    protected int lastDigits;
 
     public CreditCard(int cid, Date expDate, String token, String type, int lastDigits) {
         this.cid = cid;
@@ -41,4 +41,5 @@ public class CreditCard {
     public int getLastDigits() {
         return lastDigits;
     }
+
 }

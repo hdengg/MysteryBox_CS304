@@ -1,6 +1,9 @@
 package client;
 
 import GUI.Login;
+import model.Session;
+import service.AddressService;
+import service.CreditCardService;
 import service.CustomerService;
 
 import javax.swing.*;
@@ -17,9 +20,15 @@ public class MainFrameController {
     private int MAX_LOGIN_ATTEMPTS = 3;
     private int loginAttempts;
     private CustomerService customerService;
+    private AddressService addressService;
+    private CreditCardService creditCardService;
+    private Session session;
 
-    public MainFrameController(CustomerService customerService) {
+    public MainFrameController(Session session, CustomerService customerService, AddressService addressService,
+                               CreditCardService creditCardService) {
         this.customerService = customerService;
+        this.addressService = addressService;
+        this.session = session;
         initLoginWindow();
         initListeners();
     }
@@ -56,7 +65,7 @@ public class MainFrameController {
         public void actionPerformed(ActionEvent e) {
             String username = loginUI.getUserField().getText();
             String password = loginUI.getPasswordField().getText();
-            if (customerService.login(username, password)) {
+            if (customerService.login(session, username, password)) {
                 //TODO: open main app frame
             } else {
                 loginAttempts++;

@@ -6,9 +6,11 @@ import java.sql.SQLException;
 
 public class ConnectionService {
     private Connection connection;
+    private String host;
 
-    public ConnectionService() {
+    public ConnectionService(String host) {
         int loginAttempts = 0;
+        this.host = host;
 
         try {
             // Load the Oracle JDBC driver
@@ -25,10 +27,11 @@ public class ConnectionService {
      */
     public boolean connect(String username, String password)
     {
-        String connectURL = "jdbc:oracle:thin:@localhost:1522:ug";
+        String connectURL = "jdbc:oracle:thin:@"+ this.host + ":1522:ug";
 
         try {
             connection = DriverManager.getConnection(connectURL,username,password);
+            connection.setAutoCommit(false);
 
             System.out.println("\nConnected to Oracle!");
             return true;
