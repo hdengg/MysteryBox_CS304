@@ -1,7 +1,6 @@
 DROP TABLE Contains;
 DROP TABLE Item;
 DROP TABLE Shipment;
-DROP TABLE Subscribes_Mystery_Box;
 DROP TABLE Subscription;
 DROP TABLE Mystery_Box;
 DROP TABLE Pays_With;
@@ -64,13 +63,11 @@ VALUES ('2901', 'Pinetree Way', 'V9R9F1');
 INSERT INTO Address
 VALUES ('1834', 'David Drive', 'V2T9I2');
 
-/* Every Customer Must be from British Columbia */
 CREATE TABLE City_Province
 	(city		VARCHAR(20),
 	province	VARCHAR(20),
 	postal_code	VARCHAR(7) NOT NULL,
-	PRIMARY KEY (postal_code)
-	CONSTRAINT residesInBC CHECK (province = 'British Columbia'));
+	PRIMARY KEY (postal_code));
 
 GRANT SELECT ON City_Province to public;
 
@@ -100,21 +97,8 @@ CREATE TABLE Customer_Has_Address
 	postal_code varchar(6) NOT NULL,
 	PRIMARY KEY (username, house_num, street, postal_code),
 	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE,
-	FOREIGN KEY (house_num, street, postal_code) REFERENCES Address(house_num, street, postal_code) ON DELETE CASCADE);
-
-/* Each Customer must have atleast one Address */
-CREATE ASSERTION customerToAddress
-CHECK
-(NOT EXIST ((SELECT username FROM Customer)
-			EXCEPT
-			(username FROM Customer_Has_Address)));
-
-/* Each address must have atleast one customer */
-CREATE ASSERTION addressToCustomer
-CHECK
-(NOT EXIST ((SELECT house_num, street, postal_code FROM Address)
-			EXCEPT
-			(house_num, street, postal_code FROM Customer_Has_Address)));
+	FOREIGN KEY (house_num, street, postal_code) REFERENCES
+	Address(house_num, street, postal_code) ON DELETE CASCADE);
 
 GRANT SELECT ON Customer_Has_Address to public;
 
@@ -175,22 +159,7 @@ CREATE TABLE Pays_With
 	FOREIGN KEY (c_id) REFERENCES Credit_Card(c_id) ON DELETE CASCADE,
 	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE);
 
-/* Every Customer needs to have atleast one Credit Card */
-CREATE ASSERTION customerToCreditCard
-CHECK
-(NOT EXIST ((SELECT username FROM Customer)
-			EXCEPT
-			(username FROM Pays_With));
-
-/* Every Credit Card needs to have exactly one Customer */
-/* NOT SURE HOW TO MAKE IT EXACTLY ONE */
-/*
-CREATE ASSERTION creditCardToCustomer
-CHECK
-((SELECT Count(*))); 
-
 GRANT SELECT ON Pays_With to public;
-*/
 
 /* Anthony Davidson */
 INSERT INTO Pays_With
@@ -244,47 +213,31 @@ CREATE TABLE Subscription
 	s_from date,
 	num_month INTEGER,
 	username varchar(20) NOT NULL,
-	/*mbid INTEGER NOT NULL,*/
+	mbid INTEGER NOT NULL,
 	PRIMARY KEY (s_id),
 	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE,
-	/*FOREIGN KEY (mbid) REFERENCES Mystery_Box(mbid) ON DELETE CASCADE*/);
+	FOREIGN KEY (mbid) REFERENCES Mystery_Box(mbid) ON DELETE CASCADE);
  
 GRANT SELECT ON Subscription to public;
 
 /* Anthony Davidson */
 INSERT INTO Subscription
-VALUES (1, 20.00, 'true', '2017-11-07', 3, 'anthonyd' /*5*/);
+VALUES (1, 20.00, 'true', '2017-11-07', 3, 'anthonyd', 5);
 /* Tony Valer */
 INSERT INTO Subscription
-VALUES (2, 50.00, 'true', '2017-12-20', 3, 'tonyvaler' /*7*/);
+VALUES (2, 50.00, 'true', '2017-12-20', 3, 'tonyvaler', 7);
 /* Michael James*/
 INSERT INTO Subscription
-VALUES (3, 25.00, 'true', '2018-01-04', 2, 'mikeman' /*9*/);
+VALUES (3, 25.00, 'true', '2018-01-04', 2, 'mikeman', 9);
 /* Karen Piper */
 INSERT INTO Subscription
-VALUES (4, 25.00, 'true', '2018-12-16', 2, 'bieberfever' /*9*/);
+VALUES (4, 25.00, 'true', '2018-12-16', 2, 'bieberfever', 9);
 INSERT INTO Subscription
-VALUES (5, 20.00, 'true', '2018-01-29', 1, 'bieberfever' /*5*/);
+VALUES (5, 20.00, 'true', '2018-01-29', 1, 'bieberfever', 5);
 /* Navjit Lal*/
 INSERT INTO Subscription
-VALUES (6, 35.00, 'false', '2017-08-04', 1, 'navigator' /*5*/);
-
-CREATE TABLE Subscribes_Mystery_Box
-	(s_id INTEGER NOT NULL,
-	mbid INTEGER NOT NULL,
-	PRIMARY KEY (s_id, mbid),
-	FOREIGN KEY (s_id) REFERENCES Subscription(s_id) ON DELETE CASCADE,
-	FOREIGN KEY (mbid) REFERENCES Mystery_Box(mbid) ON DELETE CASCADE);
-
-/* Every Subscription needs to have atlease one Mystery Box */
-CREATE ASSERTION SubscribedToMysteryBox
-CHECK
-(NOT EXIST ((SELECT s_id FROM Subscription)
-			EXCEPT
-			(s_id FROM Subscribes_Mystery_Box)));
+VALUES (6, 35.00, 'false', '2017-08-04', 1, 'navigator', 1);
  
-GRANT SELECT ON Subscribes_Mystery_Box to public;
-
 CREATE TABLE Shipment
 	(shipping_no INTEGER,
 	carrier varchar(20),
@@ -373,20 +326,6 @@ CREATE TABLE Contains
 	PRIMARY KEY (mbid, item_id),
 	FOREIGN KEY (mbid) REFERENCES Mystery_Box(mbid) ON DELETE CASCADE,
 	FOREIGN KEY (item_id) REFERENCES Item(item_id) ON DELETE CASCADE);
-
-/* Every MysteryBox must contain atleast one item */
-CREATE ASSERTION mysteryBoxContainsItem
-CHECK
-(NOT EXIST ((SELECT mbid FROM MysteryBox)
-			EXCEPT
-			(mbid FROM Contains)));
-
-/* Every Item must be in atleast one MysteryBox */
-CREATE ASSERTION itemInMysteryBox
-CHECK
-(NOT EXIST ((SELECT item_id FROM Item)
-			EXCEPT
-			(item_id FROM Contains)));
  
 GRANT SELECT ON Contains to public;
 
@@ -419,3 +358,5 @@ INSERT INTO Contains VALUES (8, 23);
 INSERT INTO Contains VALUES (8, 24);
 INSERT INTO Contains VALUES (9, 25);
 INSERT INTO Contains VALUES (9, 26);
+
+
