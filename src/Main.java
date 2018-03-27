@@ -5,6 +5,8 @@ import service.AddressService;
 import service.ConnectionService;
 import service.CreditCardService;
 import service.CustomerService;
+import service.MysteryBoxService;
+import service.ItemService;
 
 public class Main {
 
@@ -20,7 +22,6 @@ public class Main {
         CustomerService customerService = new CustomerService(connectionService.getConnection());
         MysteryBoxService mysteryBoxService = new MysteryBoxService(connectionService.getConnection());
         ItemService itemService = new ItemService(connectionService.getConnection());
-        MainFrameController mfc = new MainFrameController(customerService);
         AddressService addressService = new AddressService(connectionService.getConnection());
         CreditCardService credCardService = new CreditCardService(connectionService.getConnection());
 
