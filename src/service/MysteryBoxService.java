@@ -4,6 +4,7 @@ import model.MysteryBox;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.sql.Date;
 
@@ -109,6 +110,30 @@ public class MysteryBoxService {
     }
 
     /**
+     * Updates mystery box
+     * @param mbid mbid of mystery box
+     * @param no_items number of items to update
+     * @param mdate date to update
+     * @param theme theme to update
+     */
+    public void updateMysteryBox(int mbid, int no_items, Date mdate, String theme) {
+        PreparedStatement ps;
+        try {
+            ps = connection.prepareStatement(
+                    "UPDATE Mystery_Box SET no_items = ?, mdate = ?, theme = ? WHERE (mbid = ?)");
+            ps.setInt(1, no_items);
+            ps.setDate(2, mdate);
+            ps.setString(3, theme);
+            ps.setInt(4, mbid);
+            ps.executeUpdate();
+            connection.commit();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Add item to box
      * @param mbid mystery box id to add item to
      * @param item_id item id to add
@@ -146,34 +171,11 @@ public class MysteryBoxService {
     }
 
     /**
-     * Updates mystery box
-     * @param mbid mbid of mystery box
-     * @param no_items number of items to update
-     * @param mdate date to update
-     * @param theme theme to update
-     */
-    public void updateMysteryBox(int mbid, int no_items, Date mdate, String theme) {
-        PreparedStatement ps;
-        try {
-            ps = connection.prepareStatement(
-                    "UPDATE Mystery_Box SET no_items = ?, mdate = ?, theme = ? WHERE (mbid = ?)");
-            ps.setInt(1, no_items);
-            ps.setDate(2, mdate);
-            ps.setString(3, theme);
-            ps.setInt(4, mbid);
-            ps.executeUpdate();
-            connection.commit();
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Gets the box and price with the minimum or maximum average cost
      * @param isMax is maximum
      */
-    public void getAverage(boolean isMax) {
+    public HashMap<Integer, Double> getAverage(boolean isMax) {
+        HashMap<Integer, Double> hm = new HashMap<>();
         try {
             Statement st = connection.createStatement();
             String query = "WITH inner_table as"
@@ -193,11 +195,12 @@ public class MysteryBoxService {
             if (rs.next()) {
                 int mbid = rs.getInt("mbid");
                 double avgprice = rs.getDouble("avgprice");
-                System.out.println(mbid);
-                System.out.println(avgprice);
+                hm.put(mbid, avgprice);
+                return hm;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
