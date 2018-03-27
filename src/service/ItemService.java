@@ -132,6 +132,7 @@ public class ItemService {
             ps.setDouble(2, value);
             ps.setString(3, item_name);
             ps.executeUpdate();
+            connection.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -147,6 +148,7 @@ public class ItemService {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM Item where (item_id = ?)");
             ps.setInt(1, item_id);
             ps.executeUpdate();
+            connection.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -168,6 +170,7 @@ public class ItemService {
             ps.setString(2, item_name);
             ps.setInt(3, item_id);
             ps.executeUpdate();
+            connection.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();

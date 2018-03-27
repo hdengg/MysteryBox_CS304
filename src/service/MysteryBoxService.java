@@ -85,6 +85,7 @@ public class MysteryBoxService {
             ps.setDate(3, mdate);
             ps.setString(4, theme);
             ps.executeUpdate();
+            connection.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -100,6 +101,7 @@ public class MysteryBoxService {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM Mystery_Box where (mbid = ?)");
             ps.setInt(1, mbid);
             ps.executeUpdate();
+            connection.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,10 +118,8 @@ public class MysteryBoxService {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO Contains VALUES (?,?)");
             ps.setInt(1, mbid);
             ps.setInt(2, item_id);
-            int res = ps.executeUpdate();
-            if (res == 1) {
-                System.out.println("Item successfully added to Mystery Box");
-            }
+            ps.executeUpdate();
+            connection.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -137,10 +137,8 @@ public class MysteryBoxService {
                     "DELETE FROM Contains WHERE (mbid = ?)" + " AND (item_id = ?)");
             ps.setInt(1, mbid);
             ps.setInt(2, item_id);
-            int res = ps.executeUpdate();
-            if (res == 1) {
-                System.out.println("Item successfully deleted from Mystery Box");
-            }
+            ps.executeUpdate();
+            connection.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -164,6 +162,7 @@ public class MysteryBoxService {
             ps.setString(3, theme);
             ps.setInt(4, mbid);
             ps.executeUpdate();
+            connection.commit();
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
