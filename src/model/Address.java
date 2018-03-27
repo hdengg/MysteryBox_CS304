@@ -3,14 +3,14 @@ package model;
 /**
  * Created by janicelee on 2018-03-24.
  */
-public class Address {
-    private String houseNum;
-    private String street;
-    private String postalCode;
-    private String city;
-    private String province;
+public class Address extends Model {
+    protected int houseNum;
+    protected String street;
+    protected String postalCode;
+    protected String city;
+    protected String province;
 
-    public Address(String houseNum, String street, String postalCode, String city, String province) {
+    public Address(int houseNum, String street, String postalCode, String city, String province) {
         this.houseNum = houseNum;
         this.street = street;
         this.postalCode = postalCode;
@@ -18,7 +18,7 @@ public class Address {
         this.province = province;
     }
 
-    public String getHouseNum() {
+    public int getHouseNum() {
         return houseNum;
     }
 
@@ -37,4 +37,5 @@ public class Address {
     public String getProvince() {
         return province;
     }
+
 }
