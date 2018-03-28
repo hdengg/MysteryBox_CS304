@@ -223,7 +223,7 @@ public class MysteryBoxService {
                 + "FROM Subscribes_To NATURAL JOIN Mystery_Box";
         ResultSet rs = st.executeQuery(query);
         if (rs.next()) {
-            return rs.getFloat("cost");
+            return rs.getFloat("total");
         }
         return 0;
     }

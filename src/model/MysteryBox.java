@@ -10,9 +10,9 @@ public class MysteryBox {
     private int no_items;
     private Date mdate;
     private String theme;
-    private float cost;
+    private double cost;
 
-    public MysteryBox(int mbid, int no_items, Date mdate, String theme, float cost) {
+    public MysteryBox(int mbid, int no_items, Date mdate, String theme, double cost) {
         this.mbid = mbid;
         this.no_items = no_items;
         this.mdate = mdate;
@@ -36,7 +36,7 @@ public class MysteryBox {
         return theme;
     }
 
-    public float getCost() {
+    public double getCost() {
         return cost;
     }
 }
