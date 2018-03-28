@@ -1,3 +1,4 @@
+import client.MainFrameController;
 import model.Session;
 import service.*;
 
@@ -20,9 +21,9 @@ public class Main {
         ShipmentService shipmentService = new ShipmentService(connectionService.getConnection());
         SubscriptionService subscriptionService = new SubscriptionService(connectionService.getConnection());
 
-        janiceTester(customerService, addressService, credCardService, shipmentService, subscriptionService, session);
+        //janiceTester(customerService, addressService, credCardService, shipmentService, subscriptionService, session);
 
-        //MainFrameController mfc = new MainFrameController(session, customerService, addressService, credCardService);
+        MainFrameController mfc = new MainFrameController(session, customerService, addressService, credCardService);
     }
 
     public static void janiceTester(CustomerService customerService, AddressService addressService,
