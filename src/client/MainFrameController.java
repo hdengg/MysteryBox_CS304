@@ -30,6 +30,7 @@ public class MainFrameController {
                                CreditCardService creditCardService) {
         this.customerService = customerService;
         this.addressService = addressService;
+        this.creditCardService = creditCardService;
         this.session = session;
         initLoginWindow();
         initListeners();
@@ -41,6 +42,10 @@ public class MainFrameController {
         loginButton = loginUI.getLoginButton();
         loginFrame.setContentPane(loginUI.getRootPanel());
         setFrameProperties(loginFrame);
+//        customerFrame = new JFrame("MysteryBox Customer Application");
+//        CustomerUI customerUI = new CustomerUI();
+//        customerFrame.setContentPane(customerUI.getRootPanel());
+//        setFrameProperties(customerFrame);
     }
 
     private void initListeners() {
@@ -55,6 +60,7 @@ public class MainFrameController {
                 loginFrame.dispose();
                 customerFrame = new JFrame("MysteryBox Customer Application");
                 CustomerUI customerUI = new CustomerUI();
+                AccountController accountController = new AccountController(customerService, addressService, creditCardService, customerUI);
                 customerFrame.setContentPane(customerUI.getRootPanel());
                 setFrameProperties(customerFrame);
             } else {

@@ -14,7 +14,8 @@ public class Main {
         }
 
         ConnectionService connectionService = new ConnectionService(host);
-        connectionService.connect("ora_w8t0b", "a86182169");
+        //connectionService.connect("ora_w8t0b", "a86182169");
+        connectionService.connect("ora_j2z8", "a31484116");
         Session session = new Session();
         CustomerService customerService = new CustomerService(connectionService.getConnection());
         AddressService addressService = new AddressService(connectionService.getConnection());

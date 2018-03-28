@@ -9,13 +9,14 @@ public class Login {
     private JPanel rootPanel;
     private JPanel rightPanel;
     private JTextField userField;
-    private JTextField passwordField;
+    private JPasswordField passwordField;
     private JButton loginButton;
     private JLabel MainTitle;
     private JPanel rightContentPanel;
     private JLabel usernameLabel;
     private JLabel passwordLabel;
     private JLabel iconLabel;
+
 
 
     private void createUIComponents() {
