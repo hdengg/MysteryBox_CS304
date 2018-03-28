@@ -43,16 +43,16 @@ public class Main {
 //
 //        System.out.println(customer.toString());
 //
-//        ArrayList<Address> mikeAddresses = addressService.getAllCustomerAddresses("anthonyd");
+//        ArrayList<AddressUI> mikeAddresses = addressService.getAllCustomerAddresses("anthonyd");
 //
-//        for (Address a : mikeAddresses) {
+//        for (AddressUI a : mikeAddresses) {
 //            System.out.println(a.toString());
 //        }
 //
 //        addressService.addAddress("mikeman", 11, "STREEET", "PCODE", "CITY", "PROV");
 //        addressService.deleteAddress("mikeman", 11, "STREEET", "PCODE");
 //
-//        Address mikeAddress = new Address(3894, "4th Ave", "V6S9L4", "Nanaimo", "British Columbia");
+//        AddressUI mikeAddress = new AddressUI(3894, "4th Ave", "V6S9L4", "Nanaimo", "British Columbia");
 //        addressService.updateAddress("mikeman", mikeAddress, 99, "newStreet", "newPC", "newCity", "newProv");
 //
 //        ArrayList<CreditCard> mikecards = credCardService.getCustomerCreditCards("mikeman");

@@ -1,13 +1,15 @@
 package ui;
 
 import client.AccountController;
+import client.BoxController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class CustomerUI {
+public class MainUI {
     private JButton logoutButton;
     private JButton accountButton;
     private JButton subButton;
@@ -46,10 +48,14 @@ public class CustomerUI {
     private JLabel animeCost;
     private JTextArea textArea1;
     private JButton addressEditBtn;
+    private JPanel adminLeftPnl;
+    private JComboBox comboBox1;
 
     private AccountController accountController;
+    private BoxController boxController;
 
-    public CustomerUI() {
+
+    public MainUI() {
         subButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -117,9 +123,15 @@ public class CustomerUI {
         mbButton.setSelectedIndex(0);
     }
 
-    public void setController(AccountController controller) {
+    public void addAccountController(AccountController controller) {
         accountController = controller;
     }
+
+    public void addBoxController(BoxController controller) {
+        boxController = controller;
+    }
+
+    public JPanel getLeftPanel() { return leftPanel; }
 
     public JLabel getFirstNameLbl() { return firstNameLbl; }
 
@@ -132,4 +144,8 @@ public class CustomerUI {
     public JLabel getEmailLbl() {return emailLbl; }
 
     public JTable getAddressTable() {return addressTable; }
+
+    public JButton getAddressEditBtn() { return addressEditBtn; }
+
+    public JLabel getAnimeCost() { return animeCost; }
 }

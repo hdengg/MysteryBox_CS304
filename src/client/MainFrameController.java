@@ -5,7 +5,7 @@ import model.Session;
 import service.AddressService;
 import service.CreditCardService;
 import service.CustomerService;
-import ui.CustomerUI;
+import ui.MainUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +14,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class MainFrameController {
+public class MainFrameController extends FrameController {
     private JFrame loginFrame;
-    private JFrame customerFrame;
+    private JFrame mainFrame;
     private Login loginUI;
     private JButton loginButton;
     private int MAX_LOGIN_ATTEMPTS = 3;
@@ -26,26 +26,27 @@ public class MainFrameController {
     private CreditCardService creditCardService;
     private Session session;
 
-    public MainFrameController(Session session, CustomerService customerService, AddressService addressService,
+    public MainFrameController (Session session, CustomerService customerService, AddressService addressService,
                                CreditCardService creditCardService) {
         this.customerService = customerService;
         this.addressService = addressService;
         this.creditCardService = creditCardService;
         this.session = session;
         initLoginWindow();
-        initListeners();
+        //initListeners();
     }
 
     public void initLoginWindow() {
-        loginFrame = new JFrame("User Login");
-        loginUI = new Login();
-        loginButton = loginUI.getLoginButton();
-        loginFrame.setContentPane(loginUI.getRootPanel());
-        setFrameProperties(loginFrame);
-//        customerFrame = new JFrame("MysteryBox Customer Application");
-//        CustomerUI customerUI = new CustomerUI();
-//        customerFrame.setContentPane(customerUI.getRootPanel());
-//        setFrameProperties(customerFrame);
+//        loginFrame = new JFrame("User Login");
+//        loginUI = new Login();
+//        loginButton = loginUI.getLoginButton();
+//        loginFrame.setContentPane(loginUI.getRootPanel());
+//        setFrameProperties(loginFrame);
+        mainFrame = new JFrame("MysteryBox Customer Application");
+        MainUI mainUI = getView(false);
+        AccountController accountController = new AccountController(customerService, addressService, creditCardService, mainUI);
+        mainFrame.setContentPane(mainUI.getRootPanel());
+        setFrameProperties(mainFrame);
     }
 
     private void initListeners() {
@@ -58,11 +59,12 @@ public class MainFrameController {
             String password = loginUI.getPasswordField().getText();
             if (customerService.login(session, username, password)) {
                 loginFrame.dispose();
-                customerFrame = new JFrame("MysteryBox Customer Application");
-                CustomerUI customerUI = new CustomerUI();
-                AccountController accountController = new AccountController(customerService, addressService, creditCardService, customerUI);
-                customerFrame.setContentPane(customerUI.getRootPanel());
-                setFrameProperties(customerFrame);
+                mainFrame = new JFrame("MysteryBox Application");
+                MainUI mainUI = getView(false);
+                AccountController accountController = new AccountController(customerService, addressService, creditCardService, mainUI);
+                mainFrame.setContentPane(mainUI.getRootPanel());
+                setFrameProperties(mainFrame);
+                addCloseHandling(mainFrame);
             } else {
                 loginAttempts++;
                 if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
@@ -75,16 +77,18 @@ public class MainFrameController {
         }
     }
 
-    private void setFrameProperties(JFrame frame) {
-        // size the window to obtain a best fit for the components
-        frame.pack();
+    private MainUI getView(boolean isAdmin) {
+        MainUI mainUI = new MainUI();
+        if (isAdmin) {
+            JPanel leftPanel = mainUI.getLeftPanel();
+            CardLayout cardLayout = (CardLayout) leftPanel.getLayout();
+            cardLayout.next(leftPanel);
+        }
 
-        // center the frame
-        Dimension d = frame.getToolkit().getScreenSize();
-        Rectangle r = frame.getBounds();
-        frame.setLocation( (d.width - r.width)/2, (d.height - r.height)/2 );
-        frame.setVisible(true);
+        return mainUI;
+    }
 
+    private void addCloseHandling(JFrame frame) {
         // anonymous inner class for closing the window
         frame.addWindowListener(new WindowAdapter()
         {

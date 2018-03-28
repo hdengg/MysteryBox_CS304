@@ -154,12 +154,12 @@ public class AddressService {
         }
     }
 
-    // Inserts an address into the Address table
+    // Inserts an address into the AddressUI table
     private void insertAddress(int houseNum, String street, String postalCode) throws SQLException {
         PreparedStatement pstmt;
 
         try {
-            // Insert into Address table if not already there
+            // Insert into AddressUI table if not already there
             pstmt = connection.prepareStatement(
                     "INSERT INTO Address VALUES (?, ?, ?)"
             );
