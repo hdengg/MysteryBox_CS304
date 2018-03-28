@@ -249,6 +249,28 @@ public class SubscriptionService {
         return usernames;
     }
 
+    private void createView() {
+        try {
+            Statement st;
+            st = con.createStatement();
+            String query = "CREATE VIEW join_table AS "
+                    + "SELECT * "
+                    + "FROM Subscription NATURAL JOIN Mystery_Box NATURAL JOIN Subscribes_To";
+            st.executeQuery(query);
+        } catch (SQLException e) {
+            // silent catch
+        }
+    }
+
+    private void dropView() {
+        try {
+            Statement st = con.createStatement();
+            st.executeQuery("drop view join_table");
+        } catch (SQLException e) {
+            // silent catch
+        }
+    }
+
     /**
      * Division Query: Gets usernames who are subscribed to all mbox themes
      * @return list of usernames
@@ -257,18 +279,19 @@ public class SubscriptionService {
     public List<String> getUsersSubscribedToAllThemes() throws SQLException {
         Statement st;
         ResultSet rs;
+        createView();
         List<String> usernames = new ArrayList<>();
         st = con.createStatement();
         String query = "SELECT username FROM Subscription S WHERE NOT EXISTS "
                 + "(SELECT M.theme FROM Mystery_Box M "
-                + "WHERE NOT EXISTS (SELECT * FROM Subscription NATURAL JOIN "
-                + "Subscribes_To NATURAL JOIN Mystery_Box as J WHERE "
+                + "WHERE NOT EXISTS (SELECT * FROM join_table J WHERE "
                 + "J.theme = M.theme AND J.s_id = S.s_id))";
         rs = st.executeQuery(query);
         while (rs.next()) {
             String username = rs.getString("username");
             usernames.add(username);
         }
+        dropView();
         return usernames;
     }
 }

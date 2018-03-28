@@ -250,6 +250,8 @@ GRANT SELECT ON Subscribes_To to public;
 INSERT INTO Subscribes_To VALUES (1, 1);
 INSERT INTO Subscribes_To VALUES (1, 4);
 INSERT INTO Subscribes_To VALUES (1, 5);
+INSERT INTO Subscribes_To VALUES (1, 2);
+INSERT INTO Subscribes_To VALUES (1, 3);
 /* Tony Valer */
 INSERT INTO Subscribes_To VALUES (2, 2);
 INSERT INTO Subscribes_To VALUES (2, 6);
