@@ -220,7 +220,7 @@ public class MysteryBoxService {
     public float getRevenue() throws SQLException {
         Statement st = connection.createStatement();
         String query = "SELECT SUM(cost) as total "
-                + "FROM SUBSCRIBES_TO NATURAL JOIN MYSTERY_BOX ";
+                + "FROM Subscribes_To NATURAL JOIN Mystery_Box";
         ResultSet rs = st.executeQuery(query);
         if (rs.next()) {
             return rs.getFloat("cost");
