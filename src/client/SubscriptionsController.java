@@ -4,6 +4,7 @@ import model.Subscription;
 import service.ConnectionService;
 import service.SubscriptionService;
 import ui.MainUI;
+import ui.UpdateSubscriptionUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,13 +14,15 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-public class SubscriptionsController {
+public class SubscriptionsController extends  FrameController {
     private SubscriptionService subscriptionService;
     private MainUI mainUI;
     private JTable allSubscribers;
     private JButton submitNumSubs;
     private JButton submitSubAllThemes;
     private JButton addSubscriptionBtn;
+    private JButton updateSubscriptionBtn;
+    private UpdateSubscriptionUI updateSubscriptionUI;
 
     public SubscriptionsController(MainUI mainUI) {
         this.mainUI = mainUI;
@@ -31,7 +34,7 @@ public class SubscriptionsController {
 
     public void initAdminSubscriptionPanel() {
         DefaultTableModel dtm = new DefaultTableModel(0, 0);
-        String[] header = new String[] {"Subscription ID", "Status", "From", "Num Months"};
+        String[] header = new String[] {"Subscription ID", "Status", "From", "Num Months", "Username"};
         dtm.setColumnIdentifiers(header);
         allSubscribers = mainUI.getAllSubscribers();
         allSubscribers.setModel(dtm);
@@ -41,7 +44,7 @@ public class SubscriptionsController {
             for (int i = 0; i < subscriptions.size(); i++) {
                 Subscription subscription = subscriptions.get(i);
                 dtm.addRow(new Object[] {subscription.getSid(), subscription.getStatus(),
-                subscription.getFrom(), subscription.getNum_months()});
+                subscription.getFrom(), subscription.getNum_months(), subscription.getUsername()});
             }
 
         } catch (SQLException e) {
@@ -74,13 +77,21 @@ public class SubscriptionsController {
 
             }
         });
+
+        updateSubscriptionBtn = mainUI.getUpdateSubsButton();
+        updateSubscriptionBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createUpdateSubscriptionWindow();
+            }
+        });
     }
 
     private int getNumSubsFromTheme(String theme) {
         int numSubs = 0;
         try {
             numSubs =  subscriptionService.getNumSubsFromTheme(theme);
-            return subscriptionService.getNumSubsFromTheme(theme);
+            return numSubs;
         } catch (SQLException e) {
             e.printStackTrace();
             //TODO: error dialog "Could not retrieve results"
@@ -105,6 +116,15 @@ public class SubscriptionsController {
             e.printStackTrace();
         }
     }
+
+    public void createUpdateSubscriptionWindow() {
+        JFrame updateSubscriptionFrame = new JFrame("Update Subscription");
+        updateSubscriptionUI = new UpdateSubscriptionUI();
+        updateSubscriptionFrame.setContentPane(updateSubscriptionUI.getRootPanel());
+        setFrameProperties(updateSubscriptionFrame);
+        updateSubscriptionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
 
     private void initServices() {
         Connection conn = ConnectionService.getInstance().getConnection();

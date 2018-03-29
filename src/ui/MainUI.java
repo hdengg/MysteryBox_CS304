@@ -1,6 +1,7 @@
 package ui;
 
 import client.AccountController;
+import client.AdminBoxController;
 import client.BoxController;
 import client.SubscriptionsController;
 
@@ -115,6 +116,7 @@ public class MainUI {
     private AccountController accountController;
     private BoxController boxController;
     private SubscriptionsController subscriptionsController;
+    private AdminBoxController adminBoxController;
 
     public MainUI() {
         registerController();
@@ -195,8 +197,6 @@ public class MainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changePanel(adminSubsPanel);
-
-
             }
         });
         AdminCustBtn.addActionListener(new ActionListener() {
@@ -209,7 +209,6 @@ public class MainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changePanel(adminBoxPanel);
-
             }
         });
     }
@@ -238,6 +237,7 @@ public class MainUI {
         accountController = new AccountController(this);
         boxController = new BoxController(this);
         subscriptionsController = new SubscriptionsController(this);
+        adminBoxController = new AdminBoxController(this);
     }
 
     public JPanel getLeftPanel() { return leftPanel; }
@@ -287,4 +287,20 @@ public class MainUI {
     public JTextField getNumSubThemeResult() { return numSubThemeResult; }
 
     public JButton getAddSubsButton() { return addSubsButton; }
+
+    public JTable getAllBoxes() { return allBoxes; }
+
+    public JButton getSubmitTotalQueryBtn() { return submitTotalQuery; }
+
+    public JTextField getTotalCostResult() { return totalCostResult; }
+
+    public JButton getMaxButton() { return maxButton; }
+
+    public JButton getMinButton() { return minButton; }
+
+    public JTextField getMinMaxResult() { return minMaxResult; }
+
+    public JButton getSubmitMostSubsQuery() { return submitMostSubsQuery; }
+
+    public JTextField getMostSubsResult() { return mostSubsResult; }
 }
