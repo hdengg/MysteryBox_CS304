@@ -82,6 +82,17 @@ public class MainUI {
     private JButton maxButton;
     private JButton submitMostSubsQuery;
     private JTextField mostSubsResult;
+    private JTable itemsTable;
+    private JButton editButton;
+    private JPanel adminSubsPanel;
+    private JTable allSubscribers;
+    private JButton addSubsButton;
+    private JButton updateSubsButton;
+    private JButton submitAllThemesQuery;
+    private JTable allSubsThemeResult;
+    private JTextField subTheme;
+    private JButton submitNumSubThemeQuery;
+    private JTextField numSubThemeResult;
     private JButton CCEditButton;
 
     private AccountController accountController;
