@@ -71,15 +71,15 @@ public class MainUI {
     private JTextField CCExpDate;
     private JTextField CCType;
     private JTable CreditCards;
-    private JPanel adminSubPanel;
-    private JTable Subscribers;
-    private JButton addSub;
-    private JButton updateSub;
-    private JTextField ComplexQuerySub;
-    private JButton performComplex;
-    private JTextField BoxTheme;
-    private JButton submitButton;
-    private JTextField AggQuerySub;
+    private JPanel adminBoxPanel;
+    private JPanel adminItemsPanel;
+    private JTable allBoxes;
+    private JButton viewItemsButton;
+    private JButton submitTotalQuery;
+    private JTextField totalCostResult;
+    private JButton minButton;
+    private JTextField textField3;
+    private JButton maxButton;
     private JButton CCEditButton;
 
     private AccountController accountController;

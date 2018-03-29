@@ -28,10 +28,11 @@ public class MysteryBoxService {
         List<MysteryBox> mysteryBoxes = new ArrayList<>();
         try {
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Mystery_Box");
+            ResultSet rs = st.executeQuery("SELECT * FROM Mystery_Box M ORDER BY M.mbid");
 
             while (rs.next()) {
                 int mbid = rs.getInt("mbid");
+                System.out.println(mbid);
                 int no_items = rs.getInt("no_items");
                 Date mdate = rs.getDate("mdate");
                 String theme = rs.getString("theme");
