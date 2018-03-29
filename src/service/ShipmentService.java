@@ -18,29 +18,24 @@ public class ShipmentService {
     public ArrayList<Shipment> getShipments(int subscriptionId) throws SQLException {
         ArrayList<Shipment> shipments = new ArrayList();
 
-        try {
-            PreparedStatement pstmt = connection.prepareStatement(
-                "SELECT * FROM Shipment WHERE s_id = ?"
-            );
-            pstmt.setInt(1, subscriptionId);
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()) {
-                int shippingNo = rs.getInt("shipping_no");
-                String carrier = rs.getString("carrier");
-                String status = rs.getString("status");
-                Date shipDate = rs.getDate("ship_date");
-                String trackingNo = rs.getString("tracking_no");
-                shipments.add(new Shipment(shippingNo, carrier, status, shipDate, trackingNo));
-            }
-        } catch(SQLException ex) {
-            System.out.println("Message: " + ex.getMessage());
-            throw ex;
+        PreparedStatement pstmt = connection.prepareStatement(
+            "SELECT * FROM Shipment WHERE s_id = ?"
+        );
+        pstmt.setInt(1, subscriptionId);
+        ResultSet rs = pstmt.executeQuery();
+        while(rs.next()) {
+            int shippingNo = rs.getInt("shipping_no");
+            String carrier = rs.getString("carrier");
+            String status = rs.getString("status");
+            Date shipDate = rs.getDate("ship_date");
+            String trackingNo = rs.getString("tracking_no");
+            shipments.add(new Shipment(shippingNo, carrier, status, shipDate, trackingNo));
         }
 
         return shipments;
     }
 
-    public void addShipment(int subscriptionId, Shipment newShipment) throws SQLException{
+    public void addShipment(int subscriptionId, Shipment newShipment) throws SQLException {
         try {
             PreparedStatement pstmt = connection.prepareStatement(
                 "INSERT INTO Shipment VALUES (?, ?, ?, ?, ?, ?)"
@@ -54,12 +49,7 @@ public class ShipmentService {
             pstmt.executeUpdate();
             connection.commit();
         } catch(SQLException ex) {
-            System.out.println("Message: " + ex.getMessage());
-            try {
-                connection.rollback();
-            } catch(SQLException ex2) {
-                throw ex2;
-            }
+            connection.rollback();
             throw ex;
         }
     }
@@ -73,12 +63,7 @@ public class ShipmentService {
             pstmt.executeUpdate();
             connection.commit();
         } catch(SQLException ex) {
-            System.out.println("Message: " + ex.getMessage());
-            try {
-                connection.rollback();
-            } catch(SQLException ex2) {
-                throw ex2;
-            }
+            connection.rollback();
             throw ex;
         }
     }

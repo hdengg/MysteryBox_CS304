@@ -3,7 +3,6 @@ import model.Session;
 import service.*;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class Main {
 
@@ -75,6 +74,45 @@ public class Main {
 //            Shipment shipment = new Shipment(999, "carrier", "zombie", date, "W8W8W");
 //            shipmentService.deleteShipment(999);
 //
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+
+//        try {
+//            Address a = new Address(3894, "4th Ave", "V6S9L4", "Nanaimo", "British Columbia");
+//
+//            addressService.updateAddress("mikeman", a, 000, "4th Ave", "V6S9L4",
+//                    "CITYCITY", "Ontario");
+//
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+
+//        try {
+//            int housenum = 77;
+//            String street = "asdfasdf";
+//            String postalCode = "888888";
+//            addressService.insertAddress(housenum, street, postalCode);
+//
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+
+//        try {
+//            String city = "WASSAUP";
+//            String province = "British Columbia";
+//            String postalCode = "YOYOYO";
+//            addressService.insertCityProvince(city, province, postalCode);
+//
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+
+//        Date date = new Date(1522027111);
+//        CreditCard cc = new CreditCard(99, date, "TOKEN", "type", 999);
+//
+//        try {
+//            credCardService.addCustomerCreditCard("mikeman", cc);
 //        } catch (SQLException e) {
 //            System.out.println(e.getMessage());
 //        }

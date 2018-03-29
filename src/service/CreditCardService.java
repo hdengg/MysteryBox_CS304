@@ -53,15 +53,7 @@ public class CreditCardService {
             pstmt.close();
 
         } catch (SQLException ex) {
-            System.out.println("Message: " + ex.getMessage());
-
-            try {
-                connection.rollback();
-            } catch (SQLException ex2) {
-                System.out.println("Message: " + ex2.getMessage());
-                throw ex2;
-            }
-
+            connection.rollback();
             throw ex;
         }
     }
@@ -77,14 +69,7 @@ public class CreditCardService {
             pstmt.close();
 
         } catch (SQLException ex) {
-            System.out.println("Message: " + ex.getMessage());
-
-            try {
-                connection.rollback();
-            } catch (SQLException ex2) {
-                System.out.println("Message: " + ex2.getMessage());
-                throw ex2;
-            }
+            connection.rollback();
             throw ex;
         }
     }
@@ -95,30 +80,23 @@ public class CreditCardService {
 
         try {
             pstmt = connection.prepareStatement(
-                    "INSERT INTO Credit_Card VALUES(?, ?, ?, ?, ?)"
+                    "INSERT INTO Credit_Card (c_id, exp_date, token, type, last_digits)" +
+                            "SELECT ?, ?, ?, ?, ? FROM dual " +
+                            "WHERE NOT EXISTS (SELECT * FROM Credit_Card WHERE c_id = ?)"
             );
             pstmt.setInt(1, newCreditCard.getCid());
             pstmt.setDate(2, newCreditCard.getExpDate());
             pstmt.setString(3, newCreditCard.getToken());
             pstmt.setString(4, newCreditCard.getType());
             pstmt.setInt(5, newCreditCard.getLastDigits());
+            pstmt.setInt(6, newCreditCard.getCid());
             pstmt.executeUpdate();
             connection.commit();
             pstmt.close();
 
         } catch (SQLException ex) {
-            System.out.println("Message: " + ex.getMessage());
-
-            try {
-                connection.rollback();
-            } catch (SQLException ex2) {
-                System.out.println("Message: " + ex2.getMessage());
-                throw ex2;
-            }
-
-            if (!ex.getSQLState().equals(Integer.toString(23000))) {
-                throw ex;
-            }
+            connection.rollback();
+            throw ex;
         }
     }
 }
