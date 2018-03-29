@@ -66,31 +66,6 @@ public class MainUI {
     private JTextField CCExpDate;
     private JTextField CCType;
     private JTable CreditCards;
-    private JPanel adminBoxPanel;
-    private JPanel adminItemsPanel;
-    private JTable allBoxes;
-    private JButton viewItemsButton;
-    private JButton submitTotalQuery;
-    private JTextField totalCostResult;
-    private JButton minButton;
-    private JTextField minMaxResult;
-    private JButton maxButton;
-    private JButton submitMostSubsQuery;
-    private JTextField mostSubsResult;
-    private JTable itemsTable;
-    private JButton editButton;
-    private JPanel adminSubsPanel;
-    private JTable allSubscribers;
-    private JButton addSubsButton;
-    private JButton updateSubsButton;
-    private JButton submitAllThemesQuery;
-    private JTable allSubsThemeResult;
-    private JTextField subTheme;
-    private JButton submitNumSubThemeQuery;
-    private JTextField numSubThemeResult;
-    private JPanel adminCustomerPanel;
-    private JTable adminCustomerTable;
-    private JButton editButton1;
     private JButton cardEditBtn;
     private JLabel hpCostLbl;
     private JButton hpSubBtn;
@@ -151,7 +126,6 @@ public class MainUI {
                 accountController.setAddressPanel();
             }
         });
-
         addressEditBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
