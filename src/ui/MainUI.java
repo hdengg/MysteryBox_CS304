@@ -80,6 +80,8 @@ public class MainUI {
     private JButton minButton;
     private JTextField textField3;
     private JButton maxButton;
+    private JButton submitButton;
+    private JTextField textField4;
     private JButton CCEditButton;
 
     private AccountController accountController;
