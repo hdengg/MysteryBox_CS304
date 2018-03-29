@@ -29,7 +29,8 @@ public class ShipmentService {
             String status = rs.getString("status");
             Date shipDate = rs.getDate("ship_date");
             String trackingNo = rs.getString("tracking_no");
-            shipments.add(new Shipment(shippingNo, carrier, status, shipDate, trackingNo));
+            int sid = rs.getInt("s_id");
+            shipments.add(new Shipment(shippingNo, carrier, status, shipDate, trackingNo, sid));
         }
 
         return shipments;
@@ -66,5 +67,41 @@ public class ShipmentService {
             connection.rollback();
             throw ex;
         }
+    }
+
+    public ArrayList<Shipment> getSelectShipments(String selectCarrier, boolean shippingNoCol, boolean carrierCol,
+                                                  boolean statusCol, boolean shipDateCol, boolean trackingNoCol,
+                                                  boolean subscriptionIdCol) throws SQLException {
+
+        ArrayList<String> dynamicSelection = new ArrayList();
+        ArrayList<Shipment> selectShipments = new ArrayList();
+
+        if (shippingNoCol) dynamicSelection.add("shipping_no");
+        if (carrierCol) dynamicSelection.add("carrier");
+        if (statusCol) dynamicSelection.add("status");
+        if (shipDateCol) dynamicSelection.add("ship_date");
+        if (trackingNoCol) dynamicSelection.add("tracking_no");
+        if (subscriptionIdCol) dynamicSelection.add("s_id");
+
+        String selectionString = String.join(", ", dynamicSelection);
+        System.out.println(selectionString);
+
+        PreparedStatement pstmt = connection.prepareStatement(
+                "SELECT " + selectionString + " FROM Shipment WHERE carrier = ?"
+        );
+        pstmt.setString(1, selectCarrier);
+        ResultSet rs = pstmt.executeQuery();
+
+        while(rs.next()) {
+            int shippingNo = (shippingNoCol) ? rs.getInt("shipping_no") : -1;
+            String carrier = (carrierCol) ? rs.getString("carrier") : null;
+            String status = (statusCol) ? rs.getString("status") : null;
+            Date shipDate = (shipDateCol)? rs.getDate("ship_date") : null;
+            String trackingNo = (trackingNoCol) ? rs.getString("tracking_no"): null;
+            int sid = (subscriptionIdCol) ? rs.getInt("s_id") : -1;
+            selectShipments.add(new Shipment(shippingNo, carrier, status, shipDate, trackingNo, sid));
+        }
+
+        return selectShipments;
     }
 }
