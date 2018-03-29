@@ -93,6 +93,9 @@ public class MainUI {
     private JTextField subTheme;
     private JButton submitNumSubThemeQuery;
     private JTextField numSubThemeResult;
+    private JPanel adminCustomerPanel;
+    private JTable adminCustomerTable;
+    private JButton editButton1;
     private JButton CCEditButton;
 
     private AccountController accountController;
