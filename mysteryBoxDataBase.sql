@@ -183,33 +183,33 @@ CREATE TABLE Mystery_Box
 	no_items INTEGER,
 	mdate date,
 	theme varchar(20),
+	cost binary_float,
 	PRIMARY KEY (mbid));
  
 GRANT SELECT ON Mystery_Box to public;
 
 INSERT INTO Mystery_Box
-VALUES (1, 3, '2017-12-01', 'Harry Potter');
+VALUES (1, 3, '2017-12-01', 'Harry Potter', 20.00);
 INSERT INTO Mystery_Box
-VALUES (4, 2, '2018-01-01', 'Harry Potter');
+VALUES (4, 2, '2018-01-01', 'Harry Potter', 20.00);
 INSERT INTO Mystery_Box
-VALUES (5, 3, '2018-02-01', 'Harry Potter');
+VALUES (5, 3, '2018-02-01', 'Harry Potter', 20.00);
 INSERT INTO Mystery_Box
-VALUES (2, 3, '2017-12-01', 'Anime');
+VALUES (2, 3, '2017-12-01', 'Anime', 25.00);
 INSERT INTO Mystery_Box
-VALUES (6, 3, '2018-01-01', 'Anime');
+VALUES (6, 3, '2018-01-01', 'Anime', 25.00);
 INSERT INTO Mystery_Box
-VALUES (7, 4, '2018-02-01', 'Anime');
+VALUES (7, 4, '2018-02-01', 'Anime', 25.00);
 INSERT INTO Mystery_Box
-VALUES (3, 3, '2017-12-01','Marvel');
+VALUES (3, 3, '2017-12-01','Marvel', 30.00);
 INSERT INTO Mystery_Box
-VALUES (9, 3, '2018-01-01','Marvel');
+VALUES (9, 3, '2018-01-01','Marvel', 30.00);
 INSERT INTO Mystery_Box
-VALUES (8, 2, '2018-02-01','Marvel');
+VALUES (8, 2, '2018-02-01','Marvel', 30.00);
 
 
 CREATE TABLE Subscription
 	(s_id INTEGER,
-	cost float(2),
 	status varchar(10),
 	s_from date,
 	num_month INTEGER,
@@ -221,6 +221,7 @@ GRANT SELECT ON Subscription to public;
 
 /* Anthony Davidson */
 INSERT INTO Subscription
+<<<<<<< HEAD
 VALUES (1, 20.00, 'true', '2017-11-07', 3, 'anthonyd');
 /* Tony Valer */
 INSERT INTO Subscription
@@ -236,6 +237,23 @@ VALUES (5, 20.00, 'true', '2018-01-29', 1, 'bieberfever');
 /* Navjit Lal*/
 INSERT INTO Subscription
 VALUES (6, 35.00, 'false', '2017-08-04', 1, 'navigator');
+=======
+VALUES (1, 'true', '2017-11-07', 3, 'anthonyd');
+/* Tony Valer */
+INSERT INTO Subscription
+VALUES (2, 'true', '2017-12-20', 3, 'tonyvaler');
+/* Michael James*/
+INSERT INTO Subscription
+VALUES (3, 'true', '2018-01-04', 2, 'mikeman');
+/* Karen Piper */
+INSERT INTO Subscription
+VALUES (4, 'true', '2018-12-16', 2, 'bieberfever');
+INSERT INTO Subscription
+VALUES (5, 'true', '2018-01-29', 1, 'bieberfever');
+/* Navjit Lal*/
+INSERT INTO Subscription
+VALUES (6, 'false', '2017-08-04', 1, 'navigator');
+>>>>>>> master
 
 CREATE TABLE Subscribes_To
   (s_id INTEGER NOT NULL,
@@ -250,6 +268,11 @@ GRANT SELECT ON Subscribes_To to public;
 INSERT INTO Subscribes_To VALUES (1, 1);
 INSERT INTO Subscribes_To VALUES (1, 4);
 INSERT INTO Subscribes_To VALUES (1, 5);
+<<<<<<< HEAD
+=======
+INSERT INTO Subscribes_To VALUES (1, 2);
+INSERT INTO Subscribes_To VALUES (1, 3);
+>>>>>>> master
 /* Tony Valer */
 INSERT INTO Subscribes_To VALUES (2, 2);
 INSERT INTO Subscribes_To VALUES (2, 6);
@@ -309,7 +332,7 @@ VALUES (168, 'UPS', 'Arrived', '2017-12-25', 'UK911', 6);
  
 CREATE TABLE Item
 	(item_id INTEGER,
-	value float(2),
+	value binary_float,
 	item_name varchar(40),
 	PRIMARY KEY (item_id));
  

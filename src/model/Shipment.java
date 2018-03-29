@@ -1,13 +1,13 @@
 package model;
 
-import java.util.Date;
+import java.sql.Date;
 
-public class Shipment {
-    private int shipping_no;
-    private String carrier;
-    private String status;
-    private Date ship_date;
-    private String tracking_no;
+public class Shipment extends Model {
+    protected int shipping_no;
+    protected String carrier;
+    protected String status;
+    protected Date ship_date;
+    protected String tracking_no;
 
     public Shipment(int shipping_no, String carrier, String status, Date ship_date, String tracking_no) {
         this.shipping_no = shipping_no;

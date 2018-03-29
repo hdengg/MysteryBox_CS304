@@ -21,22 +21,19 @@ public class ItemService {
     /**
      * Retrieves all Items
      * @return items
+     * @throws SQLException
      */
-    public List<Item> getAllItems() {
+    public List<Item> getAllItems() throws SQLException {
         List<Item> items = new ArrayList<>();
-        try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM Items");
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM Items");
 
-            while (rs.next()) {
-                int item_id = rs.getInt("item_id");
-                double value = rs.getDouble("value");
-                String item_name = rs.getString("item_name");
-                Item item = new Item(item_id, value, item_name);
-                items.add(item);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        while (rs.next()) {
+            int item_id = rs.getInt("item_id");
+            double value = rs.getDouble("value");
+            String item_name = rs.getString("item_name");
+            Item item = new Item(item_id, value, item_name);
+            items.add(item);
         }
         return items;
     }
@@ -45,24 +42,21 @@ public class ItemService {
      * Gets item from item_id
      * @param item_id item_id
      * @return Item
+     * @throws SQLException
      */
-    public Item getItem(int item_id) {
+    public Item getItem(int item_id) throws SQLException {
         PreparedStatement ps;
         ResultSet rs;
-        try {
-            ps = connection.prepareStatement("SELECT * FROM Item WHERE (item_id = ?)");
-            ps.setInt(1, item_id);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                int item_id1 = rs.getInt("item_id");
-                double value = rs.getDouble("value");
-                String item_name = rs.getString("item_name");
-                return new Item(item_id1, value, item_name);
-            }
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        ps = connection.prepareStatement("SELECT * FROM Item WHERE (item_id = ?)");
+        ps.setInt(1, item_id);
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            int item_id1 = rs.getInt("item_id");
+            double value = rs.getDouble("value");
+            String item_name = rs.getString("item_name");
+            return new Item(item_id1, value, item_name);
         }
+        ps.close();
         return null;
     }
 
@@ -70,22 +64,19 @@ public class ItemService {
      * Retrieves all Items from a specified Mystery Box
      * @param mbid the mbid to query
      * @return all item names associated with mbid
+     * @throws SQLException
      */
-    public List<Item> getItemsFromBox(int mbid) {
+    public List<Item> getItemsFromBox(int mbid) throws SQLException {
         List<Item> items = new ArrayList<>();
         PreparedStatement ps;
-        try {
-            String query = "SELECT item_id FROM Contains WHERE (mbid = ?)";
-            ps = connection.prepareStatement(query);
-            ps.setInt(1, mbid);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int item_id = rs.getInt("item_id");
-                Item item = getItem(item_id);
-                items.add(item);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        String query = "SELECT item_id FROM Contains WHERE (mbid = ?)";
+        ps = connection.prepareStatement(query);
+        ps.setInt(1, mbid);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int item_id = rs.getInt("item_id");
+            Item item = getItem(item_id);
+            items.add(item);
         }
         return items;
     }
@@ -95,8 +86,9 @@ public class ItemService {
      * @param item_id item_id
      * @param value value
      * @param item_name name of item
+     * @throws SQLException
      */
-    public void addItem(int item_id, double value, String item_name) {
+    public void addItem(int item_id, double value, String item_name) throws SQLException {
         PreparedStatement ps;
         try {
             ps = connection.prepareStatement("INSERT INTO Item VALUES (?, ?, ?)");
@@ -107,15 +99,17 @@ public class ItemService {
             connection.commit();
             ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            connection.rollback();
+            throw e;
         }
     }
 
     /**
      * Deletes Item given item_id
      * @param item_id the item_id of the Item to delete
+     * @throws SQLException
      */
-    public void deleteItem(int item_id) {
+    public void deleteItem(int item_id) throws SQLException {
         try {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM Item where (item_id = ?)");
             ps.setInt(1, item_id);
@@ -123,7 +117,8 @@ public class ItemService {
             connection.commit();
             ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            connection.rollback();
+            throw e;
         }
     }
 
@@ -132,8 +127,9 @@ public class ItemService {
      * @param item_id id of item
      * @param value price of item
      * @param item_name name of item
+     * @throws SQLException
      */
-    public void updateItem(int item_id, double value, String item_name) {
+    public void updateItem(int item_id, double value, String item_name) throws SQLException {
         PreparedStatement ps;
         try {
             ps = connection.prepareStatement(
@@ -145,7 +141,8 @@ public class ItemService {
             connection.commit();
             ps.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            connection.rollback();
+            throw e;
         }
     }
 }
