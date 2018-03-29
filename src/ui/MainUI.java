@@ -211,6 +211,12 @@ public class MainUI {
                 changePanel(adminBoxPanel);
             }
         });
+        viewItemsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePanel(adminItemsPanel);
+            }
+        });
     }
 
     public JPanel getRootPanel() {
@@ -303,4 +309,6 @@ public class MainUI {
     public JButton getSubmitMostSubsQuery() { return submitMostSubsQuery; }
 
     public JTextField getMostSubsResult() { return mostSubsResult; }
+
+    public JTable getItemsTable() { return itemsTable; }
 }
