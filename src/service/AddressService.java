@@ -77,8 +77,6 @@ public class AddressService {
         }
     }
 
-
-
     // delete an address
     public void deleteAddress(String username, int houseNum, String street, String postalCode) throws SQLException {
         try {
@@ -163,7 +161,7 @@ public class AddressService {
         try {
             // Insert into City_Province if not already there
             pstmt = connection.prepareStatement(
-                    "INSERT INTO City_Province (city, province, postal_code)" +
+                    "INSERT INTO City_Province (city, province, postal_code) " +
                             "SELECT ?, ?, ? FROM dual " +
                             "WHERE NOT EXISTS (SELECT * FROM City_Province WHERE postal_code = ?)"
             );
@@ -180,4 +178,5 @@ public class AddressService {
             throw ex;
         }
     }
+
 }
