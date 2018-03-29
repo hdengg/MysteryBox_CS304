@@ -58,6 +58,18 @@ public class MainUI {
     private JButton button3;
     private JTextField textField1;
     private JTextField textField2;
+    private JPanel PaysWith;
+    private JPanel ShippingDetails;
+    private JButton payButton;
+    private JButton ShipDetailsBtn;
+    private JTable Addresses;
+    private JTextField streetField;
+    private JTextField PCField;
+    private JTextField cityField;
+    private JTextField provinceField;
+    private JTextField CCNumber;
+    private JTextField CCExpDate;
+    private JTextField CCType;
     private JButton CCEditButton;
 
     private AccountController accountController;
@@ -83,6 +95,7 @@ public class MainUI {
 
             }
         });
+
         mbButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
