@@ -116,5 +116,35 @@ public class Main {
 //        } catch (SQLException e) {
 //            System.out.println(e.getMessage());
 //        }
+
+//
+//        try {
+//            ArrayList<Shipment> shipments = shipmentService.getSelectShipments("UPS",
+//                    false, false, false ,false ,
+//                    false, true);
+//            for (Shipment s : shipments) {
+//                System.out.println(s.toString());
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+
+//        try {
+//            ArrayList<Shipment> shipments = shipmentService.getShipments(1);
+//            for (Shipment s : shipments) {
+//                System.out.println(s.toString());
+//            }
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+
+//
+//        try {
+//            //subscriptionService.addSubscription(7, "true", date, 10, "mikeman", 1);
+//            subscriptionService.updateSubscription(7, "false", date, 11, "mikeman");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
     }
 }
