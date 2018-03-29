@@ -14,6 +14,7 @@ public class Main {
 
         ConnectionService connectionService = ConnectionService.getInstance();
 
+
         //connectionService.connect("ora_w8t0b", "a86182169");
         connectionService.connect(host, "ora_c1z8", "a41584103");
         Connection connection = connectionService.getConnection();
@@ -137,7 +138,6 @@ public class Main {
 //        } catch (SQLException e) {
 //            System.out.println(e.getMessage());
 //        }
-
 //
 //        try {
 //            //subscriptionService.addSubscription(7, "true", date, 10, "mikeman", 1);
