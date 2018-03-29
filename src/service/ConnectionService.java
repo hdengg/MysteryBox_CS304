@@ -5,13 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionService {
+
+    private static ConnectionService instance;
     private Connection connection;
-    private String host;
 
-    public ConnectionService(String host) {
-        int loginAttempts = 0;
-        this.host = host;
-
+    private ConnectionService() {
         try {
             // Load the Oracle JDBC driver
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -25,9 +23,9 @@ public class ConnectionService {
     /*
      * connects to Oracle database named ug using user supplied username and password
      */
-    public boolean connect(String username, String password)
+    public boolean connect(String host, String username, String password)
     {
-        String connectURL = "jdbc:oracle:thin:@"+ this.host + ":1522:ug";
+        String connectURL = "jdbc:oracle:thin:@"+ host + ":1522:ug";
 
         try {
             connection = DriverManager.getConnection(connectURL,username,password);
@@ -42,7 +40,12 @@ public class ConnectionService {
         }
     }
 
-    public Connection getConnection() {
-        return connection;
+    public Connection getConnection() { return connection; }
+
+    public static ConnectionService getInstance() {
+        if (instance == null) {
+            instance = new ConnectionService();
+        }
+        return instance;
     }
 }

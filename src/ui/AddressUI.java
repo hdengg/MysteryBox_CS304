@@ -1,6 +1,7 @@
 package ui;
 
 import client.AccountController;
+import client.AddressController;
 import service.AddressService;
 
 import javax.swing.*;
@@ -18,11 +19,13 @@ public class AddressUI {
     private JButton AddrUpdateBtn;
     private JButton AddrDeleteBtn;
     private JPanel addressErrorPnl;
+    private JLabel addressErrorLbl;
 
-    private AccountController accountController;
-    private AddressService addressService;
+    private AddressController addressController;
 
     public AddressUI() {
+        registerController();
+
         AddrAddBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,7 +47,6 @@ public class AddressUI {
         });
     }
 
-
     public JTextField getHouseField() { return houseField; }
 
     public JTextField getStreetField() { return streetField; }
@@ -57,18 +59,16 @@ public class AddressUI {
 
     public JPanel getRootPanel() { return rootPanel; }
 
+    public JButton getAddrUpdateBtn() { return AddrUpdateBtn; }
 
+    public JButton getAddrDeleteBtn() { return AddrDeleteBtn; }
 
-    public JButton getAddrUpdateBtn() {
-        return AddrUpdateBtn;
-    }
+    public JPanel getAddressErrorPnl() { return addressErrorPnl; }
 
-    public JButton getAddrDeleteBtn() {
-        return AddrDeleteBtn;
-    }
+    public JLabel getAddressErrorLbl() { return addressErrorLbl; }
 
-    public JPanel getAddressErrorPnl() {
-        return addressErrorPnl;
+    public void registerController() {
+        this.addressController = new AddressController(this);
     }
 }
 

@@ -1,8 +1,11 @@
 package client;
 
 import model.Address;
+import model.CreditCard;
 import model.Customer;
+import model.Session;
 import service.AddressService;
+import service.ConnectionService;
 import service.CreditCardService;
 import service.CustomerService;
 import ui.AddressUI;
@@ -12,6 +15,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Array;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -23,15 +28,12 @@ public class AccountController extends FrameController {
     private MainUI mainUI;
     private AddressUI addressUI;
 
-    public AccountController(CustomerService customerService, AddressService addressService,
-                             CreditCardService creditCardService, MainUI mainUI) {
-        this.customerService = customerService;
-        this.addressService = addressService;
-        this.creditCardService = creditCardService;
+    public AccountController(MainUI mainUI) {
         this.mainUI = mainUI;
-        mainUI.addAccountController(this);
-        customer = customerService.getLoggedInCustomer();
+        initServices();
         initListeners();
+
+        customer = Session.getInstance().getCustomer();
 
     }
 
@@ -56,10 +58,28 @@ public class AccountController extends FrameController {
                 dtm.addRow(new Object[] {address.getHouseNum(), address.getStreet(), address.getPostalCode(),
                         address.getCity(), address.getProvince()});
             }
+
         } catch (SQLException e) {
-            // TODO: error dialog
+            //TODO: error message
         }
     }
+
+    public void setCreditCardPanel() {
+        DefaultTableModel dtm = new DefaultTableModel(0, 0);
+        String[] header = new String[] {"Card ID", "Expiry Date", "Type", "Last Digits"};
+        dtm.setColumnIdentifiers(header);
+        mainUI.getCreditCardTable().setModel(dtm);
+
+        try {
+            ArrayList<CreditCard> creditCards = creditCardService.getCustomerCreditCards(customer.getUsername());
+
+        } catch (SQLException e) {
+
+        }
+
+    }
+
+
 
     private class addressEditBtnListner implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -68,12 +88,30 @@ public class AccountController extends FrameController {
             editAddressFrame.setContentPane(addressUI.getRootPanel());
             setFrameProperties(editAddressFrame);
             editAddressFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            //TODO: think about coupling issues
         }
+    }
+
+    private class cardEditBtnListner implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JFrame editCardFrame = new JFrame("Edit Credit Cards");
+            addressUI = new AddressUI();
+            editCardFrame.setContentPane(addressUI.getRootPanel());
+            setFrameProperties(editCardFrame);
+            editCardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        }
+    }
+
+    private void initServices() {
+        Connection conn = ConnectionService.getInstance().getConnection();
+        this.customerService = new CustomerService(conn);
+        this.creditCardService = new CreditCardService(conn);
+        this.addressService = new AddressService(conn);
     }
 
     private void initListeners() {
         mainUI.getAddressEditBtn().addActionListener(new addressEditBtnListner());
+        mainUI.getAddressEditBtn().addActionListener(new cardEditBtnListner());
+
     }
 
 }

@@ -33,20 +33,20 @@ public class MainFrameController extends FrameController {
         this.creditCardService = creditCardService;
         this.session = session;
         initLoginWindow();
-        //initListeners();
+        initListeners();
     }
 
     public void initLoginWindow() {
-//        loginFrame = new JFrame("User Login");
-//        loginUI = new Login();
-//        loginButton = loginUI.getLoginButton();
-//        loginFrame.setContentPane(loginUI.getRootPanel());
-//        setFrameProperties(loginFrame);
-        mainFrame = new JFrame("MysteryBox Customer Application");
-        MainUI mainUI = getView(false);
-        AccountController accountController = new AccountController(customerService, addressService, creditCardService, mainUI);
-        mainFrame.setContentPane(mainUI.getRootPanel());
-        setFrameProperties(mainFrame);
+        loginFrame = new JFrame("User Login");
+        loginUI = new Login();
+        loginButton = loginUI.getLoginButton();
+        loginFrame.setContentPane(loginUI.getRootPanel());
+        setFrameProperties(loginFrame);
+//        mainFrame = new JFrame("MysteryBox Customer Application");
+//        MainUI mainUI = getView(false);
+//        // AccountController accountController = new AccountController(customerService, addressService, creditCardService, mainUI);
+//        mainFrame.setContentPane(mainUI.getRootPanel());
+//        setFrameProperties(mainFrame);
     }
 
     private void initListeners() {
@@ -61,7 +61,6 @@ public class MainFrameController extends FrameController {
                 loginFrame.dispose();
                 mainFrame = new JFrame("MysteryBox Application");
                 MainUI mainUI = getView(false);
-                AccountController accountController = new AccountController(customerService, addressService, creditCardService, mainUI);
                 mainFrame.setContentPane(mainUI.getRootPanel());
                 setFrameProperties(mainFrame);
                 addCloseHandling(mainFrame);

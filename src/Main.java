@@ -8,6 +8,9 @@ import service.CustomerService;
 import service.MysteryBoxService;
 import service.ItemService;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -16,15 +19,19 @@ public class Main {
             host = args[0];
         }
 
-        ConnectionService connectionService = new ConnectionService(host);
+        ConnectionService connectionService = ConnectionService.getInstance();
+
+
+
         //connectionService.connect("ora_w8t0b", "a86182169");
-        connectionService.connect("ora_j2z8", "a31484116");
-        Session session = new Session();
-        CustomerService customerService = new CustomerService(connectionService.getConnection());
-        MysteryBoxService mysteryBoxService = new MysteryBoxService(connectionService.getConnection());
-        ItemService itemService = new ItemService(connectionService.getConnection());
-        AddressService addressService = new AddressService(connectionService.getConnection());
-        CreditCardService credCardService = new CreditCardService(connectionService.getConnection());
+        connectionService.connect(host, "ora_j2z8", "a31484116");
+        Connection connection = connectionService.getConnection();
+        Session session = Session.getInstance();
+        CustomerService customerService = new CustomerService(connection);
+        MysteryBoxService mysteryBoxService = new MysteryBoxService(connection);
+        ItemService itemService = new ItemService(connection);
+        AddressService addressService = new AddressService(connection);
+        CreditCardService credCardService = new CreditCardService(connection);
 
         //janiceTester(customerService, addressService, credCardService, session);
 

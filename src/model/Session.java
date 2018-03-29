@@ -3,11 +3,12 @@ package model;
 /**
  * Created by janicelee on 2018-03-24.
  */
-public class Session  extends Model {
+public class Session {
     protected Customer customer;
     protected boolean loggedIn = false;
+    private static Session sessionInstance;
 
-    public Session() {}
+    private Session() {}
 
     public Customer getCustomer() {
         return customer;
@@ -26,5 +27,10 @@ public class Session  extends Model {
         this.customer = customer;
     }
 
+    public static Session getInstance() {
+        if  (sessionInstance == null)
+            sessionInstance = new Session();
+        return sessionInstance;
+    }
 
 }

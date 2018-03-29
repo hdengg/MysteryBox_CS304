@@ -14,7 +14,6 @@ public class BoxController {
         this.mysteryBoxService = mbService;
         this.itemService = itemService;
         this.mainUI = mainUI;
-        mainUI.addBoxController(this);
     }
 
     public void setBoxPanel() {

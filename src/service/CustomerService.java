@@ -14,7 +14,6 @@ import java.util.ArrayList;
  */
 public class CustomerService {
     private Connection connection;
-    private Customer loggedInCustomer;
 
     public CustomerService(Connection connection) {
         this.connection = connection;
@@ -23,9 +22,9 @@ public class CustomerService {
     // returns true if customer login username and password match, false otherwise
     public boolean login(Session session, String username, String password) {
         try {
-            loggedInCustomer = getCustomer(username);
-            if (loggedInCustomer != null && password.equals(loggedInCustomer.getPassword())) {
-                session.loginCustomer(loggedInCustomer);
+            Customer customer = getCustomer(username);
+            if (customer != null && password.equals(customer.getPassword())) {
+                session.loginCustomer(customer);
                 return true;
             }
 
@@ -117,6 +116,4 @@ public class CustomerService {
             throw ex;
         }
     }
-
-    public Customer getLoggedInCustomer() { return loggedInCustomer; }
 }

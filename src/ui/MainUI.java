@@ -50,12 +50,21 @@ public class MainUI {
     private JButton addressEditBtn;
     private JPanel adminLeftPnl;
     private JComboBox comboBox1;
+    private JPanel CardPanel;
+    private JLabel cardTitle;
+    private JTable cardTable;
+    private JButton button1;
+    private JButton button2;
+    private JButton button3;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JButton CCEditButton;
 
     private AccountController accountController;
-    private BoxController boxController;
-
 
     public MainUI() {
+        registerController();
+
         subButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -123,12 +132,8 @@ public class MainUI {
         mbButton.setSelectedIndex(0);
     }
 
-    public void addAccountController(AccountController controller) {
-        accountController = controller;
-    }
-
-    public void addBoxController(BoxController controller) {
-        boxController = controller;
+    public void registerController() {
+        accountController = new AccountController(this);
     }
 
     public JPanel getLeftPanel() { return leftPanel; }
@@ -145,7 +150,11 @@ public class MainUI {
 
     public JTable getAddressTable() {return addressTable; }
 
+    public JTable getCreditCardTable() {return cardTable; }
+
     public JButton getAddressEditBtn() { return addressEditBtn; }
+
+    public JButton getCCEditButton() { return CCEditButton; }
 
     public JLabel getAnimeCost() { return animeCost; }
 }
