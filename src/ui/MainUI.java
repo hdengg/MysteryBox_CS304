@@ -75,8 +75,11 @@ public class MainUI {
     private JTable Subscribers;
     private JButton addSub;
     private JButton updateSub;
-    private JTextField SubComplexResult;
+    private JTextField ComplexQuerySub;
     private JButton performComplex;
+    private JTextField BoxTheme;
+    private JButton submitButton;
+    private JTextField AggQuerySub;
     private JButton CCEditButton;
 
     private AccountController accountController;
