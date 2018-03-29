@@ -14,20 +14,20 @@ public class SubscriptionService {
         con = connection;
     }
 
-    public void addSubscription(int s_id, boolean status, Date from,
+    public void addSubscription(int s_id, String status, Date from,
                                 int num_months, String username, int mbid) throws SQLException {
         PreparedStatement ps;
         try {
-            ps = con.prepareStatement("INSERT INTO subscription VALUES " +
-                    "(?, ?, ?, ?, ?, ?)");
+            ps = con.prepareStatement("INSERT INTO subscription VALUES (?, ?, ?, ?, ?)");
             ps.setInt(1, s_id);
-            ps.setBoolean(2, status);
+            ps.setString(2, status);
             ps.setDate(3, from);
             ps.setInt(4, num_months);
             ps.setString(5, username);
             ps.executeUpdate();
             con.commit();
             ps.close();
+
             addSubscribesTo(mbid, s_id);
         } catch (SQLException e) {
             // undo the insert
@@ -45,10 +45,9 @@ public class SubscriptionService {
     public void addSubscribesTo(int mbid, int s_id) throws SQLException {
         PreparedStatement ps;
         try {
-            ps = con.prepareStatement("INSERT INTO Subscribes_To VALUES " +
-                    "(?, ?)");
-            ps.setInt(1, mbid);
-            ps.setInt(2, s_id);
+            ps = con.prepareStatement("INSERT INTO Subscribes_To VALUES (?, ?)");
+            ps.setInt(1, s_id);
+            ps.setInt(2, mbid);
             ps.executeUpdate();
             con.commit();
             ps.close();
@@ -75,20 +74,20 @@ public class SubscriptionService {
 //        }
 //    }
 
-    public void updateSubscription(int s_id, boolean status, Date from,
+    public void updateSubscription(int s_id, String status, Date from,
                                    int num_months, String username) throws Exception {
         PreparedStatement ps;
-        String updateString =
-                "UPDATE Subscription SET s_id = ?, status = ?, s_from = ?, num_month = ?, username = ?" +
-                        "WHERE s_id = ?";
 
         try {
-            ps = con.prepareStatement(updateString);
+            ps = con.prepareStatement("UPDATE Subscription SET s_id = ?, status = ?, s_from = ?, " +
+                    "num_month = ?, username = ? WHERE s_id = ?"
+            );
             ps.setInt(1, s_id);
-            ps.setBoolean(2, status);
+            ps.setString(2, status);
             ps.setDate(3, from);
             ps.setInt(4, num_months);
             ps.setString(5, username);
+            ps.setInt(6, s_id);
             update(s_id, ps);
 
         } catch (SQLException e) {
@@ -136,7 +135,7 @@ public class SubscriptionService {
         rs = st.executeQuery("SELECT * FROM subscription");
         while (rs.next()) {
             int s_id = rs.getInt("s_id");
-            boolean status = rs.getBoolean("status");
+            String status = rs.getString("status");
             Date s_from = rs.getDate("s_from");
             int num_months = rs.getInt("num_month");
             String username = rs.getString("username");
@@ -162,7 +161,7 @@ public class SubscriptionService {
 
         if (rs.next()) {
             int s_id = rs.getInt("s_id");
-            boolean status = rs.getBoolean("status");
+            String status = rs.getString("status");
             Date s_from = rs.getDate("s_from");
             int num_months = rs.getInt("num_month");
             String username = rs.getString("username");
@@ -187,7 +186,7 @@ public class SubscriptionService {
         rs = ps.executeQuery();
         while (rs.next()) {
             int sid = rs.getInt("s_id");
-            boolean status = rs.getBoolean("status");
+            String status = rs.getString("status");
             Date s_from = rs.getDate("s_from");
             int num_months = rs.getInt("num_month");
             Subscription sub = new Subscription(sid, status, s_from, num_months, username);
