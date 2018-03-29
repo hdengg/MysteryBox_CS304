@@ -77,17 +77,17 @@ public class SubscriptionService {
     public void updateSubscription(int s_id, String status, Date from,
                                    int num_months, String username) throws Exception {
         PreparedStatement ps;
-        String updateString =
-                "UPDATE Subscription SET s_id = ?, status = ?, s_from = ?, num_month = ?, username = ?" +
-                        "WHERE s_id = ?";
 
         try {
-            ps = con.prepareStatement(updateString);
+            ps = con.prepareStatement("UPDATE Subscription SET s_id = ?, status = ?, s_from = ?, " +
+                    "num_month = ?, username = ? WHERE s_id = ?"
+            );
             ps.setInt(1, s_id);
             ps.setString(2, status);
             ps.setDate(3, from);
             ps.setInt(4, num_months);
             ps.setString(5, username);
+            ps.setInt(6, s_id);
             update(s_id, ps);
 
         } catch (SQLException e) {
