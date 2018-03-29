@@ -215,6 +215,8 @@ CREATE TABLE Subscription
 	num_month INTEGER,
 	username varchar(20) NOT NULL,
 	PRIMARY KEY (s_id),
+	UNIQUE(username),
+	CONSTRAINT positiveSubID CHECK (s_id > 0),
 	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE);
  
 GRANT SELECT ON Subscription to public;
@@ -236,7 +238,6 @@ VALUES (5, 'true', '2018-01-29', 1, 'bieberfever');
 /* Navjit Lal*/
 INSERT INTO Subscription
 VALUES (6, 'false', '2017-08-04', 1, 'navigator');
->>>>>>> master
 
 CREATE TABLE Subscribes_To
   (s_id INTEGER NOT NULL,
@@ -276,6 +277,7 @@ CREATE TABLE Shipment
 	s_id INTEGER NOT NULL,
 	PRIMARY KEY (shipping_no),
 	UNIQUE(tracking_no),
+	CONSTRAINT positiveShipNo CHECK (shipping_no > 0),
 	FOREIGN KEY (s_id) REFERENCES Subscription(s_id) ON DELETE CASCADE);
  
 GRANT SELECT ON Shipment to public;
@@ -314,7 +316,8 @@ CREATE TABLE Item
 	(item_id INTEGER,
 	value binary_float,
 	item_name varchar(40),
-	PRIMARY KEY (item_id));
+	PRIMARY KEY (item_id),
+	CONSTRAINT positiveValue CHECK (value > 0));
  
 GRANT SELECT ON Item to public;
 

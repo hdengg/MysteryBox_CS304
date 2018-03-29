@@ -32,7 +32,7 @@ public class UpdateSubscriptionUI {
 
                 try {
                     int sid = Integer.parseInt(sidField.getText());
-                    boolean status = Boolean.parseBoolean(statusField.getText());
+                    String status = statusField.getText();
                     int num_months = Integer.parseInt(numMonthsField.getText());
                     String username = usernameField.getText();
                     Date date = stringToDate(fromField.getText());

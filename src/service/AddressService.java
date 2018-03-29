@@ -72,20 +72,10 @@ public class AddressService {
             pstmt.close();
 
         } catch (SQLException ex) {
-            System.out.println("Message: " + ex.getMessage());
-
-            try {
-                connection.rollback();
-            } catch (SQLException ex2) {
-                System.out.println("Message: " + ex2.getMessage());
-                throw ex2;
-            }
-
+            connection.rollback();
             throw ex;
         }
     }
-
-
 
     // delete an address
     public void deleteAddress(String username, int houseNum, String street, String postalCode) throws SQLException {
@@ -103,16 +93,8 @@ public class AddressService {
             pstmt.close();
 
         } catch(SQLException ex) {
-            System.out.println("Message: " + ex.getMessage());
-
-            try {
-                connection.rollback();
-            } catch (SQLException ex2) {
-                System.out.println("Message: " + ex2.getMessage());
-                throw ex2;
-            }
-
-             throw ex;
+            connection.rollback();
+            throw ex;
         }
     }
 
@@ -120,8 +102,8 @@ public class AddressService {
     public void updateAddress(String username, Address currAddress, int houseNum, String street,
                                  String postalCode, String city, String province) throws SQLException {
         PreparedStatement pstmt;
-        insertAddress(houseNum, street, postalCode);
         insertCityProvince(city, province, postalCode);
+        insertAddress(houseNum, street, postalCode);
 
         try {
             // Update the Customer_Has_Address table
@@ -141,15 +123,7 @@ public class AddressService {
             pstmt.close();
 
         } catch (SQLException ex) {
-            System.out.println("Message: " + ex.getMessage());
-
-            try {
-                connection.rollback();
-            } catch (SQLException ex2) {
-                System.out.println("Message: " + ex2.getMessage());
-                throw ex2;
-            }
-
+            connection.rollback();
             throw ex;
         }
     }
@@ -161,27 +135,22 @@ public class AddressService {
         try {
             // Insert into AddressUI table if not already there
             pstmt = connection.prepareStatement(
-                    "INSERT INTO Address VALUES (?, ?, ?)"
+                    "INSERT INTO Address (house_num, street, postal_code)" +
+                            "SELECT ?, ?, ? FROM dual " +
+                            "WHERE NOT EXISTS (SELECT * FROM Address WHERE (house_num = ?) and (street LIKE ?) and (postal_code LIKE ?))"
             );
             pstmt.setInt(1, houseNum);
             pstmt.setString(2, street);
             pstmt.setString(3, postalCode);
+            pstmt.setInt(4, houseNum);
+            pstmt.setString(5, street);
+            pstmt.setString(6, postalCode);
             pstmt.executeUpdate();
             connection.commit();
             pstmt.close();
         } catch (SQLException ex) {
-            System.out.println("Message: " + ex.getMessage());
-
-            try {
-                connection.rollback();
-            } catch (SQLException ex2) {
-                System.out.println("Message: " + ex2.getMessage());
-                throw ex2;
-            }
-
-            if (!ex.getSQLState().equals(Integer.toString(23000))) {
-                throw ex;
-            }
+            connection.rollback();
+            throw ex;
         }
     }
 
@@ -192,29 +161,22 @@ public class AddressService {
         try {
             // Insert into City_Province if not already there
             pstmt = connection.prepareStatement(
-                    "INSERT INTO City_Province VALUES (?, ?, ?)"
+                    "INSERT INTO City_Province (city, province, postal_code) " +
+                            "SELECT ?, ?, ? FROM dual " +
+                            "WHERE NOT EXISTS (SELECT * FROM City_Province WHERE postal_code = ?)"
             );
             pstmt.setString(1, city);
             pstmt.setString(2, province);
             pstmt.setString(3, postalCode);
+            pstmt.setString(4, postalCode);
             pstmt.executeUpdate();
             connection.commit();
             pstmt.close();
 
         } catch (SQLException ex) {
-            System.out.println("Message: " + ex.getMessage());
-
-            try {
-                connection.rollback();
-            } catch (SQLException ex2) {
-                System.out.println("Message: " + ex2.getMessage());
-                throw ex2;
-            }
-
-            // only throws errors other than unique constraint violated
-            if (!ex.getSQLState().equals(Integer.toString(23000))) {
-                throw ex;
-            }
+            connection.rollback();
+            throw ex;
         }
     }
+
 }
