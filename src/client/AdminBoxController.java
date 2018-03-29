@@ -179,7 +179,8 @@ public class AdminBoxController extends FrameController {
 
     public void createItemEditWindow() {
         JFrame editItemFrame = new JFrame("Edit Item");
-        ItemUI itemUI = new ItemUI();
+        ItemUI itemUI = new ItemUI(mbid);
+
         editItemFrame.setContentPane(itemUI.getRootPanel());
         setFrameProperties(editItemFrame);
         editItemFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

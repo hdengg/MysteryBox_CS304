@@ -16,8 +16,9 @@ public class ItemUI {
 
     private ItemController itemController;
 
-    public ItemUI() {
+    public ItemUI(int mbid) {
         registerController();
+        itemController.setBoxID(mbid);
     }
 
     public JPanel getRootPanel() {
