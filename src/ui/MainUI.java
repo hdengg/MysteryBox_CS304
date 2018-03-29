@@ -71,6 +71,12 @@ public class MainUI {
     private JTextField CCExpDate;
     private JTextField CCType;
     private JTable CreditCards;
+    private JPanel adminSubPanel;
+    private JTable Subscribers;
+    private JButton addSub;
+    private JButton updateSub;
+    private JTextField SubComplexResult;
+    private JButton performComplex;
     private JButton CCEditButton;
 
     private AccountController accountController;
