@@ -3,6 +3,7 @@ package ui;
 import client.AccountController;
 import client.AdminBoxController;
 import client.BoxController;
+import client.CustomerController;
 import client.SubscriptionsController;
 
 import javax.swing.*;
@@ -116,6 +117,7 @@ public class MainUI {
     private AccountController accountController;
     private BoxController boxController;
     private SubscriptionsController subscriptionsController;
+    private CustomerController customerController;
     private AdminBoxController adminBoxController;
 
     public MainUI() {
@@ -237,6 +239,7 @@ public class MainUI {
         accountController = new AccountController(this);
         boxController = new BoxController(this);
         subscriptionsController = new SubscriptionsController(this);
+        customerController = new CustomerController(this);
         adminBoxController = new AdminBoxController(this);
     }
 
@@ -288,6 +291,11 @@ public class MainUI {
 
     public JButton getAddSubsButton() { return addSubsButton; }
 
+    public JTable getAdminCustomerTable() { return adminCustomerTable;
+    }
+
+    public JButton getEditButton1() { return editButton1; }
+  
     public JTable getAllBoxes() { return allBoxes; }
 
     public JButton getSubmitTotalQueryBtn() { return submitTotalQuery; }
