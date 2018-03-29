@@ -276,6 +276,7 @@ CREATE TABLE Shipment
 	tracking_no char(20),
 	s_id INTEGER NOT NULL,
 	PRIMARY KEY (shipping_no),
+	UNIQUE(s_id),
 	UNIQUE(tracking_no),
 	CONSTRAINT positiveShipNo CHECK (shipping_no > 0),
 	FOREIGN KEY (s_id) REFERENCES Subscription(s_id) ON DELETE CASCADE);
