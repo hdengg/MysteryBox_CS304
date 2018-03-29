@@ -101,6 +101,16 @@ public class MainUI {
     private JButton AdminCustBtn;
     private JButton AdminBoxesBtn;
     private JButton LogoutBtn1;
+    private JPanel adminShipmentPanel;
+    private JTable adminShipmentTable;
+    private JTextField carrierField;
+    private JButton submitSelectQuery;
+    private JRadioButton subscriptionIDRadioButton;
+    private JRadioButton shipDateRadioButton;
+    private JRadioButton shipNo;
+    private JRadioButton carrierRadioButton;
+    private JRadioButton statusRadioButton;
+    private JRadioButton trackingNoRadioButton;
 
     private AccountController accountController;
     private BoxController boxController;
