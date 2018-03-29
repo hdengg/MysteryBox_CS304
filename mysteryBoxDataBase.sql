@@ -221,23 +221,6 @@ GRANT SELECT ON Subscription to public;
 
 /* Anthony Davidson */
 INSERT INTO Subscription
-<<<<<<< HEAD
-VALUES (1, 20.00, 'true', '2017-11-07', 3, 'anthonyd');
-/* Tony Valer */
-INSERT INTO Subscription
-VALUES (2, 50.00, 'true', '2017-12-20', 3, 'tonyvaler');
-/* Michael James*/
-INSERT INTO Subscription
-VALUES (3, 25.00, 'true', '2018-01-04', 2, 'mikeman');
-/* Karen Piper */
-INSERT INTO Subscription
-VALUES (4, 25.00, 'true', '2018-12-16', 2, 'bieberfever');
-INSERT INTO Subscription
-VALUES (5, 20.00, 'true', '2018-01-29', 1, 'bieberfever');
-/* Navjit Lal*/
-INSERT INTO Subscription
-VALUES (6, 35.00, 'false', '2017-08-04', 1, 'navigator');
-=======
 VALUES (1, 'true', '2017-11-07', 3, 'anthonyd');
 /* Tony Valer */
 INSERT INTO Subscription
@@ -268,11 +251,8 @@ GRANT SELECT ON Subscribes_To to public;
 INSERT INTO Subscribes_To VALUES (1, 1);
 INSERT INTO Subscribes_To VALUES (1, 4);
 INSERT INTO Subscribes_To VALUES (1, 5);
-<<<<<<< HEAD
-=======
 INSERT INTO Subscribes_To VALUES (1, 2);
 INSERT INTO Subscribes_To VALUES (1, 3);
->>>>>>> master
 /* Tony Valer */
 INSERT INTO Subscribes_To VALUES (2, 2);
 INSERT INTO Subscribes_To VALUES (2, 6);

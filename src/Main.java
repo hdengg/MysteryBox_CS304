@@ -13,10 +13,7 @@ public class Main {
             host = args[0];
         }
 
-<<<<<<< HEAD
         ConnectionService connectionService = ConnectionService.getInstance();
-
-
 
         //connectionService.connect("ora_w8t0b", "a86182169");
         connectionService.connect(host, "ora_c1z8", "a41584103");
@@ -27,18 +24,6 @@ public class Main {
         ItemService itemService = new ItemService(connection);
         AddressService addressService = new AddressService(connection);
         CreditCardService credCardService = new CreditCardService(connection);
-=======
-        ConnectionService connectionService = new ConnectionService(host);
-        connectionService.connect("ora_w8t0b", "a86182169");
-        Session session = new Session();
-        CustomerService customerService = new CustomerService(connectionService.getConnection());
-        MysteryBoxService mysteryBoxService = new MysteryBoxService(connectionService.getConnection());
-        ItemService itemService = new ItemService(connectionService.getConnection());
-        AddressService addressService = new AddressService(connectionService.getConnection());
-        CreditCardService credCardService = new CreditCardService(connectionService.getConnection());
-        ShipmentService shipmentService = new ShipmentService(connectionService.getConnection());
-        SubscriptionService subscriptionService = new SubscriptionService(connectionService.getConnection());
->>>>>>> master
 
         //janiceTester(customerService, addressService, credCardService, shipmentService, subscriptionService, session);
 
