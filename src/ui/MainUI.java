@@ -58,8 +58,8 @@ public class MainUI {
     private JButton button3;
     private JTextField textField1;
     private JTextField textField2;
-    private JPanel PaysWith;
-    private JPanel ShippingDetails;
+    private JPanel PaysWithPanel;
+    private JPanel ShippingDetailsPanel;
     private JButton payButton;
     private JButton ShipDetailsBtn;
     private JTable Addresses;
