@@ -81,8 +81,8 @@ public class Main {
 //        try {
 //            Address a = new Address(3894, "4th Ave", "V6S9L4", "Nanaimo", "British Columbia");
 //
-//            addressService.updateAddress("mikeman", a, 000, "4th Ave", "V6S9L4",
-//                    "CITYCITY", "Ontario");
+//            addressService.updateAddress("mikeman", a, 4949, "4th Ave", "V6S9L4",
+//                    "Nanaimo", "British Columbia");
 //
 //        } catch (Exception e) {
 //            System.out.println(e.getMessage());

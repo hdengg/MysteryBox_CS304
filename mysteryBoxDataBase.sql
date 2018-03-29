@@ -314,7 +314,8 @@ CREATE TABLE Item
 	(item_id INTEGER,
 	value binary_float,
 	item_name varchar(40),
-	PRIMARY KEY (item_id));
+	PRIMARY KEY (item_id),
+	CONSTRAINT positiveValue CHECK (value > 0));
  
 GRANT SELECT ON Item to public;
 
