@@ -15,7 +15,7 @@ public class SubscriptionService {
     }
 
     public void addSubscription(int s_id, boolean status, Date from,
-                                int num_months, String username) throws SQLException {
+                                int num_months, String username, int mbid) throws SQLException {
         PreparedStatement ps;
         try {
             ps = con.prepareStatement("INSERT INTO subscription VALUES " +
@@ -29,6 +29,7 @@ public class SubscriptionService {
             ps.executeUpdate();
             con.commit();
             ps.close();
+            addSubscribesTo(mbid, s_id);
         } catch (SQLException e) {
             // undo the insert
             con.rollback();
@@ -36,15 +37,20 @@ public class SubscriptionService {
         }
     }
 
-    public void deleteSubscription(int sid) throws Exception {
+    /**
+     * Once subscription is added, add the mbid and s_id to the Subscribes_To table
+     * @param mbid mbid to add
+     * @param s_id s_id to add
+     * @throws SQLException
+     */
+    private void addSubscribesTo(int mbid, int s_id) throws SQLException {
         PreparedStatement ps;
-        String deleteString = "DELETE FROM Subscription WHERE s_id = ?";
         try {
-            ps = con.prepareStatement(deleteString);
-            ps.setInt(1, sid);
-            int rowCount = ps.executeUpdate();
-            if (rowCount == 0)
-                throw new Exception("Subscription " + sid + " does not exist");
+            ps = con.prepareStatement("INSERT INTO Subscribes_To VALUES " +
+                    "(?, ?)");
+            ps.setInt(1, mbid);
+            ps.setInt(2, s_id);
+            ps.executeUpdate();
             con.commit();
             ps.close();
         } catch (SQLException e) {
@@ -52,6 +58,23 @@ public class SubscriptionService {
             throw e;
         }
     }
+
+//    public void deleteSubscription(int sid) throws Exception {
+//        PreparedStatement ps;
+//        String deleteString = "DELETE FROM Subscription WHERE s_id = ?";
+//        try {
+//            ps = con.prepareStatement(deleteString);
+//            ps.setInt(1, sid);
+//            int rowCount = ps.executeUpdate();
+//            if (rowCount == 0)
+//                throw new Exception("Subscription " + sid + " does not exist");
+//            con.commit();
+//            ps.close();
+//        } catch (SQLException e) {
+//            con.rollback();
+//            throw e;
+//        }
+//    }
 
     public void updateSubscription(int s_id, boolean status, Date from,
                                    int num_months, String username) throws Exception {
