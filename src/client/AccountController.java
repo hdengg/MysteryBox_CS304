@@ -71,7 +71,6 @@ public class AccountController extends FrameController {
 
         try {
             ArrayList<CreditCard> cards = creditCardService.getCustomerCreditCards(username);
-            ArrayList<Address> addresses = addressService.getAllCustomerAddresses(customer.getUsername());
             for (int i = 0; i < cards.size(); i++) {
                 CreditCard card = cards.get(i);
                 dtm.addRow(new Object[] {card.getCid(), card.getExpDate(), card.getType(), card.getLastDigits()});

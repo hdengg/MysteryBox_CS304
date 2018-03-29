@@ -60,7 +60,7 @@ public class MainFrameController extends FrameController {
             if (customerService.login(session, username, password)) {
                 loginFrame.dispose();
                 mainFrame = new JFrame("MysteryBox Application");
-                MainUI mainUI = getView(false);
+                MainUI mainUI = getView(Session.getInstance().isAdmin());
                 mainFrame.setContentPane(mainUI.getRootPanel());
                 setFrameProperties(mainFrame);
                 addCloseHandling(mainFrame);
@@ -80,8 +80,12 @@ public class MainFrameController extends FrameController {
         MainUI mainUI = new MainUI();
         if (isAdmin) {
             JPanel leftPanel = mainUI.getLeftPanel();
-            CardLayout cardLayout = (CardLayout) leftPanel.getLayout();
-            cardLayout.next(leftPanel);
+            CardLayout leftCardLayout = (CardLayout) leftPanel.getLayout();
+            leftCardLayout.next(leftPanel);
+            JPanel rightPanel = mainUI.getRightPanel();
+            CardLayout rightCardLayout = (CardLayout) rightPanel.getLayout();
+            rightPanel.add(mainUI.getAdminCustomerPanel(), "adminCustomerPanel");
+            rightCardLayout.show(rightPanel, "adminCustomerPanel");
         }
 
         return mainUI;

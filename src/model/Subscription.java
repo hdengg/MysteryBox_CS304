@@ -18,7 +18,8 @@ public class Subscription extends Model {
     }
 
     public int getSid() { return s_id; }
-    public boolean isStatus() { return status; }
+
+    public boolean getStatus() { return status; }
 
     public Date getFrom() { return s_from; }
 

@@ -14,6 +14,9 @@ import java.util.ArrayList;
  */
 public class CustomerService {
     private Connection connection;
+    private String adminUsername = "admin";
+    private String adminsPassword = "hackathon";
+    private boolean isAdmin = false;
 
     public CustomerService(Connection connection) {
         this.connection = connection;
@@ -28,11 +31,19 @@ public class CustomerService {
                 return true;
             }
 
+            if (username.equals(adminUsername) && password.equals(adminsPassword)) {
+                session.setAdmin();
+                return true;
+            }
+
+
         } catch (SQLException ex) {
             System.out.println("Message: " + ex.getMessage());
         }
         return false;
     }
+
+    public boolean getIsAdmin() {return isAdmin; }
 
     // returns a customer given the username, null otherwise
     public Customer getCustomer(String username) throws SQLException {

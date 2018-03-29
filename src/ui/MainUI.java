@@ -2,6 +2,7 @@ package ui;
 
 import client.AccountController;
 import client.BoxController;
+import client.SubscriptionsController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +50,6 @@ public class MainUI {
     private JTextArea animeIsAmazingTextArea;
     private JButton addressEditBtn;
     private JPanel adminLeftPnl;
-    private JComboBox comboBox1;
     private JPanel CardPanel;
     private JLabel cardTitle;
     private JTable cardTable;
@@ -97,9 +97,14 @@ public class MainUI {
     private JPanel adminCustomerPanel;
     private JTable adminCustomerTable;
     private JButton editButton1;
+    private JButton AdminSubBtn;
+    private JButton AdminCustBtn;
+    private JButton AdminBoxesBtn;
+    private JButton LogoutBtn1;
 
     private AccountController accountController;
     private BoxController boxController;
+    private SubscriptionsController subscriptionsController;
 
     public MainUI() {
         registerController();
@@ -176,6 +181,27 @@ public class MainUI {
 
             }
         });
+        AdminSubBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePanel(adminSubsPanel);
+
+
+            }
+        });
+        AdminCustBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePanel(adminCustomerPanel);
+            }
+        });
+        AdminBoxesBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePanel(adminBoxPanel);
+
+            }
+        });
     }
 
     public JPanel getRootPanel() {
@@ -201,7 +227,7 @@ public class MainUI {
     public void registerController() {
         accountController = new AccountController(this);
         boxController = new BoxController(this);
-
+        subscriptionsController = new SubscriptionsController(this);
     }
 
     public JPanel getLeftPanel() { return leftPanel; }
@@ -229,4 +255,26 @@ public class MainUI {
     public JLabel getHpCostLbl() { return hpCostLbl; }
 
     public JLabel getMarvelCostLbl() { return marvelCostLbl; }
+
+    public JPanel getRightPanel() { return rightPanel; }
+
+    public JPanel getAdminCustomerPanel() { return adminCustomerPanel; }
+
+    public JTable getAllSubscribers() { return allSubscribers; }
+
+    public JTable getAllSubsThemeResult() { return allSubsThemeResult; }
+
+    public JTextField getSubThemeField() { return subTheme; }
+
+    public JButton getSubButton() { return subButton; }
+
+    public JButton getUpdateSubsButton() { return updateSubsButton; }
+
+    public JButton getSubmitNumSubThemeQuery() { return submitNumSubThemeQuery; }
+
+    public JButton getSubmitAllThemesQuery() { return submitAllThemesQuery; }
+
+    public JTextField getNumSubThemeResult() { return numSubThemeResult; }
+
+    public JButton getAddSubsButton() { return addSubsButton; }
 }
