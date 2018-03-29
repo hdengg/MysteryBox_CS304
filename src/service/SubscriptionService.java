@@ -43,7 +43,7 @@ public class SubscriptionService {
      * @param s_id s_id to add
      * @throws SQLException
      */
-    private void addSubscribesTo(int mbid, int s_id) throws SQLException {
+    public void addSubscribesTo(int mbid, int s_id) throws SQLException {
         PreparedStatement ps;
         try {
             ps = con.prepareStatement("INSERT INTO Subscribes_To VALUES " +
