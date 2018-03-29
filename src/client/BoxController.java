@@ -5,6 +5,8 @@ import service.ItemService;
 import service.MysteryBoxService;
 import ui.MainUI;
 
+import java.sql.SQLException;
+
 public class BoxController {
     private MysteryBoxService mysteryBoxService;
     private ItemService itemService;
@@ -18,8 +20,11 @@ public class BoxController {
 
     public void setBoxPanel() {
 
-        MysteryBox mb = mysteryBoxService.getMysteryBox(7);
-
+        try {
+            MysteryBox mb = mysteryBoxService.getMysteryBox(7);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
     }
