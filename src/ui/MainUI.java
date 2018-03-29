@@ -70,6 +70,7 @@ public class MainUI {
     private JTextField CCNumber;
     private JTextField CCExpDate;
     private JTextField CCType;
+    private JTable CreditCards;
     private JButton CCEditButton;
 
     private AccountController accountController;
