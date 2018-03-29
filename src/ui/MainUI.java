@@ -1,10 +1,7 @@
 package ui;
 
-import client.AccountController;
-import client.AdminBoxController;
-import client.BoxController;
-import client.CustomerController;
-import client.SubscriptionsController;
+import client.*;
+import model.Item;
 
 import javax.swing.*;
 import java.awt.*;
@@ -86,7 +83,7 @@ public class MainUI {
     private JButton submitMostSubsQuery;
     private JTextField mostSubsResult;
     private JTable itemsTable;
-    private JButton editButton;
+    private JButton editItemButton;
     private JPanel adminSubsPanel;
     private JTable allSubscribers;
     private JButton addSubsButton;
@@ -119,6 +116,7 @@ public class MainUI {
     private SubscriptionsController subscriptionsController;
     private CustomerController customerController;
     private AdminBoxController adminBoxController;
+    private ItemController itemController;
 
     public MainUI() {
         registerController();
@@ -216,7 +214,19 @@ public class MainUI {
         viewItemsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changePanel(adminItemsPanel);
+                int mbid = adminBoxController.getSelectedBoxId();
+                if (mbid != 0) {
+                    changePanel(adminItemsPanel);
+                    adminBoxController.setBoxID(mbid);
+                    adminBoxController.initItemsPanel();
+                }
+            }
+        });
+        editItemButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adminBoxController.createItemEditWindow();
+
             }
         });
     }
@@ -319,4 +329,6 @@ public class MainUI {
     public JTextField getMostSubsResult() { return mostSubsResult; }
 
     public JTable getItemsTable() { return itemsTable; }
+
+    public JButton getEditItemButton() { return editItemButton; }
 }

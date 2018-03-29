@@ -1,5 +1,7 @@
 package ui;
 
+import client.ItemController;
+
 import javax.swing.*;
 
 public class ItemUI {
@@ -11,6 +13,12 @@ public class ItemUI {
     private JButton ItemAddBtn;
     private JButton ItemUpdateBtn;
     private JButton ItemDeleteBtn;
+
+    private ItemController itemController;
+
+    public ItemUI() {
+        registerController();
+    }
 
     public JPanel getRootPanel() {
         return rootPanel;
@@ -42,5 +50,9 @@ public class ItemUI {
 
     public JButton getItemDeleteBtn() {
         return ItemDeleteBtn;
+    }
+
+    private void registerController() {
+        itemController = new ItemController(this);
     }
 }

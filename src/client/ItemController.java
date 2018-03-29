@@ -1,29 +1,50 @@
 package client;
 
+import model.Item;
 import service.ConnectionService;
 import service.ItemService;
+import ui.ItemUI;
 import ui.MainUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 
-public class ItemController {
-    private MainUI mainUI;
+public class ItemController extends FrameController {
+    private ItemUI itemUI;
     private ItemService itemService;
     private JTable allItemsTable;
+    private int mbid;
+    private JButton editItemButton;
 
-    public ItemController(MainUI mainUI) {
-        this.mainUI = mainUI;
+    public ItemController(ItemUI itemUI) {
+        this.itemUI = itemUI;
         initServices();
+        //initActionListners();
     }
 
-    private void initItemsPanel() {
-        DefaultTableModel dtm = new DefaultTableModel(0, 0);
-        String[] header = new String[] {"Item ID", "value", "mdate", "theme", "cost"};
-        dtm.setColumnIdentifiers(header);
-        allItemsTable = mainUI.getItemsTable();
-        allItemsTable.setModel(dtm);
+    public void setBoxID(int mbid) {
+        this.mbid = mbid;
+    }
+
+//    public void initActionListners() {
+//        editItemButton = mainUI.getEditItemButton();
+//        editItemButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                createItemEditWindow();
+//            }
+//        });
+//    }
+
+    public void deleteItem() {
+
+        // itemService.deleteItem();
 
     }
 
