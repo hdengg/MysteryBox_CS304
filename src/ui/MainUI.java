@@ -2,6 +2,7 @@ package ui;
 
 import client.AccountController;
 import client.BoxController;
+import client.CustomerController;
 import client.SubscriptionsController;
 
 import javax.swing.*;
@@ -115,6 +116,7 @@ public class MainUI {
     private AccountController accountController;
     private BoxController boxController;
     private SubscriptionsController subscriptionsController;
+    private CustomerController customerController;
 
     public MainUI() {
         registerController();
@@ -238,6 +240,7 @@ public class MainUI {
         accountController = new AccountController(this);
         boxController = new BoxController(this);
         subscriptionsController = new SubscriptionsController(this);
+        customerController = new CustomerController(this);
     }
 
     public JPanel getLeftPanel() { return leftPanel; }
@@ -287,4 +290,9 @@ public class MainUI {
     public JTextField getNumSubThemeResult() { return numSubThemeResult; }
 
     public JButton getAddSubsButton() { return addSubsButton; }
+
+    public JTable getAdminCustomerTable() { return adminCustomerTable;
+    }
+
+    public JButton getEditButton1() { return editButton1; }
 }
