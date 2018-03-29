@@ -13,15 +13,13 @@ import ui.MainUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AccountController extends FrameController {
     private Customer customer;
+    private String username;
     private CustomerService customerService;
     private AddressService addressService;
     private CreditCardService creditCardService;
@@ -31,9 +29,10 @@ public class AccountController extends FrameController {
     public AccountController(MainUI mainUI) {
         this.mainUI = mainUI;
         initServices();
-        initListeners();
+        //initListeners();
 
         customer = Session.getInstance().getCustomer();
+        username = customer.getUsername();
 
     }
 
@@ -47,12 +46,12 @@ public class AccountController extends FrameController {
 
     public void setAddressPanel() {
         DefaultTableModel dtm = new DefaultTableModel(0, 0);
-        String[] header = new String[] {"House No.", "Street No.", "Postal Code", "City", "Province"};
+        String[] header = new String[] {"House No.", "Street", "Postal Code", "City", "Province"};
         dtm.setColumnIdentifiers(header);
         mainUI.getAddressTable().setModel(dtm);
 
         try {
-            ArrayList<Address> addresses = addressService.getAllCustomerAddresses(customer.getUsername());
+            ArrayList<Address> addresses = addressService.getAllCustomerAddresses(username);
             for (int i = 0; i < addresses.size(); i++) {
                 Address address = addresses.get(i);
                 dtm.addRow(new Object[] {address.getHouseNum(), address.getStreet(), address.getPostalCode(),
@@ -71,34 +70,58 @@ public class AccountController extends FrameController {
         mainUI.getCreditCardTable().setModel(dtm);
 
         try {
-            ArrayList<CreditCard> creditCards = creditCardService.getCustomerCreditCards(customer.getUsername());
+            ArrayList<CreditCard> cards = creditCardService.getCustomerCreditCards(username);
+            ArrayList<Address> addresses = addressService.getAllCustomerAddresses(customer.getUsername());
+            for (int i = 0; i < cards.size(); i++) {
+                CreditCard card = cards.get(i);
+                dtm.addRow(new Object[] {card.getCid(), card.getExpDate(), card.getType(), card.getLastDigits()});
+            }
 
         } catch (SQLException e) {
-
-        }
-
-    }
-
-
-
-    private class addressEditBtnListner implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            JFrame editAddressFrame = new JFrame("Edit Address");
-            addressUI = new AddressUI();
-            editAddressFrame.setContentPane(addressUI.getRootPanel());
-            setFrameProperties(editAddressFrame);
-            editAddressFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            //TODO: error message
         }
     }
 
-    private class cardEditBtnListner implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            JFrame editCardFrame = new JFrame("Edit Credit Cards");
-            addressUI = new AddressUI();
-            editCardFrame.setContentPane(addressUI.getRootPanel());
-            setFrameProperties(editCardFrame);
-            editCardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    public void createAddressEditWindow() {
+        Address currAddress = getCurrentAddress();
+
+        JFrame editAddressFrame = new JFrame("Edit Address");
+        addressUI = new AddressUI();
+        addressUI.setAddressFields(currAddress);
+        editAddressFrame.setContentPane(addressUI.getRootPanel());
+        setFrameProperties(editAddressFrame);
+        editAddressFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+
+//    private class cardEditBtnListner implements ActionListener {
+//        public void actionPerformed(ActionEvent e) {
+//            JFrame editCardFrame = new JFrame("Edit Credit Cards");
+//            addressUI = new AddressUI();
+//            editCardFrame.setContentPane(addressUI.getRootPanel());
+//            setFrameProperties(editCardFrame);
+//            editCardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        }
+//    }
+
+    private Address getCurrentAddress() {
+        JTable addressTable = mainUI.getAddressTable();
+        int row = addressTable.getSelectedRow();
+
+        ArrayList<String> data = new ArrayList<>();
+
+        for (int i = 0; i < addressTable.getColumnCount(); i++) {
+            data.add(addressTable.getModel().getValueAt(row, i).toString());
+            //System.out.println(addressTable.getModel().getValueAt(row, i).toString());
         }
+
+        int house_num = Integer.parseInt(data.get(0));
+        String street = data.get(1);
+        String postal_code = data.get(2);
+        String city = data.get(3);
+        String province = data.get(4);
+
+        return new Address(house_num, street, postal_code, city, province);
     }
 
     private void initServices() {
@@ -108,10 +131,5 @@ public class AccountController extends FrameController {
         this.addressService = new AddressService(conn);
     }
 
-    private void initListeners() {
-        mainUI.getAddressEditBtn().addActionListener(new addressEditBtnListner());
-        mainUI.getAddressEditBtn().addActionListener(new cardEditBtnListner());
-
-    }
 
 }

@@ -18,15 +18,20 @@ public class AddressController {
     private AddressUI addressUI;
     private AddressService addressService;
     private Customer customer;
-    String house_num;
-    String street;
-    String city;
-    String province;
-    String postal_code;
+    private Address currAddress;
+    private String house_num;
+    private String street;
+    private String city;
+    private String province;
+    private String postal_code;
+    JLabel addressErrorLabel;
+
 
     public AddressController(AddressUI addressUI) {
         this.addressUI = addressUI;
+        addressErrorLabel = addressUI.getAddressErrorLbl();
         customer = Session.getInstance().getCustomer();
+        initServices();
 
     }
 
@@ -35,36 +40,69 @@ public class AddressController {
         this.addressService = new AddressService(conn);
     }
 
-    private void initListeners() {
-
-    }
-
     public boolean hasEmptyInput() {
         return (house_num.isEmpty() || street.isEmpty() || city.isEmpty() || province.isEmpty() || postal_code.isEmpty());
     }
 
-    private class addressUpdateBtnListner implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            if (hasEmptyInput()) {
-                JLabel addressErrorLabel = addressUI.getAddressErrorLbl();
-                addressErrorLabel.setText("Error: empty inputs");
-            } else {
-                try {
-                    ArrayList<Address> addresses = addressService.getAllCustomerAddresses(customer.getUsername());
-                    
 
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
+    public void addAddress() {
+        getInputFields();
 
-                house_num = addressUI.getHouseField().getText();
-                street = addressUI.getStreetField().getText();
-                city = addressUI.getCityField().getText();
-                province = addressUI.getProvinceField().getText();
-                postal_code = addressUI.getProvinceField().getText();
+        if (hasEmptyInput()) {
+            addressErrorLabel = addressUI.getAddressErrorLbl();
+            addressErrorLabel.setText("Error: empty inputs");
+        } else {
+            try {
+                int houseNum = Integer.parseInt(house_num);
+                addressService.addCustomerAddress(customer.getUsername(), houseNum,
+                        street, postal_code, city, province);
+
+            } catch (SQLException e1) {
+                addressErrorLabel.setText("Error: Could not add address");
             }
-            //addressService.updateAddress(customer.getUsername(), );
-            // close current frame and
         }
+    }
+
+    public void updateAddress() {
+        getInputFields();
+
+        if (hasEmptyInput()) {
+            addressErrorLabel = addressUI.getAddressErrorLbl();
+            addressErrorLabel.setText("Error: empty inputs");
+        } else {
+            try {
+                int houseNum = Integer.parseInt(house_num);
+                addressService.updateAddress(customer.getUsername(), currAddress, houseNum,
+                        street, postal_code, city, province);
+
+            } catch (SQLException e1) {
+                addressErrorLabel.setText("Error: Could not update address");
+            }
+        }
+    }
+
+    public void deleteAddress() {
+        getInputFields();
+
+        if (hasEmptyInput()) {
+            addressErrorLabel = addressUI.getAddressErrorLbl();
+            addressErrorLabel.setText("Error: empty inputs");
+        } else {
+            try {
+                int houseNum = Integer.parseInt(house_num);
+                addressService.deleteAddress(customer.getUsername(), houseNum,
+                        street, postal_code);
+            } catch (SQLException e1) {
+                addressErrorLabel.setText("Error: Could not delete address");
+            }
+        }
+    }
+
+    public void getInputFields() {
+        house_num = addressUI.getHouseField().getText();
+        street = addressUI.getStreetField().getText();
+        city = addressUI.getCityField().getText();
+        province = addressUI.getProvinceField().getText();
+        postal_code = addressUI.getPCField().getText();
     }
 }

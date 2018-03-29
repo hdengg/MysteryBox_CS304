@@ -46,18 +46,13 @@ public class MainUI {
     private JPanel custLeftPnl;
     private JButton animeSubBtn;
     private JLabel animeCost;
-    private JTextArea textArea1;
+    private JTextArea animeIsAmazingTextArea;
     private JButton addressEditBtn;
     private JPanel adminLeftPnl;
     private JComboBox comboBox1;
     private JPanel CardPanel;
     private JLabel cardTitle;
     private JTable cardTable;
-    private JButton button1;
-    private JButton button2;
-    private JButton button3;
-    private JTextField textField1;
-    private JTextField textField2;
     private JPanel PaysWithPanel;
     private JPanel ShippingDetailsPanel;
     private JButton payButton;
@@ -96,9 +91,15 @@ public class MainUI {
     private JPanel adminCustomerPanel;
     private JTable adminCustomerTable;
     private JButton editButton1;
+    private JButton cardEditBtn;
+    private JLabel hpCostLbl;
+    private JButton hpSubBtn;
+    private JLabel marvelCostLbl;
+    private JButton marvelSubBtn;
     private JButton CCEditButton;
 
     private AccountController accountController;
+    private BoxController boxController;
 
     public MainUI() {
         registerController();
@@ -133,6 +134,7 @@ public class MainUI {
                 } else if (selectedBox.equals("Marvel")) {
                     changePanel(MarvelPanel);
                 }
+                boxController.setBoxPanel(selectedBox);
             }
         });
         profileBtn.addActionListener(new ActionListener() {
@@ -147,6 +149,32 @@ public class MainUI {
             public void actionPerformed(ActionEvent e) {
                 changePanel(AddressPanel);
                 accountController.setAddressPanel();
+            }
+        });
+
+        addressEditBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                accountController.createAddressEditWindow();
+            }
+        });
+        cardBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePanel(CardPanel);
+                accountController.setCreditCardPanel();
+            }
+        });
+        cardEditBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        marvelSubBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
     }
@@ -173,6 +201,8 @@ public class MainUI {
 
     public void registerController() {
         accountController = new AccountController(this);
+        boxController = new BoxController(this);
+
     }
 
     public JPanel getLeftPanel() { return leftPanel; }
@@ -193,7 +223,11 @@ public class MainUI {
 
     public JButton getAddressEditBtn() { return addressEditBtn; }
 
-    public JButton getCCEditButton() { return CCEditButton; }
+    public JButton getCardEditBtn() { return cardEditBtn; }
 
     public JLabel getAnimeCost() { return animeCost; }
+
+    public JLabel getHpCostLbl() { return hpCostLbl; }
+
+    public JLabel getMarvelCostLbl() { return marvelCostLbl; }
 }

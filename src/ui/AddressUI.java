@@ -2,6 +2,7 @@ package ui;
 
 import client.AccountController;
 import client.AddressController;
+import model.Address;
 import service.AddressService;
 
 import javax.swing.*;
@@ -22,6 +23,7 @@ public class AddressUI {
     private JLabel addressErrorLbl;
 
     private AddressController addressController;
+    private Address currAddress;
 
     public AddressUI() {
         registerController();
@@ -29,20 +31,20 @@ public class AddressUI {
         AddrAddBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                addressController.addAddress();
             }
         });
 
         AddrUpdateBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                addressController.updateAddress();
             }
         });
         AddrDeleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                addressController.deleteAddress();
             }
         });
     }
@@ -70,6 +72,17 @@ public class AddressUI {
     public void registerController() {
         this.addressController = new AddressController(this);
     }
-}
 
+    public void setAddressFields(Address address) {
+        houseField.setText(Integer.toString(address.getHouseNum()));
+        streetField.setText(address.getStreet());
+        PCField.setText(address.getPostalCode());
+        cityField.setText(address.getCity());
+        provinceField.setText(address.getProvince());
+    }
+
+    public void setAddress(Address address) {
+        currAddress = address;
+    }
+}
 

@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="d3379" layout-manager="GridLayoutManager" row-count="5" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="d3379" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="15" left="15" bottom="15" right="15"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
@@ -24,10 +24,10 @@
             </constraints>
             <properties>
               <font size="14" style="1"/>
-              <text value="House No."/>
+              <text value="Card ID"/>
             </properties>
           </component>
-          <component id="81e4" class="javax.swing.JTextField" binding="houseField">
+          <component id="81e4" class="javax.swing.JTextField" binding="cidField">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -41,37 +41,28 @@
             </constraints>
             <properties>
               <font size="14" style="1"/>
-              <text value="Street"/>
+              <text value="Expiry Date"/>
             </properties>
           </component>
-          <component id="c270d" class="javax.swing.JLabel">
+          <component id="26cf1" class="javax.swing.JLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font size="14" style="1"/>
-              <text value="Postal Code"/>
+              <text value="Type"/>
             </properties>
           </component>
-          <component id="26cf1" class="javax.swing.JLabel">
+          <component id="96a0e" class="javax.swing.JLabel">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font size="14" style="1"/>
-              <text value="City"/>
+              <text value="Last Digits"/>
             </properties>
           </component>
-          <component id="96a0e" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font size="14" style="1"/>
-              <text value="Province"/>
-            </properties>
-          </component>
-          <component id="b7333" class="javax.swing.JTextField" binding="streetField">
+          <component id="b7333" class="javax.swing.JTextField" binding="expiryField">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -79,7 +70,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="2d8f2" class="javax.swing.JTextField" binding="PCField">
+          <component id="92f8d" class="javax.swing.JTextField" binding="typeField">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -87,17 +78,9 @@
             </constraints>
             <properties/>
           </component>
-          <component id="92f8d" class="javax.swing.JTextField" binding="cityField">
+          <component id="2d3be" class="javax.swing.JTextField" binding="digitsField">
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="-1"/>
-              </grid>
-            </constraints>
-            <properties/>
-          </component>
-          <component id="2d3be" class="javax.swing.JTextField" binding="provinceField">
-            <constraints>
-              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
@@ -113,14 +96,28 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="77921" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
+          <grid id="77921" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="10" bottom="0" right="0"/>
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
-            <children/>
+            <children>
+              <component id="9dfef" class="javax.swing.JLabel" binding="cardErrorLbl">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
+              <hspacer id="6115c">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+            </children>
           </grid>
           <vspacer id="c2205">
             <constraints>
