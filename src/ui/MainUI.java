@@ -78,10 +78,10 @@ public class MainUI {
     private JButton submitTotalQuery;
     private JTextField totalCostResult;
     private JButton minButton;
-    private JTextField textField3;
+    private JTextField minMaxResult;
     private JButton maxButton;
-    private JButton submitButton;
-    private JTextField textField4;
+    private JButton submitMostSubsQuery;
+    private JTextField mostSubsResult;
     private JButton CCEditButton;
 
     private AccountController accountController;
