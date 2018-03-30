@@ -114,6 +114,8 @@ public class MainUI {
     private JPanel ShipErrorPnl;
     private JButton AdminShipBtn;
     private JTextField shipmentErrorLbl;
+    private JPanel CardErrPanel;
+    private JTextField cardErrTxtField;
 
 
     private AccountController accountController;
@@ -196,7 +198,7 @@ public class MainUI {
         cardEditBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                accountController.createCreditCardEditWindow();
             }
         });
         marvelSubBtn.addActionListener(new ActionListener() {
@@ -389,4 +391,6 @@ public class MainUI {
     public JTextField getShipmentErrorLbl() {
         return shipmentErrorLbl;
     }
+
+    public JTextField getCardErrTxtField() { return cardErrTxtField; }
 }
