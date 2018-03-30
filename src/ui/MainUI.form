@@ -242,7 +242,7 @@
                         <properties/>
                         <border type="none"/>
                         <children>
-                          <component id="a3342" class="javax.swing.JTable">
+                          <component id="a3342" class="javax.swing.JTable" binding="subscriptionTable">
                             <constraints/>
                             <properties/>
                           </component>

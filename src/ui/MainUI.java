@@ -110,6 +110,7 @@ public class MainUI {
     private JRadioButton carrierRadioButton;
     private JRadioButton statusRadioButton;
     private JRadioButton trackingNoRadioButton;
+    private JTable subscriptionTable;
 
     private AccountController accountController;
     private BoxController boxController;

@@ -92,17 +92,6 @@ public class AccountController extends FrameController {
         editAddressFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
-
-//    private class cardEditBtnListner implements ActionListener {
-//        public void actionPerformed(ActionEvent e) {
-//            JFrame editCardFrame = new JFrame("Edit Credit Cards");
-//            addressUI = new AddressUI();
-//            editCardFrame.setContentPane(addressUI.getRootPanel());
-//            setFrameProperties(editCardFrame);
-//            editCardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//        }
-//    }
-
     private Address getCurrentAddress() {
         JTable addressTable = mainUI.getAddressTable();
         int row = addressTable.getSelectedRow();
