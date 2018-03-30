@@ -1,5 +1,6 @@
 package client;
 
+import model.Session;
 import model.Subscription;
 import service.ConnectionService;
 import service.SubscriptionService;
@@ -46,6 +47,26 @@ public class SubscriptionsController extends  FrameController {
                 subscription.getFrom(), subscription.getNum_months(), subscription.getUsername()});
             }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void initCustomerSubscriptionPanel() {
+        DefaultTableModel dtm = new DefaultTableModel(0, 0);
+        String[] header = new String[] {"Subscription ID", "Status", "From", "Num Months", "Username"};
+        dtm.setColumnIdentifiers(header);
+        JTable subscriptionTable = mainUI.getSubscriptionTable();
+        subscriptionTable.setModel(dtm);
+
+        try {
+            String username = Session.getInstance().getCustomer().getUsername();
+            List<Subscription> subscriptions = subscriptionService.getSubsFromCust(username);
+            for (int i = 0; i < subscriptions.size(); i++) {
+                Subscription subscription = subscriptions.get(i);
+                dtm.addRow(new Object[] {subscription.getSid(), subscription.getStatus(),
+                        subscription.getFrom(), subscription.getNum_months(), subscription.getUsername()});
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

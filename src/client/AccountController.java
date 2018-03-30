@@ -66,7 +66,7 @@ public class AccountController extends FrameController {
             }
 
         } catch (SQLException e) {
-            //TODO: error message
+            createErrorDialog("Error: could not retrieve addresses");
         }
     }
 
@@ -82,9 +82,8 @@ public class AccountController extends FrameController {
                 CreditCard card = cards.get(i);
                 dtm.addRow(new Object[] {card.getCid(), card.getExpDate(), card.getType(), card.getLastDigits()});
             }
-
         } catch (SQLException e) {
-            //TODO: error message
+            createErrorDialog("Error: could not retrieve credit cards");
         }
     }
 
@@ -101,7 +100,7 @@ public class AccountController extends FrameController {
 
         JFrame editAddressFrame = new JFrame("Edit Address");
         addressUI = new AddressUI();
-        addressUI.setAddressFields(currAddress);
+        //addressUI.setAddressFields(currAddress);
         editAddressFrame.setContentPane(addressUI.getRootPanel());
         setFrameProperties(editAddressFrame);
         editAddressFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -115,7 +114,6 @@ public class AccountController extends FrameController {
 
         for (int i = 0; i < addressTable.getColumnCount(); i++) {
             data.add(addressTable.getModel().getValueAt(row, i).toString());
-            //System.out.println(addressTable.getModel().getValueAt(row, i).toString());
         }
 
         int house_num = Integer.parseInt(data.get(0));

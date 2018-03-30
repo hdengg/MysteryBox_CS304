@@ -56,7 +56,7 @@ public class AdminBoxController extends FrameController {
                 mysteryBox.getMdate(), mysteryBox.getTheme(), mysteryBox.getCost()});
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            createErrorDialog("Error: failed to get all mystery boxes");
         }
 
     }
@@ -84,7 +84,7 @@ public class AdminBoxController extends FrameController {
                     }
 
                 } catch (SQLException e1) {
-                    e1.printStackTrace();
+                    createErrorDialog("Error: failed to obtain the maximum average item value");
                 }
             }
         });
@@ -100,9 +100,8 @@ public class AdminBoxController extends FrameController {
                         String value = result.get(name).toString();
                         mainUI.getMinMaxResult().setText("mbid " +  key + ": " + value);
                     }
-
                 } catch (SQLException e1) {
-                    e1.printStackTrace();
+                    createErrorDialog("Error: failed to obtain the minimum average item value");
                 }
             }
         });
@@ -120,15 +119,8 @@ public class AdminBoxController extends FrameController {
                     }
 
                 } catch (SQLException e1) {
-                    e1.printStackTrace();
+                    createErrorDialog("Error: failed to obtain the theme with most subscribers");
                 }
-            }
-        });
-        editItemButton = mainUI.getEditItemButton();
-        editItemButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
             }
         });
     }
@@ -167,7 +159,7 @@ public class AdminBoxController extends FrameController {
                 dtm.addRow(new Object[] {item.getItem_id(), item.getValue(), item.getItem_name()});
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            createErrorDialog("Error: failed to get all items for a box");
         }
     }
 
