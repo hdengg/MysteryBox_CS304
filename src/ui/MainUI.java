@@ -111,6 +111,10 @@ public class MainUI {
     private JRadioButton statusRadioButton;
     private JRadioButton trackingNoRadioButton;
     private JTable subscriptionTable;
+    private JPanel ShipErrorPnl;
+    private JButton AdminShipBtn;
+    private JTextField shipmentErrorLbl;
+
 
     private AccountController accountController;
     private BoxController boxController;
@@ -118,6 +122,7 @@ public class MainUI {
     private CustomerController customerController;
     private AdminBoxController adminBoxController;
     private ItemController itemController;
+    private ShipmentController shipmentController;
 
     public MainUI() {
         registerController();
@@ -132,6 +137,12 @@ public class MainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changePanel(AccountPanel);
+            }
+        });
+        AdminShipBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePanel(adminShipmentPanel);
             }
         });
         logoutButton.addActionListener(new ActionListener() {
@@ -259,6 +270,7 @@ public class MainUI {
         subscriptionsController = new SubscriptionsController(this);
         customerController = new CustomerController(this);
         adminBoxController = new AdminBoxController(this);
+        shipmentController = new ShipmentController(this);
     }
 
     public JPanel getLeftPanel() { return leftPanel; }
@@ -333,4 +345,48 @@ public class MainUI {
     public JTable getItemsTable() { return itemsTable; }
 
     public JButton getEditItemButton() { return editItemButton; }
+
+    public JPanel getAdminShipmentPanel() {
+        return adminShipmentPanel;
+    }
+
+    public JTable getAdminShipmentTable() {
+        return adminShipmentTable;
+    }
+
+    public JButton getSubmitSelectQuery() {
+        return submitSelectQuery;
+    }
+
+    public JRadioButton getSubscriptionIDRadioButton() {
+        return subscriptionIDRadioButton;
+    }
+
+    public JRadioButton getShipDateRadioButton() {
+        return shipDateRadioButton;
+    }
+
+    public JRadioButton getShipNo() {
+        return shipNo;
+    }
+
+    public JRadioButton getCarrierRadioButton() {
+        return carrierRadioButton;
+    }
+
+    public JRadioButton getStatusRadioButton() {
+        return statusRadioButton;
+    }
+
+    public JRadioButton getTrackingNoRadioButton() {
+        return trackingNoRadioButton;
+    }
+
+    public JTextField getCarrierField() {
+        return carrierField;
+    }
+
+    public JTextField getShipmentErrorLbl() {
+        return shipmentErrorLbl;
+    }
 }
