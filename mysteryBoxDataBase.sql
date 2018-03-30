@@ -215,7 +215,6 @@ CREATE TABLE Subscription
 	num_month INTEGER,
 	username varchar(20) NOT NULL,
 	PRIMARY KEY (s_id),
-	UNIQUE(username),
 	CONSTRAINT positiveSubID CHECK (s_id > 0),
 	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE);
  
@@ -276,7 +275,6 @@ CREATE TABLE Shipment
 	tracking_no char(20),
 	s_id INTEGER NOT NULL,
 	PRIMARY KEY (shipping_no),
-	UNIQUE(s_id),
 	UNIQUE(tracking_no),
 	CONSTRAINT positiveShipNo CHECK (shipping_no > 0),
 	FOREIGN KEY (s_id) REFERENCES Subscription(s_id) ON DELETE CASCADE);
