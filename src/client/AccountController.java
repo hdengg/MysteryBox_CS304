@@ -98,31 +98,38 @@ public class AccountController extends FrameController {
     public void createAddressEditWindow() {
         Address currAddress = getCurrentAddress();
 
-        JFrame editAddressFrame = new JFrame("Edit Address");
-        addressUI = new AddressUI();
-        //addressUI.setAddressFields(currAddress);
-        editAddressFrame.setContentPane(addressUI.getRootPanel());
-        setFrameProperties(editAddressFrame);
-        editAddressFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        if (currAddress != null) {
+            JFrame editAddressFrame = new JFrame("Edit Address");
+            addressUI = new AddressUI();
+            addressUI.setAddressFields(currAddress);
+            editAddressFrame.setContentPane(addressUI.getRootPanel());
+            setFrameProperties(editAddressFrame);
+            editAddressFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        } else {
+            createErrorDialog("Error: please select an address");
+        }
     }
 
     private Address getCurrentAddress() {
         JTable addressTable = mainUI.getAddressTable();
         int row = addressTable.getSelectedRow();
 
-        ArrayList<String> data = new ArrayList<>();
+        if (row != -1) {
+            ArrayList<String> data = new ArrayList<>();
 
-        for (int i = 0; i < addressTable.getColumnCount(); i++) {
-            data.add(addressTable.getModel().getValueAt(row, i).toString());
+            for (int i = 0; i < addressTable.getColumnCount(); i++) {
+                data.add(addressTable.getModel().getValueAt(row, i).toString());
+            }
+
+            int house_num = Integer.parseInt(data.get(0));
+            String street = data.get(1);
+            String postal_code = data.get(2);
+            String city = data.get(3);
+            String province = data.get(4);
+
+            return new Address(house_num, street, postal_code, city, province);
         }
-
-        int house_num = Integer.parseInt(data.get(0));
-        String street = data.get(1);
-        String postal_code = data.get(2);
-        String city = data.get(3);
-        String province = data.get(4);
-
-        return new Address(house_num, street, postal_code, city, province);
+        return null;
     }
 
 //    private CreditCard getCurrentCreditCard() {
