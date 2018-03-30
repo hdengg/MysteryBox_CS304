@@ -215,7 +215,6 @@ CREATE TABLE Subscription
 	num_month INTEGER,
 	username varchar(20) NOT NULL,
 	PRIMARY KEY (s_id),
-	UNIQUE(username),
 	CONSTRAINT positiveSubID CHECK (s_id > 0),
 	FOREIGN KEY (username) REFERENCES Customer(username) ON DELETE CASCADE);
  

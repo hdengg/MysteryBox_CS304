@@ -1,21 +1,15 @@
 package client;
 
-import model.Item;
-import model.MysteryBox;
 import service.ConnectionService;
 import service.ItemService;
 import service.MysteryBoxService;
 import ui.ItemUI;
-import ui.MainUI;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 public class ItemController extends FrameController {
     private ItemUI itemUI;
@@ -26,11 +20,16 @@ public class ItemController extends FrameController {
     private JButton updatetItemButton;
     private JButton deleteItemButton;
     private JButton addItemButton;
+    private String item_id;
+    private String item_value;
+    private String item_name;
+    JLabel itemErrorLabel;
 
     public ItemController(ItemUI itemUI) {
         this.itemUI = itemUI;
         initServices();
         initActionListners();
+        itemErrorLabel = itemUI.getItemErrorLbl();
     }
 
     public void setBoxID(int mbid) {
@@ -61,27 +60,78 @@ public class ItemController extends FrameController {
         });
     }
 
-    public void addItem() {
-        //TODO: use services to add item to DB
-        System.out.println("add item");
+    public boolean hasEmptyInput() {
+        return (item_id.isEmpty() || item_value.isEmpty() || item_name.isEmpty() );
+    }
 
+    public void addItem() {
+        getInputFields();
+        itemErrorLabel = itemUI.getItemErrorLbl();
+
+        if (hasEmptyInput()) {
+            itemErrorLabel.setText("Error: empty inputs");
+        } else {
+            try {
+                int itemID = Integer.parseInt(item_id);
+                double value = Double.parseDouble(item_value);
+                itemService.addItem(itemID, value, item_name);
+                mysteryBoxService.addItemToBox(mbid, itemID);
+                itemErrorLabel.setText("Added item successfully");
+
+            } catch (SQLException e1) {
+                itemErrorLabel.setText("Error: Could not add item");
+            }
+        }
     }
 
     public void updateItem() {
-        //TODO: use services to update item to DB
-        System.out.println("update item");
+        getInputFields();
+        itemErrorLabel = itemUI.getItemErrorLbl();
+
+        if (hasEmptyInput()) {
+            itemErrorLabel.setText("Error: empty inputs");
+        } else {
+            try {
+                int itemID = Integer.parseInt(item_id);
+                double value = Double.parseDouble(item_value);
+                itemService.updateItem(itemID, value, item_name);
+                itemErrorLabel.setText("Updated item successfully");
+
+            } catch (SQLException e1) {
+                itemErrorLabel.setText("Error: could not update item");
+            }
+        }
     }
 
     public void deleteItem() {
-        // itemService.deleteItem();
-        //TODO: use services to delete item to DB
-        System.out.println("delete item");
+        getInputFields();
+        itemErrorLabel = itemUI.getItemErrorLbl();
+
+        if (hasEmptyInput()) {
+            itemErrorLabel.setText("Error: empty inputs");
+        } else {
+            try {
+                int itemID = Integer.parseInt(item_id);
+                itemService.deleteItem(itemID);
+                itemErrorLabel.setText("Deleted item successfully");
+
+            } catch (SQLException e1) {
+                itemErrorLabel.setText("Error: could not delete address");
+            }
+        }
+
     }
 
     private void initServices() {
         Connection conn = ConnectionService.getInstance().getConnection();
         this.itemService = new ItemService(conn);
         this.mysteryBoxService = new MysteryBoxService(conn);
+    }
+
+    public void getInputFields() {
+        item_id = itemUI.getIdField().getText();
+        item_value = itemUI.getValueField().getText();
+        item_name = itemUI.getNameField().getText();
     }
 
 }
