@@ -113,6 +113,7 @@ public class ItemController extends FrameController {
             try {
                 int itemID = Integer.parseInt(item_id);
                 itemService.deleteItem(itemID);
+                mysteryBoxService.deleteItemFromBox(mbid, itemID);
                 itemErrorLabel.setText("Deleted item successfully");
 
             } catch (SQLException e1) {
