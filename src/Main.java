@@ -16,7 +16,7 @@ public class Main {
 
 
         //connectionService.connect("ora_w8t0b", "a86182169");
-        connectionService.connect(host, "ora_c1z8", "a41584103");
+        connectionService.connect(host, "ora_w8t0b", "a86182169");
         Connection connection = connectionService.getConnection();
         Session session = Session.getInstance();
         CustomerService customerService = new CustomerService(connection);
@@ -24,15 +24,20 @@ public class Main {
         ItemService itemService = new ItemService(connection);
         AddressService addressService = new AddressService(connection);
         CreditCardService credCardService = new CreditCardService(connection);
+        ShipmentService shipmentService = new ShipmentService(connection);
+        SubscriptionService subscriptionService = new SubscriptionService(connection);
 
-        //janiceTester(customerService, addressService, credCardService, shipmentService, subscriptionService, session);
+//        janiceTester(customerService, addressService, credCardService, shipmentService, subscriptionService, itemService,
+//                mysteryBoxService, session);
 
         MainFrameController mfc = new MainFrameController(session, customerService, addressService, credCardService);
     }
 
     public static void janiceTester(CustomerService customerService, AddressService addressService,
                                     CreditCardService credCardService, ShipmentService shipmentService,
-                                    SubscriptionService subscriptionService, Session session) {
+                                    SubscriptionService subscriptionService, ItemService itemService,
+                                    MysteryBoxService mysteryBoxService,
+                                    Session session) {
 //        customerService.login(session, "mikeman", "mikeisthebest");
 //        System.out.println(session.getCustomer().toString());
 //
@@ -144,6 +149,22 @@ public class Main {
 //            subscriptionService.updateSubscription(7, "false", date, 11, "mikeman");
 //        } catch (Exception e) {
 //            e.printStackTrace();
+//        }
+
+//        try {
+//            //itemService.addItem(500, 10.00, "TESTER3");
+//            mysteryBoxService.deleteItemFromBox(1, 500);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
+//        }
+
+//        Date date = new Date(1522027111);
+//
+//        try {
+//            //itemService.addItem(500, 10.00, "TESTER3");
+//            mysteryBoxService.updateMysteryBox(1, 60, date, "GUDETAMA", (float) 99.0);
+//        } catch (SQLException e) {
+//            System.out.println(e.getMessage());
 //        }
 
     }

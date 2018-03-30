@@ -2,7 +2,6 @@ package client;
 
 import model.Item;
 import model.MysteryBox;
-import model.Subscription;
 import service.ConnectionService;
 import service.ItemService;
 import service.MysteryBoxService;
@@ -17,7 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,7 +41,7 @@ public class AdminBoxController extends FrameController {
 
     }
 
-    private void initAdminBoxesPanel() {
+    public void initAdminBoxesPanel() {
         DefaultTableModel dtm = new DefaultTableModel(0, 0);
         String[] header = new String[] {"mbid", "no_items", "mdate", "theme", "cost"};
         dtm.setColumnIdentifiers(header);
