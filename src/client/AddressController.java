@@ -53,6 +53,7 @@ public class AddressController {
                 int houseNum = Integer.parseInt(house_num);
                 addressService.addCustomerAddress(customer.getUsername(), houseNum,
                         street, postal_code, city, province);
+                addressErrorLabel.setText("Address was successfully added");
 
             } catch (SQLException e1) {
                 addressErrorLabel.setText("Error: Could not add address");
@@ -71,6 +72,7 @@ public class AddressController {
                 int houseNum = Integer.parseInt(house_num);
                 addressService.updateAddress(customer.getUsername(), currAddress, houseNum,
                         street, postal_code, city, province);
+                addressErrorLabel.setText("Address was successfully updated");
 
             } catch (SQLException e1) {
                 addressErrorLabel.setText("Error: Could not update address");
@@ -89,10 +91,15 @@ public class AddressController {
                 int houseNum = Integer.parseInt(house_num);
                 addressService.deleteAddress(customer.getUsername(), houseNum,
                         street, postal_code);
+                addressErrorLabel.setText("Address was successfully deleted");
             } catch (SQLException e1) {
                 addressErrorLabel.setText("Error: Could not delete address");
             }
         }
+    }
+
+    public void setCurrAddress(Address address) {
+        currAddress = address;
     }
 
     public void getInputFields() {

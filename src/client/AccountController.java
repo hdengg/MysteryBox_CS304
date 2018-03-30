@@ -101,6 +101,7 @@ public class AccountController extends FrameController {
         if (currAddress != null) {
             JFrame editAddressFrame = new JFrame("Edit Address");
             addressUI = new AddressUI();
+            addressUI.setAddress(currAddress);
             addressUI.setAddressFields(currAddress);
             editAddressFrame.setContentPane(addressUI.getRootPanel());
             setFrameProperties(editAddressFrame);

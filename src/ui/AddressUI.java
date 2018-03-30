@@ -31,6 +31,7 @@ public class AddressUI {
         AddrAddBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                addressController.setCurrAddress(currAddress);
                 addressController.addAddress();
             }
         });
@@ -38,12 +39,14 @@ public class AddressUI {
         AddrUpdateBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                addressController.setCurrAddress(currAddress);
                 addressController.updateAddress();
             }
         });
         AddrDeleteBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                addressController.setCurrAddress(currAddress);
                 addressController.deleteAddress();
             }
         });
