@@ -197,6 +197,7 @@ public class MainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changePanel(adminSubsPanel);
+                subscriptionsController.initAdminSubscriptionPanel();
             }
         });
         AdminCustBtn.addActionListener(new ActionListener() {

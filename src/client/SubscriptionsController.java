@@ -3,6 +3,7 @@ package client;
 import model.Subscription;
 import service.ConnectionService;
 import service.SubscriptionService;
+import ui.AddSubscriptionUI;
 import ui.MainUI;
 import ui.UpdateSubscriptionUI;
 
@@ -22,14 +23,12 @@ public class SubscriptionsController extends  FrameController {
     private JButton submitSubAllThemes;
     private JButton addSubscriptionBtn;
     private JButton updateSubscriptionBtn;
-    private UpdateSubscriptionUI updateSubscriptionUI;
 
     public SubscriptionsController(MainUI mainUI) {
         this.mainUI = mainUI;
         initServices();
         initAdminSubscriptionPanel();
         initActionListeners();
-
     }
 
     public void initAdminSubscriptionPanel() {
@@ -74,7 +73,7 @@ public class SubscriptionsController extends  FrameController {
         addSubscriptionBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                createAddSubscriptionWindow();
             }
         });
 
@@ -93,8 +92,7 @@ public class SubscriptionsController extends  FrameController {
             numSubs =  subscriptionService.getNumSubsFromTheme(theme);
             return numSubs;
         } catch (SQLException e) {
-            e.printStackTrace();
-            //TODO: error dialog "Could not retrieve results"
+            createErrorDialog("Error: Could not retrieve results");
         }
         return numSubs;
     }
@@ -119,10 +117,18 @@ public class SubscriptionsController extends  FrameController {
 
     public void createUpdateSubscriptionWindow() {
         JFrame updateSubscriptionFrame = new JFrame("Update Subscription");
-        updateSubscriptionUI = new UpdateSubscriptionUI();
+        UpdateSubscriptionUI updateSubscriptionUI = new UpdateSubscriptionUI();
         updateSubscriptionFrame.setContentPane(updateSubscriptionUI.getRootPanel());
         setFrameProperties(updateSubscriptionFrame);
         updateSubscriptionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+    public void createAddSubscriptionWindow() {
+        JFrame addSubscriptionFrame = new JFrame("Add Subscription");
+        AddSubscriptionUI addSubscriptionUI = new AddSubscriptionUI();
+        addSubscriptionFrame.setContentPane(addSubscriptionUI.getRootPanel());
+        setFrameProperties(addSubscriptionFrame);
+        addSubscriptionFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
 

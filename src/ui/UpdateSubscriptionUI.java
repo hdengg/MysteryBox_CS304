@@ -38,6 +38,7 @@ public class UpdateSubscriptionUI {
                     Date date = stringToDate(fromField.getText());
                     java.sql.Date sqlDate = new java.sql.Date(date.getTime());
                     subscriptionService.updateSubscription(sid, status, sqlDate, num_months, username);
+                    errorLabel.setText("Subscription successfully updated!");
                 } catch (Exception e1) {
                     e1.printStackTrace();
                     errorLabel.setText("Error: update subscription failed");
@@ -50,7 +51,6 @@ public class UpdateSubscriptionUI {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         return formatter.parse(dateStr);
-
     }
 
     private void initServices() {

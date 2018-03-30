@@ -187,15 +187,6 @@ public class AdminBoxController extends FrameController {
     }
 
 
-    public void createErrorDialog(String message) {
-        JFrame errorFrame = new JFrame("Error");
-        ErrorDialog errorDialog = new ErrorDialog();
-        errorFrame.setContentPane(errorDialog.getRootPanel());
-        errorDialog.getErrorLabel().setText(message);
-        setFrameProperties(errorFrame);
-        errorFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    }
-
     private void initServices() {
         Connection conn = ConnectionService.getInstance().getConnection();
         this.mysteryBoxService = new MysteryBoxService(conn);
