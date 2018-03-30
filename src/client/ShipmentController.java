@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminShipmentController extends FrameController {
+public class ShipmentController extends FrameController {
     private ShipmentService shipmentService;
     private MainUI mainUI;
     private JTable adminShipmentTable;
@@ -35,7 +35,7 @@ public class AdminShipmentController extends FrameController {
     private String tracking_no;
     private int s_id;
 
-    public AdminShipmentController(MainUI mainUI) {
+    public ShipmentController(MainUI mainUI) {
         this.mainUI = mainUI;
         shipmentErrLbl = mainUI.getShipmentErrorLbl();
         initServices();

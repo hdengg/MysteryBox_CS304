@@ -111,6 +111,8 @@ public class MainUI {
     private JPanel ShipErrorPnl;
     private JButton AdminShipBtn;
     private JTextField shipmentErrorLbl;
+    private JPanel CardErrPanel;
+    private JTextField cardErrTxtField;
     private JTextField houseNumField;
 
 
@@ -120,7 +122,8 @@ public class MainUI {
     private CustomerController customerController;
     private AdminBoxController adminBoxController;
     private ItemController itemController;
-    private AdminShipmentController adminShipmentController;
+    private ShipmentController shipmentController;
+    private int mbid;
 
     public MainUI() {
         registerController();
@@ -128,8 +131,8 @@ public class MainUI {
         subButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                changePanel(SubscriptionPanel);
                 subscriptionsController.initCustomerSubscriptionPanel();
+                changePanel(SubscriptionPanel);
             }
         });
         accountButton.addActionListener(new ActionListener() {
@@ -195,7 +198,7 @@ public class MainUI {
         cardEditBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                accountController.createCreditCardEditWindow();
             }
         });
         marvelSubBtn.addActionListener(new ActionListener() {
@@ -245,7 +248,8 @@ public class MainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changePanel(ShippingDetailsPanel);
-                boxController.setShippintDetailsPanel();
+                boxController.setShippingDetailsPanel();
+                mbid = 5;
             }
         });
         ShipDetailsBtn.addActionListener(new ActionListener() {
@@ -253,7 +257,42 @@ public class MainUI {
             public void actionPerformed(ActionEvent e) {
                 if (boxController.handleShipping()) {
                     changePanel(PaysWithPanel);
+                    boxController.setPaymentPanel();
                 }
+            }
+        });
+        payButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boxController.handlePayment(mbid);
+            }
+        });
+        animeSubBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePanel(ShippingDetailsPanel);
+                boxController.setShippingDetailsPanel();
+                mbid = 7;
+            }
+        });
+        marvelSubBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePanel(ShippingDetailsPanel);
+                boxController.setShippingDetailsPanel();
+                mbid = 8;
+            }
+        });
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(-1);
+            }
+        });
+        LogoutBtn1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(-1);
             }
         });
     }
@@ -284,7 +323,7 @@ public class MainUI {
         subscriptionsController = new SubscriptionsController(this);
         customerController = new CustomerController(this);
         adminBoxController = new AdminBoxController(this);
-        adminShipmentController = new AdminShipmentController(this);
+        shipmentController = new ShipmentController(this);
     }
 
     public JPanel getLeftPanel() { return leftPanel; }
@@ -335,8 +374,7 @@ public class MainUI {
 
     public JButton getAddSubsButton() { return addSubsButton; }
 
-    public JTable getAdminCustomerTable() { return adminCustomerTable;
-    }
+    public JTable getAdminCustomerTable() { return adminCustomerTable; }
 
     public JButton getEditButton1() { return editButton1; }
   
@@ -366,53 +404,28 @@ public class MainUI {
 
     public JTable getAdminShipmentTable() { return adminShipmentTable; }
 
-    public JButton getSubmitSelectQuery() {
-        return submitSelectQuery;
-    }
+    public JButton getSubmitSelectQuery() { return submitSelectQuery; }
 
-    public JRadioButton getSubscriptionIDRadioButton() {
-        return subscriptionIDRadioButton;
-    }
+    public JRadioButton getSubscriptionIDRadioButton() { return subscriptionIDRadioButton; }
 
-    public JRadioButton getShipDateRadioButton() {
-        return shipDateRadioButton;
-    }
+    public JRadioButton getShipDateRadioButton() { return shipDateRadioButton; }
 
-    public JRadioButton getShipNo() {
-        return shipNo;
-    }
+    public JRadioButton getShipNo() { return shipNo; }
 
-    public JRadioButton getCarrierRadioButton() {
-        return carrierRadioButton;
-    }
+    public JRadioButton getCarrierRadioButton() { return carrierRadioButton; }
 
-    public JRadioButton getStatusRadioButton() {
-        return statusRadioButton;
-    }
+    public JRadioButton getStatusRadioButton() { return statusRadioButton; }
 
-    public JRadioButton getTrackingNoRadioButton() {
-        return trackingNoRadioButton;
-    }
+    public JRadioButton getTrackingNoRadioButton() { return trackingNoRadioButton; }
 
-    public JTextField getCarrierField() {
-        return carrierField;
-    }
+    public JTextField getCarrierField() { return carrierField; }
 
-    public JTextField getShipmentErrorLbl() {
-        return shipmentErrorLbl;
-    }
+    public JTextField getShipmentErrorLbl() { return shipmentErrorLbl; }
 
     public JTable getAddresses() { return Addresses; }
 
     public JTextField getHouseNumField() { return houseNumField; }
 
-    public JButton getAnimeSubBtn() { return animeSubBtn; }
-
-    public JButton getHpSubBtn() { return hpSubBtn; }
-
-    public JButton getMarvelSubBtn() { return marvelSubBtn; }
-
-    public JButton getShipDetailsBtn() { return ShipDetailsBtn; }
 
     public JTextField getStreetField() { return streetField; }
 
@@ -423,4 +436,10 @@ public class MainUI {
     public JTextField getCityField() { return cityField; }
 
     public JTable getCreditCards() { return CreditCards; }
+
+    public JTextField getCCNumber() { return CCNumber; }
+
+    public JTextField getCCExpDate() { return CCExpDate; }
+
+    public JTextField getCCType() { return CCType; }
 }

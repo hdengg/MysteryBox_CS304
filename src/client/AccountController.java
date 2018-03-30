@@ -9,13 +9,18 @@ import service.ConnectionService;
 import service.CreditCardService;
 import service.CustomerService;
 import ui.AddressUI;
+import ui.CardUI;
 import ui.MainUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AccountController extends FrameController {
     private Customer customer;
@@ -25,6 +30,8 @@ public class AccountController extends FrameController {
     private CreditCardService creditCardService;
     private MainUI mainUI;
     private AddressUI addressUI;
+    private CardUI cardUI;
+    private JFrame editJFrame;
 
     public AccountController(MainUI mainUI) {
         this.mainUI = mainUI;
@@ -59,7 +66,7 @@ public class AccountController extends FrameController {
             }
 
         } catch (SQLException e) {
-            //TODO: error message
+            createErrorDialog("Error: could not retrieve addresses");
         }
     }
 
@@ -75,10 +82,17 @@ public class AccountController extends FrameController {
                 CreditCard card = cards.get(i);
                 dtm.addRow(new Object[] {card.getCid(), card.getExpDate(), card.getType(), card.getLastDigits()});
             }
-
         } catch (SQLException e) {
-            //TODO: error message
+            createErrorDialog("Error: could not retrieve credit cards");
         }
+    }
+
+    public void createCreditCardEditWindow() {
+        JFrame editCreditFrame = new JFrame("Edit Credit Cards");
+        cardUI = new CardUI();
+        editCreditFrame.setContentPane(cardUI.getRootPanel());
+        setFrameProperties(editCreditFrame);
+        editCreditFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     public void createAddressEditWindow() {
@@ -86,7 +100,7 @@ public class AccountController extends FrameController {
 
         JFrame editAddressFrame = new JFrame("Edit Address");
         addressUI = new AddressUI();
-        addressUI.setAddressFields(currAddress);
+        //addressUI.setAddressFields(currAddress);
         editAddressFrame.setContentPane(addressUI.getRootPanel());
         setFrameProperties(editAddressFrame);
         editAddressFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -110,6 +124,40 @@ public class AccountController extends FrameController {
 
         return new Address(house_num, street, postal_code, city, province);
     }
+
+//    private CreditCard getCurrentCreditCard() {
+//        JTable creditCardTable = mainUI.getCreditCardTable();
+//        int row = creditCardTable.getSelectedRow();
+//        if (creditCardTable.getSelectedRow() == -1) {
+//            mainUI.getCardErrTxtField().setText("Error: No rows selected");
+//            return null;
+//        } else {
+//            ArrayList<String> data = new ArrayList<>();
+//
+//            for (int i = 0; i < creditCardTable.getColumnCount(); i++) {
+//                data.add(creditCardTable.getModel().getValueAt(row, i).toString());
+//            }
+//
+//            System.out.println(data);
+//
+//            int cid = Integer.parseInt(data.get(0));
+//            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//            String unParsedDate = data.get(1);
+//            System.out.println(data.get(1));
+//            Date parsedDate = null;
+//            try {
+//                parsedDate = dateFormat.parse(unParsedDate);
+//            } catch (ParseException e) {
+//                mainUI.getCardErrTxtField().setText("Error: Incorrect format of expiry date. Must be in format" +
+//                        " yyyy-MM-dd");
+//            }
+//            java.sql.Date expDate = new java.sql.Date(parsedDate.getTime());
+//            String token = CardController.randomTokenGenerator();
+//            String type = data.get(2);
+//            int lastDigits = Integer.parseInt(data.get(3));
+//            return new CreditCard(cid, expDate, token, type, lastDigits);
+//        }
+//    }
 
     private void initServices() {
         Connection conn = ConnectionService.getInstance().getConnection();

@@ -1,22 +1,24 @@
 package client;
 
 import model.*;
-import service.AddressService;
-import service.ConnectionService;
-import service.ItemService;
-import service.MysteryBoxService;
+import service.*;
 import ui.MainUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class BoxController extends FrameController {
     private MysteryBoxService mysteryBoxService;
     private AddressService addressService;
+    private CreditCardService creditCardService;
+    private SubscriptionService subscriptionService;
     private MainUI mainUI;
     private MysteryBox mysteryBox;
     private String house_num;
@@ -24,6 +26,9 @@ public class BoxController extends FrameController {
     private String city;
     private String province;
     private String postal_code;
+    private String cardNo;
+    private String expDate;
+    private String cardType;
     private Customer customer;
 
     public BoxController(MainUI mainUI) {
@@ -53,7 +58,7 @@ public class BoxController extends FrameController {
         }
     }
 
-    public void setShippintDetailsPanel() {
+    public void setShippingDetailsPanel() {
         DefaultTableModel dtm = new DefaultTableModel(0, 0);
         String[] header = new String[] {"House No.", "Street", "Postal Code", "City", "Province"};
         dtm.setColumnIdentifiers(header);
@@ -69,26 +74,56 @@ public class BoxController extends FrameController {
             }
 
         } catch (SQLException e) {
-            //TODO: error message
+            createErrorDialog("Error: could not retrieve addresses");
+        }
+    }
+
+    public void setPaymentPanel() {
+        DefaultTableModel dtm = new DefaultTableModel(0, 0);
+        String[] header = new String[] {"Card ID", "Expiry Date", "Type", "Last Digits"};
+        dtm.setColumnIdentifiers(header);
+        mainUI.getCreditCards().setModel(dtm);
+
+        try {
+            ArrayList<CreditCard> cards = creditCardService.getCustomerCreditCards(customer.getUsername());
+            for (int i = 0; i < cards.size(); i++) {
+                CreditCard card = cards.get(i);
+                dtm.addRow(new Object[] {card.getCid(), card.getExpDate(), card.getType(), card.getLastDigits()});
+            }
+
+        } catch (SQLException e) {
+            createErrorDialog("Error: could not retrieve credit cards");
         }
     }
 
     public boolean handleShipping() {
         if (getCurrentAddress() == null) {
-            getInputFields();
-            if (hasEmptyInput()) {
+            getAddressInputFields();
+            if (hasEmptyAddressInput()) {
                 createErrorDialog("Error: Please select an existing address or input a valid address");
                 return false;
             } else {
                 return addAddress();
             }
         }
-        return false;
+        return true;
     }
 
-    public void handlePayment() {
+    public void handlePayment(int mbid) {
         if (!isCardSelected()) {
-
+            CreditCard card = getCreditCard();
+            if (card != null) {
+                try {
+                    creditCardService.addCustomerCreditCard(customer.getUsername(), card);
+                } catch (SQLException e) {
+                    createErrorDialog("Error: Could not add the credit card to the account");
+                }
+            } else {
+                createErrorDialog("Error: Please select an existing credit card or input a valid credit card");
+            }
+        }
+        if (addSubscription(mbid)) {
+            createErrorDialog("Subscription was added successfully! Enjoy.");
         }
 
     }
@@ -123,6 +158,43 @@ public class BoxController extends FrameController {
         return (row != -1);
     }
 
+    private CreditCard getCreditCard() {
+        getCreditCardInputFields();
+        if (hasEmptyCardInput()) {
+            return null;
+        } else {
+            int min = 15;
+            int max = 500;
+            int cid = ThreadLocalRandom.current().nextInt(min, max);
+            try {
+                Date date = stringToDate(expDate);
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                String token = CardController.randomTokenGenerator();
+                int lastDigits = getLastDigits();
+                return new CreditCard(cid, sqlDate, token, cardType, lastDigits);
+            } catch (ParseException e) {
+                return null;
+            }
+        }
+    }
+
+    private boolean addSubscription(int mbid) {
+        int min = 15;
+        int max = 500;
+        int sid = ThreadLocalRandom.current().nextInt(min, max);
+        String status = "true";
+        try {
+            Date date = stringToDate("2018-04-06");
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            subscriptionService.addSubscription(sid, status, sqlDate, 1,
+                    customer.getUsername(), mbid);
+            return true;
+        } catch (Exception e) {
+            createErrorDialog("Error: Could not add subscription to account");
+            return false;
+        }
+    }
+
     public boolean addAddress() {
         int houseNum = Integer.parseInt(house_num);
         try {
@@ -135,11 +207,21 @@ public class BoxController extends FrameController {
         }
     }
 
-    public boolean hasEmptyInput() {
+    public boolean hasEmptyAddressInput() {
         return (house_num.isEmpty() || street.isEmpty() || city.isEmpty() || province.isEmpty() || postal_code.isEmpty());
     }
 
-    public void getInputFields() {
+    public boolean hasEmptyCardInput() {
+        return (cardNo.isEmpty() || expDate.isEmpty() || cardType.isEmpty());
+    }
+
+    public void getCreditCardInputFields() {
+        cardNo = mainUI.getCCNumber().getText();
+        expDate = mainUI.getCCExpDate().getText();
+        cardType = mainUI.getCCType().getText();
+    }
+
+    public void getAddressInputFields() {
         house_num = mainUI.getHouseNumField().getText();
         street = mainUI.getStreetField().getText();
         city = mainUI.getCityField().getText();
@@ -147,10 +229,27 @@ public class BoxController extends FrameController {
         postal_code = mainUI.getPCField().getText();
     }
 
+    public Date stringToDate(String dateStr) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        return formatter.parse(dateStr);
+    }
+
+    public int getLastDigits() {
+        if (cardNo.length() > 3) {
+            String lastDigitsStr = cardNo.substring(cardNo.length() - 3);
+            return Integer.parseInt(lastDigitsStr);
+        } else {
+            return -1;
+        }
+    }
+
     private void initServices() {
         Connection conn = ConnectionService.getInstance().getConnection();
         this.mysteryBoxService = new MysteryBoxService(conn);
         this.addressService = new AddressService(conn);
+        this.creditCardService = new CreditCardService(conn);
+        this.subscriptionService = new SubscriptionService(conn);
 
     }
 }
