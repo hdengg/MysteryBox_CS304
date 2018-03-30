@@ -24,7 +24,6 @@ public class CustomerController {
         this.mainUI = mainUI;
         initServices();
         initAdminCustomerPanel();
-        initActionListeners();
 
     }
 
@@ -47,16 +46,6 @@ public class CustomerController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private void initActionListeners() {
-        editCustomer = mainUI.getEditButton1();
-        editCustomer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
     }
 
     private Customer getCurrentCustomer() {
