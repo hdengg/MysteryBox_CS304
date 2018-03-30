@@ -84,7 +84,6 @@ public class ShipmentService {
         if (subscriptionIdCol) dynamicSelection.add("s_id");
 
         String selectionString = String.join(", ", dynamicSelection);
-        System.out.println(selectionString);
 
         PreparedStatement pstmt = connection.prepareStatement(
                 "SELECT " + selectionString + " FROM Shipment WHERE carrier = ?"

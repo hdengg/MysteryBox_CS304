@@ -1,5 +1,6 @@
 package client;
 
+import model.Item;
 import model.MysteryBox;
 import service.ConnectionService;
 import service.ItemService;
@@ -7,8 +8,10 @@ import service.MysteryBoxService;
 import ui.MainUI;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public class BoxController {
     private MysteryBoxService mysteryBoxService;

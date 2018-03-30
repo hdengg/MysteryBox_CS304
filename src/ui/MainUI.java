@@ -1,7 +1,7 @@
 package ui;
 
-import client.AccountController;
-import client.BoxController;
+import client.*;
+import model.Item;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +49,6 @@ public class MainUI {
     private JTextArea animeIsAmazingTextArea;
     private JButton addressEditBtn;
     private JPanel adminLeftPnl;
-    private JComboBox comboBox1;
     private JPanel CardPanel;
     private JLabel cardTitle;
     private JTable cardTable;
@@ -84,7 +83,7 @@ public class MainUI {
     private JButton submitMostSubsQuery;
     private JTextField mostSubsResult;
     private JTable itemsTable;
-    private JButton editButton;
+    private JButton editItemButton;
     private JPanel adminSubsPanel;
     private JTable allSubscribers;
     private JButton addSubsButton;
@@ -97,9 +96,33 @@ public class MainUI {
     private JPanel adminCustomerPanel;
     private JTable adminCustomerTable;
     private JButton editButton1;
+    private JButton AdminSubBtn;
+    private JButton AdminCustBtn;
+    private JButton AdminBoxesBtn;
+    private JButton LogoutBtn1;
+    private JPanel adminShipmentPanel;
+    private JTable adminShipmentTable;
+    private JTextField carrierField;
+    private JButton submitSelectQuery;
+    private JRadioButton subscriptionIDRadioButton;
+    private JRadioButton shipDateRadioButton;
+    private JRadioButton shipNo;
+    private JRadioButton carrierRadioButton;
+    private JRadioButton statusRadioButton;
+    private JRadioButton trackingNoRadioButton;
+    private JTable subscriptionTable;
+    private JPanel ShipErrorPnl;
+    private JButton AdminShipBtn;
+    private JTextField shipmentErrorLbl;
+
 
     private AccountController accountController;
     private BoxController boxController;
+    private SubscriptionsController subscriptionsController;
+    private CustomerController customerController;
+    private AdminBoxController adminBoxController;
+    private ItemController itemController;
+    private ShipmentController shipmentController;
 
     public MainUI() {
         registerController();
@@ -114,6 +137,12 @@ public class MainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 changePanel(AccountPanel);
+            }
+        });
+        AdminShipBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePanel(adminShipmentPanel);
             }
         });
         logoutButton.addActionListener(new ActionListener() {
@@ -176,6 +205,43 @@ public class MainUI {
 
             }
         });
+        AdminSubBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePanel(adminSubsPanel);
+                subscriptionsController.initAdminSubscriptionPanel();
+            }
+        });
+        AdminCustBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePanel(adminCustomerPanel);
+            }
+        });
+        AdminBoxesBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                changePanel(adminBoxPanel);
+            }
+        });
+        viewItemsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int mbid = adminBoxController.getSelectedBoxId();
+                if (mbid != 0) {
+                    changePanel(adminItemsPanel);
+                    adminBoxController.setBoxID(mbid);
+                    adminBoxController.initItemsPanel();
+                }
+            }
+        });
+        editItemButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adminBoxController.createItemEditWindow();
+
+            }
+        });
     }
 
     public JPanel getRootPanel() {
@@ -201,7 +267,10 @@ public class MainUI {
     public void registerController() {
         accountController = new AccountController(this);
         boxController = new BoxController(this);
-
+        subscriptionsController = new SubscriptionsController(this);
+        customerController = new CustomerController(this);
+        adminBoxController = new AdminBoxController(this);
+        shipmentController = new ShipmentController(this);
     }
 
     public JPanel getLeftPanel() { return leftPanel; }
@@ -229,4 +298,95 @@ public class MainUI {
     public JLabel getHpCostLbl() { return hpCostLbl; }
 
     public JLabel getMarvelCostLbl() { return marvelCostLbl; }
+
+    public JPanel getRightPanel() { return rightPanel; }
+
+    public JPanel getAdminCustomerPanel() { return adminCustomerPanel; }
+
+    public JTable getAllSubscribers() { return allSubscribers; }
+
+    public JTable getAllSubsThemeResult() { return allSubsThemeResult; }
+
+    public JTextField getSubThemeField() { return subTheme; }
+
+    public JButton getSubButton() { return subButton; }
+
+    public JButton getUpdateSubsButton() { return updateSubsButton; }
+
+    public JButton getSubmitNumSubThemeQuery() { return submitNumSubThemeQuery; }
+
+    public JButton getSubmitAllThemesQuery() { return submitAllThemesQuery; }
+
+    public JTextField getNumSubThemeResult() { return numSubThemeResult; }
+
+    public JButton getAddSubsButton() { return addSubsButton; }
+
+    public JTable getAdminCustomerTable() { return adminCustomerTable;
+    }
+
+    public JButton getEditButton1() { return editButton1; }
+  
+    public JTable getAllBoxes() { return allBoxes; }
+
+    public JButton getSubmitTotalQueryBtn() { return submitTotalQuery; }
+
+    public JTextField getTotalCostResult() { return totalCostResult; }
+
+    public JButton getMaxButton() { return maxButton; }
+
+    public JButton getMinButton() { return minButton; }
+
+    public JTextField getMinMaxResult() { return minMaxResult; }
+
+    public JButton getSubmitMostSubsQuery() { return submitMostSubsQuery; }
+
+    public JTextField getMostSubsResult() { return mostSubsResult; }
+
+    public JTable getItemsTable() { return itemsTable; }
+
+    public JButton getEditItemButton() { return editItemButton; }
+
+    public JPanel getAdminShipmentPanel() {
+        return adminShipmentPanel;
+    }
+
+    public JTable getAdminShipmentTable() {
+        return adminShipmentTable;
+    }
+
+    public JButton getSubmitSelectQuery() {
+        return submitSelectQuery;
+    }
+
+    public JRadioButton getSubscriptionIDRadioButton() {
+        return subscriptionIDRadioButton;
+    }
+
+    public JRadioButton getShipDateRadioButton() {
+        return shipDateRadioButton;
+    }
+
+    public JRadioButton getShipNo() {
+        return shipNo;
+    }
+
+    public JRadioButton getCarrierRadioButton() {
+        return carrierRadioButton;
+    }
+
+    public JRadioButton getStatusRadioButton() {
+        return statusRadioButton;
+    }
+
+    public JRadioButton getTrackingNoRadioButton() {
+        return trackingNoRadioButton;
+    }
+
+    public JTextField getCarrierField() {
+        return carrierField;
+    }
+
+    public JTextField getShipmentErrorLbl() {
+        return shipmentErrorLbl;
+    }
 }

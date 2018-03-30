@@ -19,7 +19,7 @@ public class Subscription extends Model {
 
     public int getSid() { return s_id; }
 
-    public String isStatus() { return status; }
+    public String getStatus() { return status; }
 
     public Date getFrom() { return s_from; }
 

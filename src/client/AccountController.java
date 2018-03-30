@@ -71,7 +71,6 @@ public class AccountController extends FrameController {
 
         try {
             ArrayList<CreditCard> cards = creditCardService.getCustomerCreditCards(username);
-            ArrayList<Address> addresses = addressService.getAllCustomerAddresses(customer.getUsername());
             for (int i = 0; i < cards.size(); i++) {
                 CreditCard card = cards.get(i);
                 dtm.addRow(new Object[] {card.getCid(), card.getExpDate(), card.getType(), card.getLastDigits()});
@@ -92,17 +91,6 @@ public class AccountController extends FrameController {
         setFrameProperties(editAddressFrame);
         editAddressFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
-
-
-//    private class cardEditBtnListner implements ActionListener {
-//        public void actionPerformed(ActionEvent e) {
-//            JFrame editCardFrame = new JFrame("Edit Credit Cards");
-//            addressUI = new AddressUI();
-//            editCardFrame.setContentPane(addressUI.getRootPanel());
-//            setFrameProperties(editCardFrame);
-//            editCardFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//        }
-//    }
 
     private Address getCurrentAddress() {
         JTable addressTable = mainUI.getAddressTable();
