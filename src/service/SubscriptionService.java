@@ -303,10 +303,10 @@ public class SubscriptionService {
         createView();
         List<String> usernames = new ArrayList<>();
         st = con.createStatement();
-        String query = "SELECT username FROM Subscription S WHERE NOT EXISTS "
+        String query = "SELECT DISTINCT username FROM Subscription S WHERE NOT EXISTS "
                 + "(SELECT M.theme FROM Mystery_Box M "
                 + "WHERE NOT EXISTS (SELECT * FROM join_table J WHERE "
-                + "J.theme = M.theme AND J.s_id = S.s_id))";
+                + "J.theme = M.theme AND J.username = S.username))";
         rs = st.executeQuery(query);
         while (rs.next()) {
             String username = rs.getString("username");
