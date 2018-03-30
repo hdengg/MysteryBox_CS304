@@ -4,8 +4,8 @@ Final Project for CS304
 ![ER Diagram](https://github.com/hdengg/MysteryBox_CS304/blob/master/MysteryBoxRevised.jpg)
 
 ### DEMO DAY CHECKLIST 
-- [ ] **2 MARKS** Selection Query & Projection Query </br >
-To be decided. For this query, must be able to allow user to select which columns they want displayed (projection). 
+- [x] **2 MARKS** Selection Query & Projection Query </br >
+Filter Shipments by Carrier. Can use projection fields. 
 - [x] **1 MARK** Join Query 
 Gets the credit cards from user 
 ```
@@ -39,13 +39,9 @@ Case 1: Delete an item. Now get all items from a box that had that item in it. T
 Case 2: Janice has one
 
 - [x] **2 MARKS** Update Constraint: </br >
-Add check constraint to provinces in SQL file </br >
-Try updating address of customer by inputting province = Ontario </br >
-Display error message </br >
-Update address of customer using province = British Columbia </br >
-Show successful update </br >
+Updating an item with a negative value. 
 
-- [ ] **3 MARKS** GUI:  
+- [x] **3 MARKS** GUI:  
 - Type checks 
 - Error handling 
 - Functional interface 
