@@ -100,7 +100,6 @@ public class AccountController extends FrameController {
 
         for (int i = 0; i < addressTable.getColumnCount(); i++) {
             data.add(addressTable.getModel().getValueAt(row, i).toString());
-            //System.out.println(addressTable.getModel().getValueAt(row, i).toString());
         }
 
         int house_num = Integer.parseInt(data.get(0));
