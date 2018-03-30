@@ -10,6 +10,10 @@ public class ItemUI {
     private JTextField valueField;
     private JTextField nameField;
     private JPanel itemErrorPnl;
+
+
+
+    private JLabel itemErrorLbl;
     private JButton ItemAddBtn;
     private JButton ItemUpdateBtn;
     private JButton ItemDeleteBtn;
@@ -41,6 +45,9 @@ public class ItemUI {
         return itemErrorPnl;
     }
 
+    public JLabel getItemErrorLbl() {
+        return itemErrorLbl;
+    }
     public JButton getItemAddBtn() {
         return ItemAddBtn;
     }

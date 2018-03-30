@@ -18,6 +18,7 @@ public class MainUI {
     private JPanel AccountPanel;
     private JPanel SubscriptionPanel;
     private JPanel HPPanel;
+    private JPanel ShippingPanel;
     private JLabel ATitle;
     private JLabel SBTitle;
     private JLabel HPTitle;
@@ -223,6 +224,7 @@ public class MainUI {
         AdminBoxesBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                adminBoxController.initAdminBoxesPanel();
                 changePanel(adminBoxPanel);
             }
         });
@@ -420,12 +422,9 @@ public class MainUI {
 
     public JTextField getCarrierField() { return carrierField; }
 
-    public JTextField getShipmentErrorLbl() { return shipmentErrorLbl; }
-
     public JTable getAddresses() { return Addresses; }
 
     public JTextField getHouseNumField() { return houseNumField; }
-
 
     public JTextField getStreetField() { return streetField; }
 
@@ -442,4 +441,8 @@ public class MainUI {
     public JTextField getCCExpDate() { return CCExpDate; }
 
     public JTextField getCCType() { return CCType; }
+
+    public JTextField getShipmentErrorLbl() { return shipmentErrorLbl; }
+
+    public JTextField getCardErrTxtField() { return cardErrTxtField; }
 }

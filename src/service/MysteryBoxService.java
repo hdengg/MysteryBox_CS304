@@ -127,8 +127,8 @@ public class MysteryBoxService {
             ps.setInt(1, no_items);
             ps.setDate(2, mdate);
             ps.setString(3, theme);
-            ps.setInt(4, mbid);
-            ps.setFloat(5, cost);
+            ps.setFloat(4, cost);
+            ps.setInt(5, mbid);
             ps.executeUpdate();
             connection.commit();
             ps.close();
@@ -152,10 +152,17 @@ public class MysteryBoxService {
             ps.executeUpdate();
             connection.commit();
             ps.close();
+            updateBoxItemCount(mbid, true);
         } catch (SQLException e) {
             connection.rollback();
             throw e;
         }
+    }
+
+    public void updateBoxItemCount(int mbid, boolean increase) throws SQLException {
+        MysteryBox mb = getMysteryBox(mbid);
+        int num_items = increase? (mb.getNo_items() + 1) : (mb.getNo_items() - 1);
+        updateMysteryBox(mbid, num_items, mb.getMdate(), mb.getTheme(), (float) mb.getCost());
     }
 
     /**
@@ -173,6 +180,7 @@ public class MysteryBoxService {
             ps.executeUpdate();
             connection.commit();
             ps.close();
+            updateBoxItemCount(mbid, false);
         } catch (SQLException e) {
             connection.rollback();
             throw e;

@@ -15,7 +15,8 @@ public class Main {
         ConnectionService connectionService = ConnectionService.getInstance();
 
         //connectionService.connect("ora_w8t0b", "a86182169");
-        connectionService.connect(host, "ora_c1z8", "a41584103");
+        // connectionService.connect(host, "ora_c1z8", "a41584103");
+        connectionService.connect(host, "ora_j2z8", "a31484116");
         Connection connection = connectionService.getConnection();
         Session session = Session.getInstance();
         CustomerService customerService = new CustomerService(connection);
@@ -23,6 +24,8 @@ public class Main {
         ItemService itemService = new ItemService(connection);
         AddressService addressService = new AddressService(connection);
         CreditCardService credCardService = new CreditCardService(connection);
+        ShipmentService shipmentService = new ShipmentService(connection);
+        SubscriptionService subscriptionService = new SubscriptionService(connection);
 
         MainFrameController mfc = new MainFrameController(session, customerService, addressService, credCardService);
     }
